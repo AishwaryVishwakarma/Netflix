@@ -1,0 +1,144 @@
+.bgContainer {
+  width: 190px;
+  height: 284px;
+  background: transparent;
+  flex-shrink: 0;
+
+  .imageSekeleton {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: 1px solid red;
+    background: white;
+  }
+
+  &:hover {
+    .movieCardWrapper {
+      width: 120%;
+      transform: scale(1.2);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 5px 0 #000000;
+
+      img {
+        border-radius: 5px 5px 0 0;
+      }
+
+      .detailsContainer {
+        display: flex;
+        box-shadow: 0 0 5px 0 #000000;
+      }
+    }
+  }
+
+  .movieCardWrapper {
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+      background-color: #cccccc;
+    }
+
+    .detailsContainer {
+      margin-top: -5px;
+      background: #141414 !important;
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px;
+      display: none;
+      height: max-content;
+
+      .ctaContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 30px;
+
+        * {
+          border: 1.5px solid #949494;
+          border-radius: 50%;
+          padding: 8px;
+          display: flex;
+          background: #2a2a2a;
+          transition: outline 0.2s ease-in-out;
+        }
+
+        .button {
+          &:hover {
+            outline: 1.5px solid #ffffff;
+          }
+        }
+
+        .playButton {
+          color: var(-bg--dark) !important;
+          background: #ffffff;
+          padding: 5px;
+        }
+
+        .thumbsIcon {
+          color: #ffffff;
+        }
+
+        .plusIcon {
+          color: #ffffff;
+        }
+
+        .downIcon {
+          margin-left: auto;
+          color: #ffffff;
+        }
+      }
+
+      .title {
+        font-family: Ubuntu;
+        color: #ffffff;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 300;
+      }
+
+      .genresContainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        line-height: 10px;
+        max-height: 42px;
+        overflow: hidden;
+
+        .genre {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          &:first-child {
+            .dotIcon {
+              display: none;
+            }
+          }
+
+          .genreTitle {
+            font-size: 12px;
+            font-family: Ubuntu;
+            color: #ffffff;
+            font-weight: 300;
+          }
+
+          .dotIcon {
+            color: #8f8f8f;
+          }
+        }
+      }
+    }
+  }
+}

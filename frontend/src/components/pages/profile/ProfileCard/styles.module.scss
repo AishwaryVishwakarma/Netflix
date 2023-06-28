@@ -1,0 +1,29 @@
+.boxWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  cursor: pointer;
+
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+  }
+
+  .profileName {
+    font-family: Ubuntu;
+    font-weight: 300;
+    font-size: 18px;
+    color: #5b5b5b;
+  }
+  &:hover {
+    img {
+      outline: 5px solid white;
+    }
+
+    .profileName {
+      color: white;
+    }
+  }
+}

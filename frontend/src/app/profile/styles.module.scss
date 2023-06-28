@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+  gap: 50px;
+  background: var(--background);
+
+  .headerText {
+    font-family: Ubuntu;
+    color: white;
+    font-weight: 400;
+    font-size: 50px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .profilesContainer {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    & > a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .manageProfilesBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    font-family: Ubuntu;
+    font-size: 20px;
+    color: #5b5b5b;
+    padding: 10px 30px;
+    border: 1px solid #5b5b5b;
+    margin: 20px auto 0;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+      outline: 3px solid white;
+    }
+  }
+}

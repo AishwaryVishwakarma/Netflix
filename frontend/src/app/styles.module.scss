@@ -1,0 +1,188 @@
+$primary-color: #e50914;
+$secondary-color: #8c8c84;
+$orange: #e87c03;
+$input-font-size: 16px;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin full-space {
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  height: 100%;
+  position: relative;
+  color: #ffffff;
+  font-family: Rubik;
+  padding-bottom: 100px;
+
+  .background {
+    @include full-space;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    filter: brightness(0.6);
+    object-fit: cover;
+  }
+
+  .heroSection {
+    padding: 1.5% 3%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    .flexbox {
+      height: 100%;
+      @include flexbox;
+
+      .formConatiner {
+        height: max-content;
+        width: max-content;
+        background: rgb(0, 0, 0, 0.75);
+        padding: 60px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        & h1 {
+          font-size: 32px;
+          font-weight: 500;
+          letter-spacing: 1.5px;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+
+          .inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 350px;
+
+            .inputContainer {
+              width: 100%;
+              position: relative;
+
+              & > label {
+                color: $secondary-color;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                padding-left: 8%;
+                font-size: $input-font-size;
+                transition: all 0.5s;
+              }
+
+              & > input {
+                color: #fff;
+                width: 100%;
+                border-radius: 5px;
+                height: 55px;
+                background: #333333;
+                border: none;
+                outline: none;
+                padding-left: 8%;
+                padding-top: 20px;
+                font-size: $input-font-size;
+                letter-spacing: 0.5px;
+
+                &[data-input-error='true'] {
+                  box-shadow: 0 2px 0 0 $orange;
+                }
+
+                &:focus ~ label,
+                &:not(:placeholder-shown) ~ label {
+                  font-size: 12px;
+                  top: 30%;
+                }
+
+                &:focus ~ label ~ .passwordVisibilty,
+                &:not(:placeholder-shown) ~ label ~ .passwordVisibilty {
+                  opacity: 1;
+                }
+              }
+
+              .passwordVisibilty {
+                opacity: 0;
+                color: $secondary-color;
+                font-size: 16px;
+                position: absolute;
+                top: 50%;
+                right: 5%;
+                transform: translateY(-50%);
+                transition: all 0.5s;
+                cursor: pointer;
+              }
+            }
+
+            .error {
+              color: $orange;
+              font-size: 14px;
+              margin-top: -10px;
+              margin-left: 2px;
+            }
+          }
+
+          button {
+            background: $primary-color;
+            color: #fff;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 0;
+            font-size: $input-font-size;
+            cursor: pointer;
+          }
+
+          .helpSection {
+            @include flexbox;
+            justify-content: space-between;
+            margin-top: -20px;
+
+            .rememberMe {
+              @include flexbox;
+              gap: 5px;
+              font-size: 14px;
+              color: $secondary-color;
+            }
+
+            & p {
+              font-size: 14px;
+              color: $secondary-color;
+              cursor: pointer;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+
+        .signUp {
+          color: $secondary-color;
+          font-size: $input-font-size;
+
+          & > span {
+            color: #fff;
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}

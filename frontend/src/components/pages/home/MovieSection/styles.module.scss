@@ -1,0 +1,73 @@
+.blurContainer {
+  height: 200px;
+  margin-top: -100px;
+  position: absolute;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, 0),
+    rgba(20, 20, 20, 1)
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.sectionWrapper {
+  position: relative;
+  padding: 10px 40px 10px 40px;
+  background: transparent;
+  margin-top: -190px;
+
+  .heading {
+    font-family: Ubuntu;
+    color: white;
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: -15px;
+    width: max-content;
+  }
+
+  .cardsContainer {
+    display: flex;
+    gap: 8px;
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+    height: 550px;
+    padding-top: 50px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 50px;
+      height: 286px;
+      cursor: pointer;
+      border: none;
+      top: 217px;
+      transform: translateY(-50%);
+      background-color: rgba($color: #000000, $alpha: 0.15);
+      font-size: 37px;
+      font-weight: 900;
+    }
+
+    .buttonIcons {
+      color: white;
+      font-size: 50px;
+    }
+
+    .prevButton {
+      left: 40px;
+      border-radius: 0 5px 5px 0;
+    }
+
+    .nextButton {
+      right: 40px;
+      border-radius: 5px 0 0 5px;
+    }
+  }
+}

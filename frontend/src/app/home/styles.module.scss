@@ -1,0 +1,52 @@
+.videoContainer {
+  iframe {
+    margin-top: -110px;
+    margin-bottom: -100px;
+    height: 850px;
+    width: 100%;
+    pointer-events: none;
+  }
+}
+.viewOptions {
+  font-family: Ubuntu;
+  position: absolute;
+  z-index: 2;
+  font-size: 25px;
+  justify-content: center;
+  top: 40%;
+  left: 40px;
+  font-family: Ubuntu;
+  display: flex;
+  gap: 15px;
+
+  .playButton {
+    padding: 10px 40px;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 25px;
+    gap: 5px;
+
+    &:hover {
+      background: #f6f0f0;
+    }
+  }
+
+  .moreInfo {
+    background: #6b6e81;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    cursor: pointer;
+
+    &:hover {
+      background: #888585;
+    }
+  }
+}

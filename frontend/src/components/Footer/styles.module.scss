@@ -1,0 +1,53 @@
+.footerWrapper {
+  padding: 80px 15% 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  .socialMediaIcons {
+    display: flex;
+    color: white;
+    font-size: 30px;
+    gap: 40px;
+    cursor: pointer;
+  }
+
+  .footerLinks {
+    margin-top: -20px;
+    font-family: Ubuntu;
+    color: rgb(120, 120, 120);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    font-size: 16px;
+
+    p {
+      margin: 20px 0;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .cta {
+    font-family: Ubuntu;
+    font-size: 18px;
+    width: max-content;
+    border: 1px solid rgb(120, 120, 120);
+    color: rgb(120, 120, 120);
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .trademark {
+    user-select: none;
+    color: rgb(120, 120, 120);
+    font-family: Ubuntu;
+    font-size: 14px;
+  }
+}

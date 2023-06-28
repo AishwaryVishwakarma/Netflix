@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Ubuntu:wght@300;400;500;700&family=Lato:wght@100;300;400;700;900&family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+:root {
+  --background: #141414;
+}
+
+.onTop {
+  position: relative;
+  z-index: 2;
+}
+
+.full-bleed {
+  width: 100%;
+}
+
+.defaultBg {
+  background: var(--background);
+}
+
+.layouted {
+  display: grid;
+  grid-template-columns: 1fr calc(min(77rem, 100%)) 1fr;
+  height: 100%;
+
+  & * {
+    grid-column: 2;
+  }
+}
