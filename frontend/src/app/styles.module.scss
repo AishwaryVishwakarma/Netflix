@@ -23,7 +23,7 @@ $input-font-size: 16px;
 
   .background {
     @include full-space;
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: -1;
     filter: brightness(0.6);
