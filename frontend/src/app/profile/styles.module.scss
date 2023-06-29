@@ -9,7 +9,7 @@
   background: var(--background);
 
   .headerText {
-    font-family: Ubuntu;
+    font-family: var(--font-ubuntu);
     color: white;
     font-weight: 400;
     font-size: 50px;
@@ -33,7 +33,7 @@
     align-items: center;
     justify-content: center;
     width: max-content;
-    font-family: Ubuntu;
+    font-family: var(--font-ubuntu);
     font-size: 20px;
     color: #5b5b5b;
     padding: 10px 30px;

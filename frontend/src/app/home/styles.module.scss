@@ -8,14 +8,13 @@
   }
 }
 .viewOptions {
-  font-family: Ubuntu;
+  font-family: var(--font-ubuntu);
   position: absolute;
   z-index: 2;
   font-size: 25px;
   justify-content: center;
   top: 40%;
   left: 40px;
-  font-family: Ubuntu;
   display: flex;
   gap: 15px;
 

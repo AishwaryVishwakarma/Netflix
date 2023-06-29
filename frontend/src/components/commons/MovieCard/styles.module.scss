@@ -96,7 +96,7 @@
       }
 
       .title {
-        font-family: Ubuntu;
+        font-family: var(--font-ubuntu);
         color: #ffffff;
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -129,7 +129,7 @@
 
           .genreTitle {
             font-size: 12px;
-            font-family: Ubuntu;
+            font-family: var(--font-ubuntu);
             color: #ffffff;
             font-weight: 300;
           }
