@@ -14,7 +14,7 @@ $input-font-size: 16px;
   width: 100%;
 }
 
-.wrapper {
+.loginWrapper {
   height: 100%;
   position: relative;
   color: #ffffff;
@@ -173,9 +173,10 @@ $input-font-size: 16px;
           color: $secondary-color;
           font-size: $input-font-size;
 
-          & > span {
+          & > a {
             color: #fff;
             cursor: pointer;
+            text-decoration: none;
 
             &:hover {
               text-decoration: underline;

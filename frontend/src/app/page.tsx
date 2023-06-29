@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout';
 import styles from './styles.module.scss';
 import React from 'react';
 import NetflixLogo from '@/icons/NetflixLogo';
+import Link from 'next/link';
 
 interface FormData {
   email: string;
@@ -101,9 +102,9 @@ const LoginPage = () => {
 
   return (
     <Layout className='full-bleed'>
-      <section className={styles.wrapper}>
+      <section className={styles.loginWrapper}>
         <img
-          src='https://i.postimg.cc/VkKtyP98/IN-en-20230619-popsignuptwoweeks-perspective-alpha-website-small.jpg'
+          src='https://assets.nflxext.com/ffe/siteui/vlv3/d282a426-b01a-424c-9b83-2c2445e4b61a/f7eb3bc2-2867-4c7e-94f8-e62ec11175cd/IN-en-20230626-popsignuptwoweeks-perspective_alpha_website_large.jpg'
           alt='background'
           className={styles.background}
         />
@@ -185,7 +186,7 @@ const LoginPage = () => {
                 </div>
               </form>
               <div className={styles.signUp}>
-                New to Netflix? <span>Sign up now.</span>
+                New to Netflix? <Link href='/signup'>Sign up now.</Link>
               </div>
             </div>
           </div>

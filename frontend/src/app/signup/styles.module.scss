@@ -1,0 +1,57 @@
+$primary-color: #e50914;
+$primary-hover-color: #cb0b15;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin full-space {
+  height: 100%;
+  width: 100%;
+}
+
+.signupWrapper {
+  height: 100%;
+  position: relative;
+  color: #ffffff;
+  font-family: Rubik;
+  padding-bottom: 100px;
+
+  .background {
+    @include full-space;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    filter: brightness(0.35);
+    object-fit: cover;
+  }
+
+  .heroSection {
+    padding: 2% 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    .header {
+      @include flexbox;
+      justify-content: space-between;
+
+      & > a {
+        background: $primary-color;
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 18px;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: $primary-hover-color;
+        }
+      }
+    }
+  }
+}
