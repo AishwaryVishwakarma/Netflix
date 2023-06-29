@@ -118,7 +118,7 @@ const LoginPage = () => {
                   <div className={styles.inputContainer}>
                     <input
                       data-input-error={emailInputError}
-                      type='text'
+                      type='email'
                       name='email'
                       id='email'
                       value={formData.email}
