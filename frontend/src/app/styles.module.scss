@@ -22,7 +22,7 @@ $input-font-size: 16px;
   padding-bottom: 100px;
 
   .background {
-    @include full-space;
+    @include full-space();
     position: fixed;
     inset: 0;
     z-index: -1;
@@ -39,7 +39,7 @@ $input-font-size: 16px;
 
     .flexbox {
       height: 100%;
-      @include flexbox;
+      @include flexbox();
 
       .formConatiner {
         height: max-content;
@@ -146,12 +146,12 @@ $input-font-size: 16px;
           }
 
           .helpSection {
-            @include flexbox;
+            @include flexbox();
             justify-content: space-between;
             margin-top: -20px;
 
             .rememberMe {
-              @include flexbox;
+              @include flexbox();
               gap: 5px;
               font-size: 14px;
               color: $secondary-color;

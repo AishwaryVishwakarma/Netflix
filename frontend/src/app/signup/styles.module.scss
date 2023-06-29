@@ -24,7 +24,7 @@ $input-left-padding: 6%;
   padding-bottom: 100px;
 
   .background {
-    @include full-space;
+    @include full-space();
     position: fixed;
     inset: 0;
     z-index: -1;
@@ -40,7 +40,7 @@ $input-left-padding: 6%;
     gap: 50px;
 
     .header {
-      @include flexbox;
+      @include flexbox();
       justify-content: space-between;
 
       & > a {
@@ -60,7 +60,7 @@ $input-left-padding: 6%;
 
     .emailWrapper {
       height: 100%;
-      @include flexbox;
+      @include flexbox();
       flex-direction: column;
       gap: 25px;
       padding: 10% 0;
@@ -81,7 +81,7 @@ $input-left-padding: 6%;
       }
 
       .emailField {
-        @include flexbox;
+        @include flexbox();
         width: 100%;
         gap: 20px;
         margin-top: 20px;
@@ -92,7 +92,7 @@ $input-left-padding: 6%;
           max-width: 350px;
 
           .errorField {
-            @include flexbox;
+            @include flexbox();
             gap: 5px;
             color: $primary-color;
             font-size: 16px;
@@ -147,7 +147,7 @@ $input-left-padding: 6%;
         }
 
         & > button {
-          @include flexbox;
+          @include flexbox();
           gap: 5px;
           background: $primary-color;
           border: none;

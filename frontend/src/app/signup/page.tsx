@@ -7,6 +7,10 @@ import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
 import NetflixLogo from '@/icons/NetflixLogo';
 import Link from 'next/link';
 
+/*
+ * Sign Up Page
+ */
+
 const SignupPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');
 

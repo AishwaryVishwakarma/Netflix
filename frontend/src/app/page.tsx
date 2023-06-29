@@ -170,7 +170,7 @@ const LoginPage = () => {
                     </p>
                   )}
                 </div>
-                <button>Sign In</button>
+                <button type='submit'>Sign In</button>
                 <div className={styles.helpSection}>
                   <div className={styles.rememberMe}>
                     <input
