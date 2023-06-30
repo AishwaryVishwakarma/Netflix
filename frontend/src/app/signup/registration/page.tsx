@@ -4,7 +4,7 @@
 import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
-import NetflixLogo from '@/icons/NetflixLogo';
+import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
 import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
@@ -41,7 +41,7 @@ const RegistrationPage = () => {
   });
 
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.INTRO
+    SCREEN_STATE.FORM
   );
 
   const onChangeHandler = (

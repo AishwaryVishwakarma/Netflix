@@ -1,1 +1,3 @@
-export const signup = 'http://localhost:8000/signup';
+const port = 8001;
+
+export const signup = `http://localhost:${port}/signup`;

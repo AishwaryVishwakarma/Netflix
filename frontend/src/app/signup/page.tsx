@@ -8,8 +8,9 @@ import {
   AiOutlineRight,
   AiOutlineLoading3Quarters,
 } from 'react-icons/ai';
-import NetflixLogo from '@/icons/NetflixLogo';
+import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
+import Loader from '@/utils/loader/loader';
 // import {redirect} from 'next/navigation';
 
 /*
@@ -115,7 +116,7 @@ const SignupPage: React.FC = () => {
               </div>
               <button type='submit' className={isLoading ? styles.loading : ''}>
                 {isLoading ? (
-                  <AiOutlineLoading3Quarters />
+                  <Loader />
                 ) : (
                   <>
                     Get Started <AiOutlineRight />

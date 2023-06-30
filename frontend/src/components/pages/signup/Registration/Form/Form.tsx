@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
+import Loader from '@/utils/loader/loader';
 
 interface InputTouched {
   email: boolean;
@@ -25,6 +26,8 @@ const Form: React.FC<{
     email: false,
     password: false,
   });
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const setInputFocus = (event: any): void => {
     const {name}: {name: 'email' | 'password'} = event.target;
@@ -60,17 +63,26 @@ const Form: React.FC<{
   const signupHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsLoading(true);
+
+    const trimmedEmail = email.trim().toLocaleLowerCase();
+
     try {
       const res = await axios.post(SIGNUP_URL, {
-        email: email.trim().toLocaleLowerCase(),
+        email: trimmedEmail,
         password,
       });
 
       const data: {_id: string} = res.data;
 
-      localStorage.setItem('userId', data._id);
+      sessionStorage.setItem('userId', data._id);
+
+      sessionStorage.setItem('email', trimmedEmail);
+
+      window.location.href = '/signup/plans';
     } catch (error: any) {
-      console.log(error.response);
+      console.log(error.response.data);
+      setIsLoading(false);
     }
   };
 
@@ -139,7 +151,9 @@ const Form: React.FC<{
               </p>
             )}
           </div>
-          <button>Next</button>
+          <button className={isLoading ? styles.loading : ''}>
+            {isLoading ? <Loader /> : 'Next'}
+          </button>
         </form>
       </div>
     </div>
