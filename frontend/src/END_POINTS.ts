@@ -1,0 +1,1 @@
+export const signup = 'http://localhost:8000/signup';

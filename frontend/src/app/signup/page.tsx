@@ -3,13 +3,20 @@
 import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
-import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
+import {
+  AiOutlineCloseCircle,
+  AiOutlineRight,
+  AiOutlineLoading3Quarters,
+} from 'react-icons/ai';
 import NetflixLogo from '@/icons/NetflixLogo';
 import Link from 'next/link';
+// import {redirect} from 'next/navigation';
 
 /*
  * Sign Up Page
  */
+
+let localEmail: string;
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');
@@ -18,6 +25,8 @@ const SignupPage: React.FC = () => {
 
   const [isEmailLostFocus, setIsEmailLostFocus] =
     React.useState<boolean>(false);
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -37,16 +46,24 @@ const SignupPage: React.FC = () => {
     (!email.includes('@') || !email.includes('.'));
 
   function emailSubmit(event: React.FormEvent<HTMLFormElement>) {
-    console.log('first');
-
     event.preventDefault();
+
+    setIsLoading(true);
 
     localStorage.setItem('email', email);
 
     // NextJs redirect has some bug so using this to navigate
 
     window.location.href = '/signup/registration';
+
+    // redirect('/');
   }
+
+  React.useEffect((): void => {
+    localEmail = localStorage.getItem('email') as string;
+
+    if (localEmail) setEmail(localEmail);
+  }, []);
 
   return (
     <Layout className='full-bleed'>
@@ -96,8 +113,14 @@ const SignupPage: React.FC = () => {
                   </p>
                 )}
               </div>
-              <button type='submit'>
-                Get Started <AiOutlineRight />
+              <button type='submit' className={isLoading ? styles.loading : ''}>
+                {isLoading ? (
+                  <AiOutlineLoading3Quarters />
+                ) : (
+                  <>
+                    Get Started <AiOutlineRight />
+                  </>
+                )}
               </button>
             </form>
           </div>

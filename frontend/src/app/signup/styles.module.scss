@@ -4,6 +4,7 @@ $secondary-color: #8c8c84;
 $input-font-size: 16px;
 $input-field-height: 55px;
 $input-left-padding: 6%;
+$button-width: 212px;
 
 @mixin flexbox {
   display: flex;
@@ -125,6 +126,13 @@ $input-left-padding: 6%;
             font-size: $input-font-size;
             letter-spacing: 0.5px;
 
+            &:-webkit-autofill {
+              -webkit-text-fill-color: #fff;
+              -webkit-box-shadow: 0 0 0px $input-field-height
+                rgba(70, 90, 126, 0.4) inset;
+              transition: background-color 5000s ease-in-out 0s;
+            }
+
             &:focus {
               outline: 2px solid rgb(194, 194, 194);
               outline-offset: 2px;
@@ -154,6 +162,7 @@ $input-left-padding: 6%;
           outline: none;
           color: #fff;
           height: $input-field-height;
+          width: $button-width;
           font-size: 22px;
           font-weight: 600;
           letter-spacing: 0.5px;
@@ -164,6 +173,25 @@ $input-left-padding: 6%;
 
           &:hover {
             background: $primary-hover-color;
+          }
+        }
+
+        .loading {
+          background: rgba($color: $primary-color, $alpha: 0.4);
+          pointer-events: none;
+
+          & > svg {
+            animation: rotate infinite 1s linear;
+            transform-origin: center;
+
+            @keyframes rotate {
+              50% {
+                transform: rotateZ(180deg);
+              }
+              100% {
+                transform: rotateZ(360deg);
+              }
+            }
           }
         }
       }

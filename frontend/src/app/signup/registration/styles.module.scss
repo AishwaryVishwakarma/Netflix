@@ -37,43 +37,50 @@ $input-left-padding: 5%;
   }
 
   .introWrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    @include flexbox();
+    align-items: flex-start;
     height: 100%;
-    gap: 20px;
     padding: 8% 0;
 
-    .setpLogo {
-      height: 65px;
-      width: 270px;
-    }
+    & > div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
 
-    h1,
-    h3 {
-      max-width: $max-width-allowed;
-      text-align: center;
-    }
+      .setupLogo {
+        height: 65px;
+        width: 270px;
+      }
 
-    button {
-      width: $max-width-allowed;
-      border-radius: 5px;
-      padding: 20px 0;
-      border: none;
-      outline: none;
-      color: #fff;
-      font-size: 24px;
-      background: $primary-color;
-      cursor: pointer;
+      h1,
+      h3 {
+        max-width: $max-width-allowed;
+        text-align: center;
+      }
 
-      &:hover {
-        background: $primary-hover-color;
+      button {
+        width: $max-width-allowed;
+        border-radius: 5px;
+        padding: 20px 0;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 24px;
+        background: $primary-color;
+        cursor: pointer;
+
+        &:hover {
+          background: $primary-hover-color;
+        }
       }
     }
   }
 
   .flexBox {
     @include flexbox();
+    position: relative;
 
     .formWrapper {
       display: flex;

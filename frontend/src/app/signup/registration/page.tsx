@@ -6,6 +6,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import NetflixLogo from '@/icons/NetflixLogo';
 import Link from 'next/link';
+import axios from 'axios';
+import {signup as SIGNUP_URL} from '@/END_POINTS';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -36,27 +38,29 @@ const Intro: React.FC<{
   changeFormState: React.Dispatch<React.SetStateAction<string>>;
 }> = ({changeFormState}) => {
   return (
-    <div className={`${styles.introWrapper} ${styles.fadeInFromRight}`}>
-      <img
-        src='https://assets.nflxext.com/ffe/siteui/acquisition/simplicity/Devices.png'
-        alt='stepLogo'
-        className={styles.setpLogo}
-      />
-      <p>
-        Step <b>1</b> of <b>3</b>
-      </p>
-      <h1>Finish setting up your account</h1>
-      <h3>
-        Netflix is personalised for you. Create a password to watch on any
-        device at any time.
-      </h3>
-      <button
-        role='button'
-        type='button'
-        onClick={(): void => changeFormState(SCREEN_STATE.FORM)}
-      >
-        Next
-      </button>
+    <div className={styles.introWrapper}>
+      <div className={styles.fadeInFromRight}>
+        <img
+          src='https://assets.nflxext.com/ffe/siteui/acquisition/simplicity/Devices.png'
+          alt='stepLogo'
+          className={styles.setupLogo}
+        />
+        <p>
+          Step <b>1</b> of <b>3</b>
+        </p>
+        <h1>Finish setting up your account</h1>
+        <h3>
+          Netflix is personalised for you. Create a password to watch on any
+          device at any time.
+        </h3>
+        <button
+          role='button'
+          type='button'
+          onClick={(): void => changeFormState(SCREEN_STATE.FORM)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
@@ -111,6 +115,25 @@ const Form: React.FC<{
     });
   };
 
+  // On Sign Up Form Submit
+  const signupHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const res = await axios.post(SIGNUP_URL, {
+        email: email.trim().toLocaleLowerCase(),
+        password,
+      });
+
+      const data: {_id: string} = res.data;
+
+      localStorage.setItem('userId', data._id);
+
+    } catch (error: any) {
+      console.log(error.response);
+    }
+  };
+
   const emailInputError =
     formData.email.length == 0 &&
     isInputFocused.email &&
@@ -122,14 +145,14 @@ const Form: React.FC<{
     isInputLostFocus.password;
 
   return (
-    <div className={`${styles.flexBox} ${styles.fadeInFromRight}`}>
-      <div className={styles.formWrapper}>
+    <div className={styles.flexBox}>
+      <div className={`${styles.formWrapper} ${styles.fadeInFromRight}`}>
         <p>
           STEP <b>1</b> OF <b>3</b>
         </p>
         <h1>Create a password to start your membership</h1>
         <h3>Just a few more steps and you're done! We hate paperwork, too.</h3>
-        <form action=''>
+        <form onSubmit={signupHandler}>
           <div className={styles.inputs}>
             <div className={styles.inputContainer}>
               <input
