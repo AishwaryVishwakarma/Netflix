@@ -1,0 +1,179 @@
+$primary-color: #e50914;
+$primary-hover-color: #ff0c18;
+$secondary-color: #8c8c84;
+$color-dark: #333333;
+$input-font-size: 16px;
+$input-left-padding: 5%;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexBox {
+  @include flexbox();
+  position: relative;
+
+  .formWrapper {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    height: 100%;
+    gap: 20px;
+    padding: 2% 0;
+    max-width: 440px;
+
+    p {
+      margin-top: 20px;
+      margin-bottom: -10px;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-weight: 500;
+    }
+
+    h3 {
+      font-weight: 400;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+
+      .inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+
+        .inputContainer {
+          width: 100%;
+          position: relative;
+
+          & > label {
+            color: $secondary-color;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            padding-left: $input-left-padding;
+            font-size: $input-font-size;
+            transition: all 0.5s;
+          }
+
+          & > input {
+            color: #fff;
+            width: 100%;
+            border-radius: 5px;
+            height: 55px;
+            background: transparent;
+            border: none;
+            outline: none;
+            padding-left: $input-left-padding;
+            padding-top: 20px;
+            font-size: $input-font-size;
+            letter-spacing: 0.5px;
+            border: 1px solid $color-dark;
+            color: #000;
+
+            &[data-input-error='true'] {
+              border-color: $primary-color;
+            }
+
+            &:focus {
+              outline: 2px solid $color-dark;
+              outline-offset: 2px;
+            }
+
+            &:focus ~ label,
+            &:not(:placeholder-shown) ~ label {
+              font-size: 12px;
+              top: 30%;
+            }
+
+            &:focus ~ label ~ .passwordVisibilty,
+            &:not(:placeholder-shown) ~ label ~ .passwordVisibilty {
+              opacity: 1;
+            }
+          }
+
+          .passwordVisibilty {
+            opacity: 0;
+            color: $secondary-color;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            transition: all 0.5s;
+            cursor: pointer;
+          }
+        }
+
+        .error {
+          color: $primary-color;
+          font-size: 12px;
+          margin-top: -10px;
+          margin-left: 2px;
+        }
+      }
+
+      button {
+        background: $primary-color;
+        color: #fff;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 20px 0;
+        font-size: 24px;
+        cursor: pointer;
+
+        &:hover {
+          background: $primary-hover-color;
+        }
+      }
+
+      .helpSection {
+        @include flexbox;
+        justify-content: space-between;
+        margin-top: -20px;
+
+        .rememberMe {
+          @include flexbox;
+          gap: 5px;
+          font-size: 14px;
+          color: $secondary-color;
+        }
+
+        & p {
+          font-size: 14px;
+          color: $secondary-color;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+.fadeInFromRight {
+  opacity: 0;
+  transform: translateX(100px);
+  animation: fade-in-from-right 1s forwards;
+
+  @keyframes fade-in-from-right {
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}

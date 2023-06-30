@@ -1,8 +1,8 @@
 $primary-color: #e50914;
+$primary-hover-color: #ff0c18;
 $secondary-color: #8c8c84;
 $color-dark: #333333;
 $max-width-allowed: 340px;
-$primary-hover-color: #ff0c18;
 $input-font-size: 16px;
 $input-left-padding: 5%;
 
@@ -32,48 +32,6 @@ $input-left-padding: 5%;
 
       &:hover {
         text-decoration: underline;
-      }
-    }
-  }
-
-  .introWrapper {
-    @include flexbox();
-    align-items: flex-start;
-    height: 100%;
-    padding: 8% 0;
-
-    & > div {
-      position: relative;
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      gap: 20px;
-
-      .setupLogo {
-        height: 65px;
-        width: 270px;
-      }
-
-      h1,
-      h3 {
-        max-width: $max-width-allowed;
-        text-align: center;
-      }
-
-      button {
-        width: $max-width-allowed;
-        border-radius: 5px;
-        padding: 20px 0;
-        border: none;
-        outline: none;
-        color: #fff;
-        font-size: 24px;
-        background: $primary-color;
-        cursor: pointer;
-
-        &:hover {
-          background: $primary-hover-color;
-        }
       }
     }
   }

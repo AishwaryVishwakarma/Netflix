@@ -19,6 +19,8 @@ interface InputTouched {
 
 const PASSWORD_STATE = ['Hide', 'Show'];
 
+let localEmail: string;
+
 const LoginPage = () => {
   const [isPasswordVisible, setIsPasswordVisibile] =
     React.useState<boolean>(false);
@@ -89,6 +91,17 @@ const LoginPage = () => {
       };
     });
   };
+
+  React.useEffect((): void => {
+    localEmail = sessionStorage.getItem('email') as string;
+
+    setFormData((prev): FormData => {
+      return {
+        ...prev,
+        email: localEmail,
+      };
+    });
+  }, []);
 
   const emailInputError =
     formData.email.length == 0 &&

@@ -50,7 +50,7 @@ const SignupPage: React.FC = () => {
 
     setIsLoading(true);
 
-    localStorage.setItem('email', email);
+    sessionStorage.setItem('email', email);
 
     // NextJs redirect has some bug so using this to navigate
 
@@ -60,7 +60,7 @@ const SignupPage: React.FC = () => {
   }
 
   React.useEffect((): void => {
-    localEmail = localStorage.getItem('email') as string;
+    localEmail = sessionStorage.getItem('email') as string;
 
     if (localEmail) setEmail(localEmail);
   }, []);
