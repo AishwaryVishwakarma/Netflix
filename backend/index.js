@@ -22,6 +22,6 @@ con.on('open', () =>{
     console.log("database connected")
 })
 
-app.listen(8000, () => {
+app.listen(8001, () => {
     console.log(`backend running on 8000 :)`)
 })
