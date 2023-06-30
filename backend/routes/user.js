@@ -21,8 +21,8 @@ router.post('/login', async(req,res) =>{
 
     }
     else{
-        res.status(401)
-        res.send()
+        res.status(401).send({"detail":"user dosen't exists or password is incorrect"})
+
     }
 
 })
@@ -41,7 +41,7 @@ router.post('/signup', async(req,res) =>{
         .exec()
     
     if (found != null){
-        res.status(409).send("User Already Exists") // status code for conflict 
+        res.status(409).send({"detail":"User Already Exists"}) // status code for conflict 
     }
     else{
         try{

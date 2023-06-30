@@ -7,7 +7,7 @@ const userRoutes = require('./routes/user')
 
 app.use(express.json())
 app.use(cors())
-app.use('/api', userRoutes)
+app.use('/', userRoutes)
 
 const uri = "mongodb+srv://netflixdatabase:YPTdReRQcXTOM1W7@netflixdatabsecluster.8tru0xo.mongodb.net/?retryWrites=true&w=majority"
 
