@@ -12,12 +12,22 @@ router.post('/login', async(req,res) =>{
         password: userData.password
     }
 
+    if (!userCreds.email || userCreds.email===""){
+        res.status(400).send({"detail": "Mandatory Field email missing"})
+        return 
+    }
+
+    if (!userCreds.password || userCreds.password===""){
+        res.status(400).send({"detail": "Mandatory Field password missing"})
+        return 
+    }
+
     const user = await userModel
         .findOne({email: userCreds.email})
         .exec()
     
     if (user && await bcrypt.compare(userCreds.password, user.password)){
-        await res.send(user).status(200)
+        res.send(user).status(200)
 
     }
     else{
@@ -30,10 +40,19 @@ router.post('/login', async(req,res) =>{
 
 router.post('/signup', async(req,res) =>{
     const userData = req.body
-
     const userCreds = {
         email: userData.email,
-        password: userData.password
+        password: userData.password     
+    }
+
+    if (!userCreds.email || userCreds.email===""){
+        res.status(400).send({"detail": "Mandatory Field email missing"})
+        return 
+    }
+
+    if (!userCreds.password || userCreds.password===""){
+        res.status(400).send({"detail": "Mandatory Field password missing"})
+        return 
     }
     
     const found = await userModel
@@ -42,6 +61,7 @@ router.post('/signup', async(req,res) =>{
     
     if (found != null){
         res.status(409).send({"detail":"User Already Exists"}) // status code for conflict 
+        return 
     }
     else{
         try{
@@ -57,6 +77,27 @@ router.post('/signup', async(req,res) =>{
             res.send(err) // error cases to be discussed
         }
     }
+})
+
+router.post('/checkuser', async(req, res) =>{
+    userData = req.body
+    userCreds = {
+        email : userData.email
+    }
+
+    const found = await userModel
+        .findOne({email: userCreds.email})
+        .exec()
+    
+    if (found != null){
+        res.status(200).send({"detail":"User Already Exists"}) // status code for conflict 
+        return 
+    }
+    else{
+        res.status(404).send({"detail":"User not found"})
+        return 
+    }
+
 })
 
 module.exports = router
