@@ -4,10 +4,9 @@
 import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
-import NetflixLogo from '@/utils/icons/NetflixLogo';
-import Link from 'next/link';
 import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
+import Header from '@/components/pages/signup/Header';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -16,11 +15,6 @@ import Form from '@/components/pages/signup/Registration/Form/Form';
 export interface FormData {
   email: string;
   password: string;
-}
-
-interface InputTouched {
-  email: boolean;
-  password: boolean;
 }
 
 export const SCREEN_STATE = {
@@ -41,7 +35,7 @@ const RegistrationPage = () => {
   });
 
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.FORM
+    SCREEN_STATE.INTRO
   );
 
   const onChangeHandler = (
@@ -71,10 +65,7 @@ const RegistrationPage = () => {
   return (
     <Layout className='full-bleed'>
       <div className={styles.registrationWrapper}>
-        <header>
-          <NetflixLogo height={45} width={167} color='#e50914' />
-          <Link href='/'>Sign In</Link>
-        </header>
+        <Header />
         {/* Intro Screen */}
         {screenState === SCREEN_STATE.INTRO && (
           <Intro changeFormState={setScreenState} />

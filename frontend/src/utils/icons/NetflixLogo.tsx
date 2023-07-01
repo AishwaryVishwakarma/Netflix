@@ -9,7 +9,7 @@ interface SvgProps {
 
 const NetflixLogo: React.FC<SvgProps> = ({
   className,
-  color = '#000000',
+  color = '#e50914',
   height = 100,
   width = 100,
 }) => {
