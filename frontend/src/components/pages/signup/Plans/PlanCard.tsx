@@ -4,25 +4,46 @@ import CheckMarkCircle from '@/utils/icons/CheckMarkCircle';
 import CheckMark from '@/utils/icons/CheckMark';
 import {type PlanData} from '@/DUMMY_DATA/PLANS';
 
-const PlanCard: React.FC<{data: PlanData}> = ({data}) => {
+const PlanCard: React.FC<{
+  data: PlanData;
+}> = ({data}) => {
   const {
     _value: {type, value},
+    background,
     name,
     resolution,
+    svgFill,
     features,
   } = data ?? {};
+
+  const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    sessionStorage.setItem('plan', event.target.value);
+  };
+
   return (
     <div className={styles.cardWrapper}>
-      <input type='radio' id={type} name='plan-select' value={type} />
+      <input
+        type='radio'
+        id={type}
+        name='plan-select'
+        value={type}
+        defaultChecked={type === 'premium'}
+        onChange={changePlanHandler}
+      />
       <label htmlFor={type}>
-        <div className={styles.topContainer}>
+        <div
+          className={styles.topContainer}
+          style={{
+            background: background,
+          }}
+        >
           <span className={styles.type}>{name}</span>
           <span className={styles.resolution}>{resolution}</span>
         </div>
         <ul className={styles.features}>
           {features.map((feature) => (
             <li key={feature.title}>
-              <CheckMarkCircle />
+              <CheckMarkCircle color={svgFill} />
               <div className={styles.featureInfo}>
                 <p>{feature.title}</p>
                 <h4>{feature.description}</h4>

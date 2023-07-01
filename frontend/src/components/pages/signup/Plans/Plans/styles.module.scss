@@ -57,6 +57,11 @@ $max-width-allowed: 340px;
         background: $primary-hover-color;
       }
     }
+
+    .loading {
+      background: rgba($color: $primary-color, $alpha: 0.4);
+      pointer-events: none;
+    }
   }
 }
 

@@ -1,13 +1,24 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
-import {PLANS, type PlanData} from '@/DUMMY_DATA/PLANS';
+import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
+import Loader from '@/utils/loader/loader';
 
 const Plans = () => {
-  const [plan, setPlan] = React.useState<string>('Premium');
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  console.log(PLANS.length);
+  React.useEffect((): void => {
+    sessionStorage.setItem('plan', 'premium');
+  }, []);
+
+  const planSubmitHandler = () => {
+    setIsLoading(true);
+
+    const plan = sessionStorage.getItem('plan');
+
+    console.log(plan);
+  };
 
   return (
     <div className={styles.plansWrapper}>
@@ -17,16 +28,17 @@ const Plans = () => {
         </p>
         <h1>Choose the plan that’s right for you</h1>
         <div className={styles.cardsContainer}>
-          {PLANS.map((plan) => (
-            <PlanCard key={nanoid()} data={plan} />
+          {PLANS.map((planObject) => (
+            <PlanCard key={nanoid()} data={planObject} />
           ))}
         </div>
         <button
           role='button'
           type='button'
-          // onClick={(): void => changeFormState(SCREEN_STATE.FORM)}
+          className={isLoading ? styles.loading : ''}
+          onClick={planSubmitHandler}
         >
-          Next
+          {isLoading ? <Loader /> : 'Next'}
         </button>
       </div>
     </div>

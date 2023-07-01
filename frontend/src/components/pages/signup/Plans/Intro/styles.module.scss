@@ -12,7 +12,7 @@ $max-width-allowed: 340px;
   @include flexbox();
   align-items: flex-start;
   height: 100%;
-  padding: 5% 0;
+  padding: 5% 0 10%;
 
   & > div {
     position: relative;
