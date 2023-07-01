@@ -5,22 +5,27 @@ import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
+import Plans from '@/components/pages/signup/Plans/Plans/Plans';
 
 export const SCREEN_STATE = {
   INTRO: 'intro',
-  FORM: 'form',
+  PLANS: 'plans',
 };
 
 const PlansPage: React.FC = () => {
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.INTRO
+    SCREEN_STATE.PLANS
   );
   return (
     <Layout className='full-bleed'>
       <div className={styles.plansWrapper}>
         <Header />
         {/* Intro Screen */}
-        <Intro changeFormState={setScreenState} />
+        {screenState === SCREEN_STATE.INTRO && (
+          <Intro changeFormState={setScreenState} />
+        )}
+        {/* Plans Screen */}
+        {screenState === SCREEN_STATE.PLANS && <Plans />}
       </div>
     </Layout>
   );

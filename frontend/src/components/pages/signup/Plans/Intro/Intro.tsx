@@ -35,7 +35,7 @@ const Intro: React.FC<{
         <button
           role='button'
           type='button'
-          onClick={(): void => changeFormState(SCREEN_STATE.FORM)}
+          onClick={(): void => changeFormState(SCREEN_STATE.PLANS)}
         >
           Next
         </button>
