@@ -16,6 +16,13 @@ const PlansPage: React.FC = () => {
   const [screenState, setScreenState] = React.useState<string>(
     SCREEN_STATE.INTRO
   );
+
+  // Setting plan in order to get a default plan checked
+  React.useEffect((): void => {
+    sessionStorage.setItem('plan', 'premium');
+    sessionStorage.setItem('value', '649');
+  }, []);
+
   return (
     <Layout className='full-bleed'>
       <div className={styles.plansWrapper}>

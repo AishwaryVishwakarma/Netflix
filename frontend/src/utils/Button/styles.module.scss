@@ -1,0 +1,25 @@
+$primary-color: #e50914;
+$primary-hover-color: #ff0c18;
+$max-width-allowed: 340px;
+
+.button {
+  width: $max-width-allowed;
+  border-radius: 5px;
+  padding: 20px 0;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 24px;
+  background: $primary-color;
+  cursor: pointer;
+  margin: 20px auto 50px;
+
+  &:hover {
+    background: $primary-hover-color;
+  }
+}
+
+.loading {
+  background: rgba($color: $primary-color, $alpha: 0.4) !important;
+  pointer-events: none;
+}

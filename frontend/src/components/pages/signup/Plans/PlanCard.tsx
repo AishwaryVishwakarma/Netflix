@@ -18,6 +18,7 @@ const PlanCard: React.FC<{
 
   const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     sessionStorage.setItem('plan', event.target.value);
+    sessionStorage.setItem('value', value.toString());
   };
 
   return (

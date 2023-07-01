@@ -4,17 +4,10 @@ import PlanCard from '../PlanCard';
 import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
 import Loader from '@/utils/loader/loader';
+import Button from '@/utils/Button/Button';
 
 const Plans = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  React.useEffect((): void => {
-    sessionStorage.setItem('plan', 'premium');
-  }, []);
-
-  const planSubmitHandler = () => {
-    setIsLoading(true);
-
+  const submitHandler = async () => {
     const plan = sessionStorage.getItem('plan');
 
     console.log(plan);
@@ -32,14 +25,7 @@ const Plans = () => {
             <PlanCard key={nanoid()} data={planObject} />
           ))}
         </div>
-        <button
-          role='button'
-          type='button'
-          className={isLoading ? styles.loading : ''}
-          onClick={planSubmitHandler}
-        >
-          {isLoading ? <Loader /> : 'Next'}
-        </button>
+        <Button submitFunction={submitHandler} />
       </div>
     </div>
   );
