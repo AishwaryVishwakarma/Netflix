@@ -35,7 +35,7 @@ const RegistrationPage = () => {
   });
 
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.INTRO
+    SCREEN_STATE.FORM
   );
 
   const onChangeHandler = (

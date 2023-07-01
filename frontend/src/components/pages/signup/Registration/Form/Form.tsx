@@ -4,7 +4,8 @@ import styles from './styles.module.scss';
 import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
-import Button from '@/utils/Button/Button';
+import Button from '@/components/pages/signup/Plans/Button/Button';
+import Loader from '@/utils/loader/loader';
 
 /*
  * Registration Form Screen
@@ -155,7 +156,9 @@ const Form: React.FC<{
               </p>
             )}
           </div>
-          <Button type='submit' />
+          <button className={isLoading ? styles.loading : ''}>
+            {isLoading ? <Loader /> : 'Next'}
+          </button>
         </form>
       </div>
     </div>

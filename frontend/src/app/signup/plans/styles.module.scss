@@ -1,17 +1,3 @@
-$primary-color: #e50914;
-$primary-hover-color: #ff0c18;
-$secondary-color: #8c8c84;
-$color-dark: #333333;
-$max-width-allowed: 340px;
-$input-font-size: 16px;
-$input-left-padding: 5%;
-
-@mixin flexbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .plansWrapper {
   background: #fff;
   height: 100%;

@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
 import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
-import Button from '@/utils/Button/Button';
+import Loader from '@/utils/loader/loader';
 
 /*
  * Plans Screen (Plans Page)
@@ -13,7 +13,7 @@ const Plans: React.FC = () => {
   const submitHandler = async () => {
     const plan = sessionStorage.getItem('plan');
 
-    console.log(plan);
+    window.location.href = '/signup/payment';
   };
 
   return (
@@ -31,6 +31,35 @@ const Plans: React.FC = () => {
         <Button submitFunction={submitHandler} />
       </div>
     </div>
+  );
+};
+
+/*
+* Custom Button to seperate the state from Plans screen (Causing issue with the transitions)
+*/
+
+interface ButtonProps {
+  submitFunction: () => Promise<void>;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+}
+
+const Button: React.FC<ButtonProps> = ({submitFunction, type = 'button'}) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const onClickHandler = () => {
+    setIsLoading(true);
+
+    submitFunction();
+  };
+  return (
+    <button
+      role='button'
+      type={type}
+      className={`${styles.button} ${isLoading && styles.loading}`}
+      onClick={onClickHandler}
+    >
+      {isLoading ? <Loader /> : 'Next'}
+    </button>
   );
 };
 
