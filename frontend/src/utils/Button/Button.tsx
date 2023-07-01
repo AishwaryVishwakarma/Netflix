@@ -3,27 +3,35 @@ import Loader from '../loader/loader';
 import styles from './styles.module.scss';
 
 interface ButtonProps {
-  submitFunction: () => Promise<void>;
+  text?: string;
+  submitFunction?: () => Promise<void>;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({submitFunction}) => {
+const Button: React.FC<ButtonProps> = ({
+  text = 'Next',
+  submitFunction,
+  type = 'button',
+  className,
+}) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const onClickHandler = () => {
     setIsLoading(true);
 
-    submitFunction();
+    submitFunction && submitFunction();
 
     setIsLoading(false);
   };
   return (
     <button
       role='button'
-      type='button'
-      className={`${styles.button} ${isLoading ? styles.loading : ''}`}
+      type={type}
+      className={`${styles.button} ${isLoading && styles.loading} ${className}`}
       onClick={onClickHandler}
     >
-      {isLoading ? <Loader /> : 'Next'}
+      {isLoading ? <Loader /> : text}
     </button>
   );
 };

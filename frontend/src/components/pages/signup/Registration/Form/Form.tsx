@@ -5,6 +5,7 @@ import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
 import Loader from '@/utils/loader/loader';
+import Button from '@/utils/Button/Button';
 
 interface InputTouched {
   email: boolean;
@@ -151,9 +152,7 @@ const Form: React.FC<{
               </p>
             )}
           </div>
-          <button className={isLoading ? styles.loading : ''}>
-            {isLoading ? <Loader /> : 'Next'}
-          </button>
+          <Button type='submit' />
         </form>
       </div>
     </div>

@@ -22,7 +22,7 @@ export const SCREEN_STATE = {
   FORM: 'form',
 };
 
-let localEmail: string;
+let sessionEmail: string;
 
 /*
  * Registration Page
@@ -52,14 +52,15 @@ const RegistrationPage = () => {
 
   // Get the email that was stored in local storage by email screen in SignUp Page
   React.useEffect((): void => {
-    localEmail = sessionStorage.getItem('email') as string;
+    sessionEmail = sessionStorage.getItem('email') as string;
 
-    setFormData((prev): FormData => {
-      return {
-        ...prev,
-        email: localEmail,
-      };
-    });
+    if (sessionEmail)
+      setFormData((prev): FormData => {
+        return {
+          ...prev,
+          email: sessionEmail,
+        };
+      });
   }, []);
 
   return (

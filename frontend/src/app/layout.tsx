@@ -9,11 +9,11 @@ const ubuntu = Ubuntu({
   variable: '--font-ubuntu',
 });
 
-const nunito = Nunito({subsets: ["latin"], variable: "--font-nunito"})
+const nunito = Nunito({subsets: ['latin'], variable: '--font-nunito'});
 
 export const metadata = {
   title: 'Netflix',
-  description: 'Netflix clone app build using MextJs',
+  description: 'Netflix clone app build using NextJs',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
 import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
-import Loader from '@/utils/loader/loader';
 import Button from '@/utils/Button/Button';
 
 const Plans = () => {
