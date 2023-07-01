@@ -5,7 +5,11 @@ import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
 import Button from '@/utils/Button/Button';
 
-const Plans = () => {
+/*
+ * Plans Screen (Plans Page)
+ */
+
+const Plans: React.FC = () => {
   const submitHandler = async () => {
     const plan = sessionStorage.getItem('plan');
 

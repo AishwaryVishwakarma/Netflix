@@ -6,6 +6,10 @@ import React from 'react';
 import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
 
+/*
+ * Login Page
+ */
+
 interface FormData {
   email: string;
   password: string;
@@ -173,9 +177,7 @@ const LoginPage = () => {
                         setIsPasswordVisibile((prev): boolean => !prev);
                       }}
                     >
-                      {isPasswordVisible
-                        ? PASSWORD_STATE[0]
-                        : PASSWORD_STATE[1]}
+                      {PASSWORD_STATE[isPasswordVisible ? 0 : 1]}
                     </p>
                   </div>
                   {passwordInputError && (

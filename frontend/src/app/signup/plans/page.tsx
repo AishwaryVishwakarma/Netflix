@@ -7,6 +7,10 @@ import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
 import Plans from '@/components/pages/signup/Plans/Plans/Plans';
 
+/*
+ * Plans Page (Contains 2 screen)
+ */
+
 export const SCREEN_STATE = {
   INTRO: 'intro',
   PLANS: 'plans',

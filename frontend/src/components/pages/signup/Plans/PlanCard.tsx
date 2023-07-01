@@ -4,6 +4,10 @@ import CheckMarkCircle from '@/utils/icons/CheckMarkCircle';
 import CheckMark from '@/utils/icons/CheckMark';
 import {type PlanData} from '@/DUMMY_DATA/PLANS';
 
+/*
+ * Plans Card (Plans Screen)
+ */
+
 const PlanCard: React.FC<{
   data: PlanData;
 }> = ({data}) => {

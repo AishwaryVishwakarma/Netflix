@@ -4,8 +4,11 @@ import styles from './styles.module.scss';
 import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
-import Loader from '@/utils/loader/loader';
 import Button from '@/utils/Button/Button';
+
+/*
+ * Registration Form Screen
+ */
 
 interface InputTouched {
   email: boolean;

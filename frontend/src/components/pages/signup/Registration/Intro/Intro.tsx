@@ -2,6 +2,10 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/signup/registration/page';
 
+/*
+ * Registration Intro Screen
+ */
+
 const Intro: React.FC<{
   changeFormState: React.Dispatch<React.SetStateAction<string>>;
 }> = ({changeFormState}) => {

@@ -3,6 +3,10 @@ import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/signup/plans/page';
 import CheckMark from '@/utils/icons/CheckMark';
 
+/*
+ * Plans Intro Screen
+ */
+
 const FEATURES = [
   'No commitments, cancel anytime.',
   'Everything on Netflix for one low price.',
