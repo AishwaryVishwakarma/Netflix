@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../schema/userSchema')
 const bcrypt = require('bcrypt')
-const saltSize = 10
+const saltSize = process.env.SALT_SIZE
 
 
 router.post('/login', async(req,res) =>{
@@ -70,7 +70,7 @@ router.post('/signup', async(req,res) =>{
             userCreds.password = hashedPwd
             const newUser = new userModel(userCreds)
             await newUser.save()
-            res.status(201).send(newUser)
+            res.status(201).send(newUser.id)
         }
 
         catch (err){
@@ -98,6 +98,25 @@ router.post('/checkuser', async(req, res) =>{
         return 
     }
 
+})
+
+router.post('/set-subscription', async(req, res) =>{
+    userData = req.body
+    userDetails = {
+        id: userData._id,
+        subscription: userData.subscription
+    }
+
+    const user = await userModel
+        .findOne({ _id: userDetails.id })
+        .exec()
+    
+    user.subscription.type = userDetails.subscription.type
+    user.subscription.value = userDetails.subscription.value
+
+    await user.save()
+
+    res.send(user)
 })
 
 module.exports = router
