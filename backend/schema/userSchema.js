@@ -8,9 +8,24 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true
+    },
+    account_created_on:{
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    subscription:{
+        type:{
+            type: String,
+            required: false
+        },
+        value:{
+            type: String,
+            required: false
+        }
     }
+}) 
 
-})
 
 userModel = mongoose.model('users', userSchema)
 module.exports = userModel
