@@ -1,0 +1,84 @@
+$primary-color: #e50914;
+$primary-hover-color: #ff0c18;
+$max-width-allowed: 340px;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paymentWrapper {
+  background: #fff;
+  height: 100vh;
+  font-family: var(--font-rubik);
+
+  & > div {
+    @include flexbox();
+    align-items: flex-start;
+    height: 100%;
+    padding: 8% 0;
+
+    & > div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
+
+      .stepLogo {
+        height: 60px;
+        width: 60px;
+      }
+
+      h1,
+      h3 {
+        max-width: $max-width-allowed;
+        text-align: center;
+      }
+
+      p {
+        margin-bottom: -10px;
+        font-size: 13px;
+        font-weight: 400;
+      }
+
+      h1 {
+        font-weight: 500;
+      }
+
+      h3 {
+        font-weight: 400;
+      }
+
+      a {
+        width: $max-width-allowed;
+        border-radius: 5px;
+        padding: 20px 0;
+        text-decoration: none;
+        text-align: center;
+        color: #fff;
+        font-size: 24px;
+        background: $primary-color;
+        cursor: pointer;
+
+        &:hover {
+          background: $primary-hover-color;
+        }
+      }
+    }
+  }
+
+  .fadeInFromRight {
+    opacity: 0;
+    transform: translateX(100px);
+    animation: fade-in-from-right 1s forwards;
+
+    @keyframes fade-in-from-right {
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+}

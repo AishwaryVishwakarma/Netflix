@@ -3,20 +3,18 @@
 import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
-import {
-  AiOutlineCloseCircle,
-  AiOutlineRight,
-  AiOutlineLoading3Quarters,
-} from 'react-icons/ai';
-import NetflixLogo from '@/icons/NetflixLogo';
+import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
+import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
-// import {redirect} from 'next/navigation';
+import Loader from '@/utils/loader/loader';
+import axios from 'axios';
+import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 
 /*
  * Sign Up Page
  */
 
-let localEmail: string;
+let sessionEmail: string;
 
 const SignupPage: React.FC = () => {
   const [email, setEmail] = React.useState<string>('');
@@ -45,24 +43,31 @@ const SignupPage: React.FC = () => {
     wasEmailTouched &&
     (!email.includes('@') || !email.includes('.'));
 
-  function emailSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function emailSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setIsLoading(true);
 
     sessionStorage.setItem('email', email);
 
-    // NextJs redirect has some bug so using this to navigate
+    try {
+      const checkUserExist = await axios.post(CHECK_USER_EXIST_URL, {
+        email: email.trim().toLowerCase(),
+      });
 
-    window.location.href = '/signup/registration';
+      // Sending user back to login pack if the user account already exists
+      if (checkUserExist.status) window.location.href = '/';
+    } catch (error: any) {
+      const status = error.response.status;
 
-    // redirect('/');
+      if (status === 404) window.location.href = '/signup/registration';
+    }
   }
 
   React.useEffect((): void => {
-    localEmail = sessionStorage.getItem('email') as string;
+    sessionEmail = sessionStorage.getItem('email') as string;
 
-    if (localEmail) setEmail(localEmail);
+    if (sessionEmail) setEmail(sessionEmail);
   }, []);
 
   return (
@@ -115,7 +120,7 @@ const SignupPage: React.FC = () => {
               </div>
               <button type='submit' className={isLoading ? styles.loading : ''}>
                 {isLoading ? (
-                  <AiOutlineLoading3Quarters />
+                  <Loader />
                 ) : (
                   <>
                     Get Started <AiOutlineRight />

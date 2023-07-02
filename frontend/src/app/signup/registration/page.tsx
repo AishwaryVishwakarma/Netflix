@@ -4,10 +4,9 @@
 import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
-import NetflixLogo from '@/icons/NetflixLogo';
-import Link from 'next/link';
 import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
+import Header from '@/components/pages/signup/Header';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -18,17 +17,12 @@ export interface FormData {
   password: string;
 }
 
-interface InputTouched {
-  email: boolean;
-  password: boolean;
-}
-
 export const SCREEN_STATE = {
   INTRO: 'intro',
   FORM: 'form',
 };
 
-let localEmail: string;
+let sessionEmail: string;
 
 /*
  * Registration Page
@@ -58,23 +52,21 @@ const RegistrationPage = () => {
 
   // Get the email that was stored in local storage by email screen in SignUp Page
   React.useEffect((): void => {
-    localEmail = sessionStorage.getItem('email') as string;
+    sessionEmail = sessionStorage.getItem('email') as string;
 
-    setFormData((prev): FormData => {
-      return {
-        ...prev,
-        email: localEmail,
-      };
-    });
+    if (sessionEmail)
+      setFormData((prev): FormData => {
+        return {
+          ...prev,
+          email: sessionEmail,
+        };
+      });
   }, []);
 
   return (
     <Layout className='full-bleed'>
       <div className={styles.registrationWrapper}>
-        <header>
-          <NetflixLogo height={45} width={167} color='#e50914' />
-          <Link href='/'>Sign In</Link>
-        </header>
+        <Header />
         {/* Intro Screen */}
         {screenState === SCREEN_STATE.INTRO && (
           <Intro changeFormState={setScreenState} />

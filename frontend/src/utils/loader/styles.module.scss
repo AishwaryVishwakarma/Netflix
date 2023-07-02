@@ -1,0 +1,13 @@
+.loader {
+  animation: rotate infinite 1s linear;
+  transform-origin: center;
+
+  @keyframes rotate {
+    50% {
+      transform: rotateZ(180deg);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
+}

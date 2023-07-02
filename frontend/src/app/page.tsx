@@ -3,8 +3,12 @@
 import Layout from '@/components/Layout/Layout';
 import styles from './styles.module.scss';
 import React from 'react';
-import NetflixLogo from '@/icons/NetflixLogo';
+import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
+
+/*
+ * Login Page
+ */
 
 interface FormData {
   email: string;
@@ -95,12 +99,13 @@ const LoginPage = () => {
   React.useEffect((): void => {
     localEmail = sessionStorage.getItem('email') as string;
 
-    setFormData((prev): FormData => {
-      return {
-        ...prev,
-        email: localEmail,
-      };
-    });
+    if (localEmail)
+      setFormData((prev): FormData => {
+        return {
+          ...prev,
+          email: localEmail,
+        };
+      });
   }, []);
 
   const emailInputError =
@@ -172,9 +177,7 @@ const LoginPage = () => {
                         setIsPasswordVisibile((prev): boolean => !prev);
                       }}
                     >
-                      {isPasswordVisible
-                        ? PASSWORD_STATE[0]
-                        : PASSWORD_STATE[1]}
+                      {PASSWORD_STATE[isPasswordVisible ? 0 : 1]}
                     </p>
                   </div>
                   {passwordInputError && (

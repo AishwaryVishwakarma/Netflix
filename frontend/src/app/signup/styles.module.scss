@@ -179,20 +179,6 @@ $button-width: 212px;
         .loading {
           background: rgba($color: $primary-color, $alpha: 0.4);
           pointer-events: none;
-
-          & > svg {
-            animation: rotate infinite 1s linear;
-            transform-origin: center;
-
-            @keyframes rotate {
-              50% {
-                transform: rotateZ(180deg);
-              }
-              100% {
-                transform: rotateZ(360deg);
-              }
-            }
-          }
         }
       }
     }
