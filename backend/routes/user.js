@@ -111,12 +111,20 @@ router.post('/set-subscription', async(req, res) =>{
         .findOne({ _id: userDetails.id })
         .exec()
     
-    user.subscription.type = userDetails.subscription.type
-    user.subscription.value = userDetails.subscription.value
+    if (user != null){
+        user.subscription.type = userDetails.subscription.type
+        user.subscription.value = userDetails.subscription.value
+        await user.save()
+        res.status(200).send({"detail":"Subscription details added successfully"})
+        return 
+    }
+    else{
+        res.status(404).send({"detail":"User Not Found"})
+        return 
+    }
 
-    await user.save()
 
-    res.send(user)
+    
 })
 
 module.exports = router
