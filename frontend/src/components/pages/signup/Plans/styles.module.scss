@@ -1,0 +1,130 @@
+$primary-color: #e50914;
+$color-feature-title: rgb(118, 118, 118);
+$color-feature-description: rgba(0, 0, 0, 0.7);
+$font-feature-title: 13px;
+$font-feature-description: 16px;
+$svg-fill: #999999;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: var(--font-rubik);
+  flex: 1 1 0;
+  width: 0;
+
+  input[type='radio'] {
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+  }
+
+  label {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.5s;
+    border-radius: 18px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+
+    .topContainer {
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      margin: 8px;
+      min-height: 120px;
+      padding: 12px 20px;
+
+      .type {
+        font-size: 24px;
+      }
+
+      .resolution {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .features {
+      color: $color-feature-title;
+      padding: 0 25px;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        padding: 12.5px 0;
+        width: 100%;
+        gap: 15px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+
+        &:last-child {
+          border: none;
+          height: 84px;
+        }
+
+        & > svg {
+          flex-shrink: 0;
+          fill: $svg-fill;
+        }
+
+        .featureInfo {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          & > p {
+            font-size: $font-feature-title;
+          }
+
+          & > h4 {
+            font-size: $font-feature-description;
+            color: $color-feature-description;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .selected {
+      @include flexbox();
+      position: relative;
+      height: 0;
+      font-size: 14px;
+      transition: all 0.5s;
+      font-weight: 500;
+      gap: 5px;
+      color: $color-feature-title;
+      transform: translateY(20px);
+      opacity: 0;
+    }
+  }
+
+  input[type='radio']:checked ~ label .selected {
+    height: max-content;
+    transform: translateY(0);
+    opacity: 1;
+    padding: 12px 0 18px;
+  }
+
+  input[type='radio']:checked ~ label {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px 0px,
+      rgba(0, 0, 0, 0.1) 0px 0px 2px 0px,
+      rgba(128, 128, 128, 0.7) 0px 0px 0px 1px;
+    fill: $primary-color;
+  }
+
+  input[type='radio']:checked ~ label li svg {
+    fill: $primary-color;
+  }
+}

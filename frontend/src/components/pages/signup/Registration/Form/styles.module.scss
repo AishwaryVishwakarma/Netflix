@@ -4,6 +4,7 @@ $secondary-color: #8c8c84;
 $color-dark: #333333;
 $input-font-size: 16px;
 $input-left-padding: 5%;
+$button-height: 68px;
 
 @mixin flexbox {
   display: flex;
@@ -125,18 +126,23 @@ $input-left-padding: 5%;
       }
 
       button {
-        background: $primary-color;
-        color: #fff;
-        outline: none;
-        border: none;
         border-radius: 5px;
         padding: 20px 0;
+        border: none;
+        outline: none;
+        color: #fff;
         font-size: 24px;
+        background: $primary-color;
         cursor: pointer;
 
         &:hover {
           background: $primary-hover-color;
         }
+      }
+
+      .loading {
+        background: rgba($color: $primary-color, $alpha: 0.4) !important;
+        pointer-events: none;
       }
 
       .helpSection {

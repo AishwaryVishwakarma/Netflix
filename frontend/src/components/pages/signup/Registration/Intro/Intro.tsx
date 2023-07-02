@@ -2,6 +2,10 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/signup/registration/page';
 
+/*
+ * Registration Intro Screen
+ */
+
 const Intro: React.FC<{
   changeFormState: React.Dispatch<React.SetStateAction<string>>;
 }> = ({changeFormState}) => {
@@ -11,7 +15,7 @@ const Intro: React.FC<{
         <img
           src='https://assets.nflxext.com/ffe/siteui/acquisition/simplicity/Devices.png'
           alt='stepLogo'
-          className={styles.setupLogo}
+          className={styles.stepLogo}
         />
         <p>
           Step <b>1</b> of <b>3</b>

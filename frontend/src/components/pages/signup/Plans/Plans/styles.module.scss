@@ -8,46 +8,41 @@ $max-width-allowed: 340px;
   justify-content: center;
 }
 
-.introWrapper {
+.plansWrapper {
   @include flexbox();
   align-items: flex-start;
+  justify-content: flex-start;
   height: 100%;
-  padding: 8% 0;
+  width: 100%;
+  padding: 3% 5%;
 
   & > div {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     gap: 20px;
 
     .stepLogo {
-      height: 65px;
-      width: 270px;
-    }
-
-    h1,
-    h3 {
-      max-width: $max-width-allowed;
-      text-align: center;
-    }
-
-    p {
-      margin-top: 20px;
-      margin-bottom: -10px;
-      font-size: 13px;
-      font-weight: 400;
+      height: 70px;
+      width: 70px;
     }
 
     h1 {
       font-weight: 500;
+      margin-top: -12px;
     }
 
-    h3 {
-      font-weight: 400;
+    .cardsContainer {
+      @include flexbox();
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+      height: 450px;
     }
 
     button {
+      margin: 20px auto 50px;
       width: $max-width-allowed;
       border-radius: 5px;
       padding: 20px 0;
@@ -62,6 +57,11 @@ $max-width-allowed: 340px;
         background: $primary-hover-color;
       }
     }
+
+    .loading {
+      background: rgba($color: $primary-color, $alpha: 0.4) !important;
+      pointer-events: none;
+    }
   }
 }
 
@@ -69,6 +69,7 @@ $max-width-allowed: 340px;
   opacity: 0;
   transform: translateX(100px);
   animation: fade-in-from-right 1s forwards;
+  width: 100%;
 
   @keyframes fade-in-from-right {
     100% {
