@@ -23,8 +23,12 @@ const PlansPage: React.FC = () => {
 
   // Setting plan in order to get a default plan checked
   React.useEffect((): void => {
-    sessionStorage.setItem('plan', 'premium');
-    sessionStorage.setItem('value', '649');
+    const subscription = {
+      type: 'premium',
+      value: '649',
+    };
+
+    sessionStorage.setItem('subscription', JSON.stringify(subscription));
   }, []);
 
   return (

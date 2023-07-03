@@ -4,7 +4,6 @@ import styles from './styles.module.scss';
 import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
-import Button from '@/components/pages/signup/Plans/Button/Button';
 import Loader from '@/utils/loader/loader';
 
 /*
@@ -33,6 +32,8 @@ const Form: React.FC<{
   });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const [error, setError] = React.useState<string>('');
 
   const setInputFocus = (event: any): void => {
     const {name}: {name: 'email' | 'password'} = event.target;
@@ -68,6 +69,8 @@ const Form: React.FC<{
   const signupHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setError('');
+
     setIsLoading(true);
 
     const trimmedEmail = email.trim().toLocaleLowerCase();
@@ -78,15 +81,18 @@ const Form: React.FC<{
         password,
       });
 
-      const data: {_id: string} = res.data;
+      const _id: string = res?.data;
 
-      sessionStorage.setItem('userId', data._id);
+      sessionStorage.setItem('userId', _id);
 
       sessionStorage.setItem('email', trimmedEmail);
 
       window.location.href = '/signup/plans';
     } catch (error: any) {
-      console.log(error.response.data);
+      const stateError = error?.response?.data?.detail;
+
+      setError(stateError);
+
       setIsLoading(false);
     }
   };
@@ -160,6 +166,7 @@ const Form: React.FC<{
             {isLoading ? <Loader /> : 'Next'}
           </button>
         </form>
+        {error && <p className={styles.error}>{error}</p>}
       </div>
     </div>
   );

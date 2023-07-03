@@ -4,16 +4,33 @@ import PlanCard from '../PlanCard';
 import {PLANS} from '@/DUMMY_DATA/PLANS';
 import {nanoid} from 'nanoid';
 import Loader from '@/utils/loader/loader';
+import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';
+import axios from 'axios';
 
 /*
  * Plans Screen (Plans Page)
  */
 
 const Plans: React.FC = () => {
-  const submitHandler = async () => {
-    const plan = sessionStorage.getItem('plan');
+  const submitHandler = async (
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    const subscription = JSON.parse(
+      sessionStorage.getItem('subscription') as string
+    );
 
-    window.location.href = '/signup/payment';
+    const _id: string | null = sessionStorage.getItem('userId');
+
+    try {
+      const res = await axios.post(SET_SUBSCRIPTION_URL, {
+        _id,
+        subscription,
+      });
+      window.location.href = '/signup/payment';
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -35,11 +52,13 @@ const Plans: React.FC = () => {
 };
 
 /*
-* Custom Button to seperate the state from Plans screen (Causing issue with the transitions)
-*/
+ * Custom Button to seperate the state from Plans screen (Causing issue with the transitions)
+ */
 
 interface ButtonProps {
-  submitFunction: () => Promise<void>;
+  submitFunction: (
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => Promise<void>;
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
@@ -49,7 +68,7 @@ const Button: React.FC<ButtonProps> = ({submitFunction, type = 'button'}) => {
   const onClickHandler = () => {
     setIsLoading(true);
 
-    submitFunction();
+    submitFunction(setIsLoading);
   };
   return (
     <button

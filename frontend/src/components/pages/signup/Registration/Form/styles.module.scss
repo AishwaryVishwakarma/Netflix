@@ -30,6 +30,10 @@ $button-height: 68px;
       margin-bottom: -10px;
       font-size: 13px;
       font-weight: 400;
+
+      &:last-child {
+        margin-top: 0;
+      }
     }
 
     h1 {
@@ -116,13 +120,6 @@ $button-height: 68px;
             cursor: pointer;
           }
         }
-
-        .error {
-          color: $primary-color;
-          font-size: 12px;
-          margin-top: -10px;
-          margin-left: 2px;
-        }
       }
 
       button {
@@ -169,6 +166,13 @@ $button-height: 68px;
       }
     }
   }
+}
+
+.error {
+  color: $primary-color;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-left: 2px;
 }
 
 .fadeInFromRight {
