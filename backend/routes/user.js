@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../schema/userSchema')
 const bcrypt = require('bcrypt')
+const { default: mongoose } = require('mongoose')
 const saltSize = process.env.SALT_SIZE
 
 
@@ -107,6 +108,11 @@ router.post('/set-subscription', async(req, res) =>{
         subscription: userData.subscription
     }
 
+    if (!mongoose.Types.ObjectId.isValid(userDetails.id)){
+        res.status(400).send({"detail":"ID is invalid"})
+        return 
+    }
+    
     const user = await userModel
         .findOne({ _id: userDetails.id })
         .exec()
