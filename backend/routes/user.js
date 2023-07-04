@@ -2,8 +2,13 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../schema/userSchema')
 const bcrypt = require('bcrypt')
-const { default: mongoose } = require('mongoose')
+const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+
+
+require('dotenv').config();
 const saltSize = process.env.SALT_SIZE
+const privateKey = process.env.PRIVATE_KEY
 
 
 router.post('/login', async(req,res) =>{
@@ -66,12 +71,16 @@ router.post('/signup', async(req,res) =>{
     }
     else{
         try{
-            const salt = await bcrypt.genSalt(saltSize)
+            const salt = await bcrypt.genSalt(parseInt(saltSize))
             const hashedPwd = await bcrypt.hash(userCreds.password, salt)
             userCreds.password = hashedPwd
             const newUser = new userModel(userCreds)
             await newUser.save()
-            res.status(201).send(newUser.id)
+            const jwtToken = jwt.sign({ id: newUser.id }, privateKey)
+            res.status(201).send({
+                "id": newUser.id,
+                "jwtToken": jwtToken
+            })
         }
 
         catch (err){
