@@ -141,9 +141,9 @@ const LoginPage = () => {
                       id='email'
                       value={formData.email}
                       placeholder=' '
-                      onChange={(e) => onChangeHandler(e)}
-                      onFocus={(e) => setInputFocus(e)}
-                      onBlur={(e) => setInputBlur(e)}
+                      onChange={onChangeHandler}
+                      onFocus={setInputFocus}
+                      onBlur={setInputBlur}
                       required
                     />
                     <label htmlFor='email'>Email or Phone Number</label>
@@ -165,9 +165,9 @@ const LoginPage = () => {
                       id='password'
                       value={formData.password}
                       placeholder=' '
-                      onChange={(e) => onChangeHandler(e)}
-                      onFocus={(e) => setInputFocus(e)}
-                      onBlur={(e) => setInputBlur(e)}
+                      onChange={onChangeHandler}
+                      onFocus={setInputFocus}
+                      onBlur={setInputBlur}
                       required
                     />
                     <label htmlFor='password'>Password</label>
@@ -194,7 +194,7 @@ const LoginPage = () => {
                       id='rememberMe'
                       name='rememberMe'
                       checked={formData.rememberMe}
-                      onChange={(e) => onChangeHandler(e)}
+                      onChange={onChangeHandler}
                     />
                     <label htmlFor='rememberMe'>Remember Me</label>
                   </div>

@@ -81,9 +81,11 @@ const Form: React.FC<{
         password,
       });
 
-      const _id: string = res?.data;
+      const {id: userId, jwtToken}: {id: string; jwtToken: string} = res?.data;
 
-      sessionStorage.setItem('userId', _id);
+      localStorage.setItem('authToken', jwtToken);
+
+      sessionStorage.setItem('userId', userId);
 
       sessionStorage.setItem('email', trimmedEmail);
 
@@ -125,9 +127,9 @@ const Form: React.FC<{
                 id='email'
                 value={formData.email}
                 placeholder=' '
-                onChange={(e) => propsOnChange(e)}
-                onFocus={(e) => setInputFocus(e)}
-                onBlur={(e) => setInputBlur(e)}
+                onChange={propsOnChange}
+                onFocus={setInputFocus}
+                onBlur={setInputBlur}
                 required
               />
               <label htmlFor='email'>Email or Phone Number</label>
@@ -149,9 +151,9 @@ const Form: React.FC<{
                 id='password'
                 value={formData.password}
                 placeholder=' '
-                onChange={(e) => propsOnChange(e)}
-                onFocus={(e) => setInputFocus(e)}
-                onBlur={(e) => setInputBlur(e)}
+                onChange={propsOnChange}
+                onFocus={setInputFocus}
+                onBlur={setInputBlur}
                 required
               />
               <label htmlFor='password'>Password</label>

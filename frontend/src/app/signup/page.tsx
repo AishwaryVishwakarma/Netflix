@@ -90,10 +90,7 @@ const SignupPage: React.FC = () => {
               Ready to watch? Enter your email to create or restart your
               membership.
             </p>
-            <form
-              className={styles.emailField}
-              onSubmit={(e) => emailSubmit(e)}
-            >
+            <form className={styles.emailField} onSubmit={emailSubmit}>
               <div
                 className={`${styles.inputContainer} ${
                   isEmailValid && styles.inputValid
@@ -105,7 +102,7 @@ const SignupPage: React.FC = () => {
                   id='email'
                   value={email}
                   placeholder=' '
-                  onChange={(e): void => onChangeHandler(e)}
+                  onChange={onChangeHandler}
                   onFocus={(): void => setIsEmailFocused(true)}
                   onBlur={(): void => setIsEmailLostFocus(true)}
                   required

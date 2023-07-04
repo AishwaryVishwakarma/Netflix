@@ -18,10 +18,10 @@ export const SCREEN_STATE = {
 
 const PlansPage: React.FC = () => {
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.INTRO
+    SCREEN_STATE.PLANS
   );
 
-  // Setting plan in order to get a default plan checked
+  // Setting plan in order to get a default plan
   React.useEffect((): void => {
     const subscription = {
       type: 'premium',

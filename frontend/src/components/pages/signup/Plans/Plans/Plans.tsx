@@ -22,10 +22,11 @@ const Plans: React.FC = () => {
     const _id: string | null = sessionStorage.getItem('userId');
 
     try {
-      const res = await axios.post(SET_SUBSCRIPTION_URL, {
+      await axios.post(SET_SUBSCRIPTION_URL, {
         _id,
         subscription,
       });
+
       window.location.href = '/signup/payment';
     } catch (error) {
       console.log(error);
@@ -45,6 +46,15 @@ const Plans: React.FC = () => {
             <PlanCard key={nanoid()} data={planObject} />
           ))}
         </div>
+        <span>
+          HD (720p), Full HD (1080p), Ultra HD (4K) and HDR availability subject
+          to your internet service and device capabilities. Not all content is
+          available in all resolutions. See our Terms of Use for more details.
+          <br /> <br />
+          Only people who live with you may use your account. Watch on 4
+          different devices at the same time with Premium, 2 with Standard, and
+          1 with Basic and Mobile.
+        </span>
         <Button submitFunction={submitHandler} />
       </div>
     </div>
