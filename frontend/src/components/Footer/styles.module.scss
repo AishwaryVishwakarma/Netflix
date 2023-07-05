@@ -11,10 +11,14 @@ $auth-footer-font-size: 13px;
 
   @media (max-width: 1024px) {
     padding: 80px 8% 40px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 
   @media (max-width: 800px) {
     padding: 30px 20px 40px;
+    position: unset;
   }
 
   .socialMediaIcons {
@@ -33,6 +37,10 @@ $auth-footer-font-size: 13px;
     column-gap: 15px;
     font-size: 16px;
 
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
     @media (max-width: 800px) {
       grid-template-columns: 1fr 1fr;
     }
@@ -42,7 +50,7 @@ $auth-footer-font-size: 13px;
       cursor: pointer;
       width: max-content;
 
-      @media (max-width: 800px) {
+      @media (max-width: 1024px) {
         margin: 20px 0 0;
       }
 
