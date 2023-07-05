@@ -2,9 +2,58 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
 
-const Footer: React.FC = () => {
+/*
+ * Footer
+ */
+
+const Footer: React.FC<{type: 'auth' | 'home'}> = ({type}) => {
   return (
-    <footer className={`${styles.footerWrapper} defaultBg`}>
+    <footer
+      className={`${styles.footerWrapper} ${type === 'home' && 'defaultBg'} ${
+        type === 'auth' && 'transparentBg'
+      }`}
+    >
+      {type === 'home' && <HomeFooter />}
+      {type === 'auth' && <AuthFooter />}
+    </footer>
+  );
+};
+
+/*
+ * Auth Pages Footer
+ */
+
+const AuthFooter = () => {
+  return (
+    <>
+      <p className={styles.contact}>Questions? Call 000-800-919-1694</p>
+      <div className={`${styles.footerLinks} ${styles.smallFont}`}>
+        <div>
+          <p>FAQ</p>
+          <p>Cookie Preferences</p>
+        </div>
+        <div>
+          <p>Help Center</p>
+          <p>Corporate Information</p>
+        </div>
+        <div>
+          <p>Terms of Use</p>
+        </div>
+        <div>
+          <p>Privacy</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+/*
+ * Home Footer
+ */
+
+const HomeFooter = () => {
+  return (
+    <>
       <div className={styles.socialMediaIcons}>
         <FaFacebookF />
         <FaInstagram />
@@ -34,10 +83,8 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className={styles.cta}>Service Code</div>
-      <div className={styles.trademark}>
-        @ 2023 , Aishwary Vishwakarma Inc.
-      </div>
-    </footer>
+      <div className={styles.trademark}>@ 2023 , Aishwary Vishwakarma Inc.</div>
+    </>
   );
 };
 

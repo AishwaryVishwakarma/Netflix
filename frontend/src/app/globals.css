@@ -26,6 +26,10 @@ body {
   background: var(--background);
 }
 
+.transparentBg {
+  background: rgba(0, 0, 0, 0.75);
+}
+
 .layouted {
   display: grid;
   grid-template-columns: 1fr calc(min(77rem, 100%)) 1fr;

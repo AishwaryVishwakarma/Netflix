@@ -1,8 +1,17 @@
+$auth-footer-text-color: #737373;
+$auth-footer-font-size: 13px;
+
 .footerWrapper {
   padding: 80px 15% 40px;
   display: flex;
   flex-direction: column;
   gap: 25px;
+  color: $auth-footer-text-color;
+  font-family: var(--font-ubuntu);
+
+  @media (max-width: 1024px) {
+    padding: 80px 8% 40px;
+  }
 
   .socialMediaIcons {
     display: flex;
@@ -14,15 +23,16 @@
 
   .footerLinks {
     margin-top: -20px;
-    font-family: var(--font-ubuntu);
     color: rgb(120, 120, 120);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 15px;
     font-size: 16px;
 
     p {
       margin: 20px 0;
       cursor: pointer;
+      width: max-content;
 
       &:hover {
         text-decoration: underline;
@@ -50,4 +60,8 @@
     font-family: var(--font-ubuntu);
     font-size: 14px;
   }
+}
+
+.smallFont {
+  font-size: $auth-footer-font-size !important;
 }

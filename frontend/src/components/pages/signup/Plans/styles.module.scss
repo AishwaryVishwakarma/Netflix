@@ -75,7 +75,6 @@ $svg-fill: #999999;
 
         & > svg {
           flex-shrink: 0;
-          fill: $svg-fill;
         }
 
         .featureInfo {
@@ -124,7 +123,7 @@ $svg-fill: #999999;
     fill: $primary-color;
   }
 
-  input[type='radio']:checked ~ label li svg {
-    fill: $primary-color;
+  input[type='radio']:not(:checked) ~ label li svg {
+    fill: $svg-fill;
   }
 }

@@ -18,7 +18,7 @@ export const SCREEN_STATE = {
 
 const PlansPage: React.FC = () => {
   const [screenState, setScreenState] = React.useState<string>(
-    SCREEN_STATE.PLANS
+    SCREEN_STATE.INTRO
   );
 
   // Setting plan in order to get a default plan
