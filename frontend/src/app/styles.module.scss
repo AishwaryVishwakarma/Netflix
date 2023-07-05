@@ -2,6 +2,10 @@ $primary-color: #e50914;
 $secondary-color: #8c8c84;
 $orange: #e87c03;
 $input-font-size: 16px;
+$input-font-size-mobile: 14px;
+$mobile-padding: 10px;
+$input-padding-left: 8%;
+$input-padding-left-mobile: 6%;
 
 @mixin flexbox {
   display: flex;
@@ -21,6 +25,10 @@ $input-font-size: 16px;
   font-family: var(--font-rubik);
   padding-bottom: 100px;
 
+  @media (max-width: 800px) {
+    padding-bottom: 40px;
+  }
+
   .background {
     @include full-space();
     position: fixed;
@@ -37,6 +45,16 @@ $input-font-size: 16px;
     flex-direction: column;
     gap: 50px;
 
+    @media (max-width: 800px) {
+      gap: 25px;
+    }
+
+    & > svg {
+      @media (max-width: 800px) {
+        margin: 20px 0 0 $mobile-padding;
+      }
+    }
+
     .flexbox {
       height: 100%;
       @include flexbox();
@@ -50,6 +68,12 @@ $input-font-size: 16px;
         display: flex;
         flex-direction: column;
         gap: 40px;
+
+        @media (max-width: 800px) {
+          padding: $mobile-padding;
+          width: 100%;
+          gap: 20px;
+        }
 
         & h1 {
           font-size: 32px;
@@ -68,9 +92,19 @@ $input-font-size: 16px;
             gap: 20px;
             width: 350px;
 
+            @media (max-width: 800px) {
+              width: 100%;
+              max-width: 350px;
+            }
+
             .inputContainer {
               width: 100%;
               position: relative;
+              font-size: $input-font-size;
+
+              @media (max-width: 800px) {
+                font-size: $input-font-size-mobile;
+              }
 
               & > label {
                 color: $secondary-color;
@@ -79,9 +113,12 @@ $input-font-size: 16px;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 width: 100%;
-                padding-left: 8%;
-                font-size: $input-font-size;
+                padding-left: $input-padding-left;
                 transition: all 0.5s;
+
+                @media (max-width: 800px) {
+                  padding-left: $input-padding-left-mobile;
+                }
               }
 
               & > input {
@@ -92,10 +129,13 @@ $input-font-size: 16px;
                 background: #333333;
                 border: none;
                 outline: none;
-                padding-left: 8%;
+                padding-left: $input-padding-left;
                 padding-top: 20px;
-                font-size: $input-font-size;
                 letter-spacing: 0.5px;
+
+                @media (max-width: 800px) {
+                  padding-left: $input-padding-left-mobile;
+                }
 
                 &[data-input-error='true'] {
                   box-shadow: 0 2px 0 0 $orange;
@@ -131,6 +171,10 @@ $input-font-size: 16px;
               font-size: 14px;
               margin-top: -10px;
               margin-left: 2px;
+
+              @media (max-width: 800px) {
+                font-size: 13px;
+              }
             }
           }
 
@@ -186,4 +230,10 @@ $input-font-size: 16px;
       }
     }
   }
+}
+
+.footerDivider {
+  height: 1px;
+  width: 100%;
+  background: rgba(229, 229, 229, 0.3);
 }

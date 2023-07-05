@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import React from 'react';
 import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 /*
  * Login Page
@@ -25,7 +26,11 @@ const PASSWORD_STATE = ['Hide', 'Show'];
 
 let localEmail: string;
 
-const LoginPage = () => {
+// Main function 👇
+
+const LoginPage: React.FC = () => {
+  const isMobile = useMediaQuery('(max-width: 800px)');
+
   const [isPasswordVisible, setIsPasswordVisibile] =
     React.useState<boolean>(false);
 
@@ -119,7 +124,7 @@ const LoginPage = () => {
     isInputLostFocus.password;
 
   return (
-    <Layout className='full-bleed' footerType='auth'>
+    <Layout className={`full-bleed ${isMobile && 'darkBg'}`} footerType='auth'>
       <section className={styles.loginWrapper}>
         <img
           src='https://assets.nflxext.com/ffe/siteui/vlv3/d282a426-b01a-424c-9b83-2c2445e4b61a/f7eb3bc2-2867-4c7e-94f8-e62ec11175cd/IN-en-20230626-popsignuptwoweeks-perspective_alpha_website_large.jpg'
@@ -127,7 +132,11 @@ const LoginPage = () => {
           className={styles.background}
         />
         <div className={styles.heroSection}>
-          <NetflixLogo height={45} width={167} color='#e50914' />
+          <NetflixLogo
+            height={isMobile ? 20 : 45}
+            width={isMobile ? 75 : 167}
+            color='#e50914'
+          />
           <div className={styles.flexbox}>
             <div className={styles.formConatiner}>
               <h1>Sign In</h1>
@@ -208,6 +217,7 @@ const LoginPage = () => {
           </div>
         </div>
       </section>
+      {isMobile && <div className={styles.footerDivider}/>}
     </Layout>
   );
 };

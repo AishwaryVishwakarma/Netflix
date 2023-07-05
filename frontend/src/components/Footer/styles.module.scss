@@ -13,6 +13,10 @@ $auth-footer-font-size: 13px;
     padding: 80px 8% 40px;
   }
 
+  @media (max-width: 800px) {
+    padding: 30px 20px 40px;
+  }
+
   .socialMediaIcons {
     display: flex;
     color: white;
@@ -29,10 +33,18 @@ $auth-footer-font-size: 13px;
     column-gap: 15px;
     font-size: 16px;
 
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
     p {
       margin: 20px 0;
       cursor: pointer;
       width: max-content;
+
+      @media (max-width: 800px) {
+        margin: 20px 0 0;
+      }
 
       &:hover {
         text-decoration: underline;
