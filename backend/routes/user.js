@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const userModel = require('../schema/userSchema')
+const userMiddleware = require('../middleware/userMiddleware')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
 
 
-require('dotenv').config();
+dotenv.config()
 const saltSize = process.env.SALT_SIZE
-const privateKey = process.env.PRIVATE_KEY
 
 
 router.post('/login', async(req,res) =>{
@@ -32,12 +32,22 @@ router.post('/login', async(req,res) =>{
         .findOne({email: userCreds.email})
         .exec()
     
-    if (user && await bcrypt.compare(userCreds.password, user.password)){
-        res.send(user).status(200)
-
+    if (user){
+        if (bcrypt.compare(userCreds.password, user.password)){
+            const jwtToken = userMiddleware.generateJWT({id: user.id})
+            res.status(200).send({
+                "user": user, 
+                "jwtToken": jwtToken
+            })
+            
+            return 
+        }
+        else{
+            res.status(401).send({"detail":"Incorrect Password"})
+        }
     }
     else{
-        res.status(401).send({"detail":"user dosen't exists or password is incorrect"})
+        res.status(401).send({"detail":"Invalid User"})
 
     }
 
@@ -68,6 +78,7 @@ router.post('/signup', async(req,res) =>{
     if (found != null){
         res.status(409).send({"detail":"User Already Exists"}) // status code for conflict 
         return 
+        
     }
     else{
         try{
@@ -76,7 +87,7 @@ router.post('/signup', async(req,res) =>{
             userCreds.password = hashedPwd
             const newUser = new userModel(userCreds)
             await newUser.save()
-            const jwtToken = jwt.sign({ id: newUser.id }, privateKey)
+            const jwtToken = userMiddleware.generateJWT({id: newUser.id})
             res.status(201).send({
                 "id": newUser.id,
                 "jwtToken": jwtToken
@@ -84,10 +95,11 @@ router.post('/signup', async(req,res) =>{
         }
 
         catch (err){
-            res.send(err) // error cases to be discussed
+            res.send(err.message) // error cases to be discussed
         }
     }
 })
+
 
 router.post('/checkuser', async(req, res) =>{
     userData = req.body
@@ -100,7 +112,7 @@ router.post('/checkuser', async(req, res) =>{
         .exec()
     
     if (found != null){
-        res.status(200).send({"detail":"User Already Exists"}) // status code for conflict 
+        res.status(200).send({"detail":"User Exists"})
         return 
     }
     else{
@@ -110,15 +122,32 @@ router.post('/checkuser', async(req, res) =>{
 
 })
 
+
 router.post('/set-subscription', async(req, res) =>{
-    userData = req.body
+    const jwtToken = req.header('Authorization').split(' ')[1]
+    const subData = req.body
     userDetails = {
-        id: userData._id,
-        subscription: userData.subscription
+        subscription: subData.subscription,
+        id: ''
     }
 
+    if (!jwtToken || jwtToken===''){
+        res.status(401).send({"detail":"Unauthorized access, please login again"})
+        return 
+    }
+
+
+    try{
+        userDetails.id = userMiddleware.verifyJWT(jwtToken)
+    }
+    catch(err){
+        res.status(401).send({"detail": err.message})
+        return
+    }
+
+
     if (!mongoose.Types.ObjectId.isValid(userDetails.id)){
-        res.status(400).send({"detail":"ID is invalid"})
+        res.status(400).send({"detail":"Invalid ID"})
         return 
     }
     
@@ -137,8 +166,6 @@ router.post('/set-subscription', async(req, res) =>{
         res.status(404).send({"detail":"User Not Found"})
         return 
     }
-
-
     
 })
 
