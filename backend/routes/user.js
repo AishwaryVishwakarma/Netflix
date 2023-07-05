@@ -169,4 +169,23 @@ router.post('/set-subscription', async(req, res) =>{
     
 })
 
+router.get('/validate-token', async(req, res) => {
+    const jwtToken = req.header('Authorization').split(' ')[1]
+
+    if (!jwtToken || jwtToken===''){
+        res.status(401).send({ "detail":"Unauthorized access, please login again" })
+        return 
+    }
+
+    try{
+        userId = userMiddleware.verifyJWT(jwtToken)
+    }
+    catch(err){
+        res.status(401).send({ "detail": err.message })
+        return
+    }
+
+    res.status(200).send({ "detail": "Authorized" })
+})
+
 module.exports = router
