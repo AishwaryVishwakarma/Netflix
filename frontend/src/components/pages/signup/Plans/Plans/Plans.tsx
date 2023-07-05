@@ -19,15 +19,30 @@ const Plans: React.FC = () => {
       sessionStorage.getItem('subscription') as string
     );
 
-    const _id: string | null = sessionStorage.getItem('userId');
+    const authToken: string | null = localStorage.getItem('auth-token');
+
+    if (!authToken) {
+      window.location.href = '/signup/registration';
+      return;
+    }
 
     try {
-      await axios.post(SET_SUBSCRIPTION_URL, {
-        _id,
-        subscription,
-      });
+      const res = await axios.post(
+        SET_SUBSCRIPTION_URL,
+        {
+          subscription,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
-      window.location.href = '/signup/payment';
+      if (res.status === 200) {
+        sessionStorage.removeItem('subscription');
+        window.location.href = '/signup/payment';
+      }
     } catch (error) {
       console.log(error);
       setIsLoading(false);

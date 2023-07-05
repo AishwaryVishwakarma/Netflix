@@ -17,10 +17,17 @@ const PaymentPage: React.FC = () => {
     sessionStorage.removeItem('userId');
   };
 
+  const authToken: string | null = localStorage.getItem('auth-token');
+
+  if (!authToken) {
+    window.location.href = '/signup/registration';
+    return;
+  }
+
   return (
     <Layout className='full-bleed'>
       <div className={styles.paymentWrapper}>
-        <Header />
+        <Header hasRegistered />
         <div>
           <div className={styles.fadeInFromRight}>
             <img

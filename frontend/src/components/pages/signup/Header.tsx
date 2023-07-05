@@ -7,11 +7,22 @@ import styles from './styles.module.scss';
  * Registration Header
  */
 
-const Header: React.FC = () => {
+const Header: React.FC<{hasRegistered?: boolean}> = ({
+  hasRegistered = false,
+}) => {
+  const submitHandler = () => {
+    if (hasRegistered) {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
+  };
+
   return (
     <header className={styles.header}>
       <NetflixLogo height={45} width={167} color='#e50914' />
-      <Link href='/'>Sign In</Link>
+      <Link href='/' onClick={submitHandler}>
+        {hasRegistered ? 'Sign Out' : 'Sign In'}
+      </Link>
     </header>
   );
 };

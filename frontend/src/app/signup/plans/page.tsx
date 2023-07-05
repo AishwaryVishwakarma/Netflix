@@ -22,7 +22,7 @@ const PlansPage: React.FC = () => {
   );
 
   // Setting plan in order to get a default plan
-  React.useEffect((): void => {
+  React.useEffect(() : void => {
     const subscription = {
       type: 'premium',
       value: '649',
@@ -31,10 +31,17 @@ const PlansPage: React.FC = () => {
     sessionStorage.setItem('subscription', JSON.stringify(subscription));
   }, []);
 
+  const authToken: string | null = localStorage.getItem('auth-token');
+
+  if (!authToken) {
+    window.location.href = '/signup/registration';
+    return;
+  }
+
   return (
     <Layout className='full-bleed'>
       <div className={styles.plansWrapper}>
-        <Header />
+        <Header hasRegistered />
         {/* Intro Screen */}
         {screenState === SCREEN_STATE.INTRO && (
           <Intro changeFormState={setScreenState} />

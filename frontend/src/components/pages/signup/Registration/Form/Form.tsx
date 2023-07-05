@@ -81,11 +81,9 @@ const Form: React.FC<{
         password,
       });
 
-      const {id: userId, jwtToken}: {id: string; jwtToken: string} = res?.data;
+      const {jwtToken}: {id: string; jwtToken: string} = res?.data;
 
-      localStorage.setItem('authToken', jwtToken);
-
-      sessionStorage.setItem('userId', userId);
+      localStorage.setItem('auth-token', jwtToken);
 
       sessionStorage.setItem('email', trimmedEmail);
 
