@@ -6,12 +6,15 @@ import {nanoid} from 'nanoid';
 import Loader from '@/utils/loader/loader';
 import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';
 import axios from 'axios';
+import {useRouter} from 'next/navigation';
 
 /*
  * Plans Screen (Plans Page)
  */
 
 const Plans: React.FC = () => {
+  const router = useRouter();
+
   const submitHandler = async (
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
@@ -22,7 +25,7 @@ const Plans: React.FC = () => {
     const authToken: string | null = localStorage.getItem('auth-token');
 
     if (!authToken) {
-      window.location.href = '/signup/registration';
+      router.push('/signup/registration');
       return;
     }
 
@@ -41,7 +44,7 @@ const Plans: React.FC = () => {
 
       if (res.status === 200) {
         sessionStorage.removeItem('subscription');
-        window.location.href = '/signup/payment';
+        router.push('/signup/payment');
       }
     } catch (error) {
       console.log(error);

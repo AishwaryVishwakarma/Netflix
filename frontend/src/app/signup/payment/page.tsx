@@ -6,12 +6,15 @@ import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
 /*
  * Payment Page
  */
 
 const PaymentPage: React.FC = () => {
+  const router = useRouter();
+
   const submitHandler = (): void => {
     sessionStorage.removeItem('subscription');
     sessionStorage.removeItem('userId');
@@ -20,7 +23,7 @@ const PaymentPage: React.FC = () => {
   const authToken: string | null = localStorage.getItem('auth-token');
 
   if (!authToken) {
-    window.location.href = '/signup/registration';
+    router.push('/signup/registration');
     return;
   }
 

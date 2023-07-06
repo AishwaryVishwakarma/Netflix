@@ -33,11 +33,6 @@ const PlansPage: React.FC = () => {
 
   const authToken: string | null = localStorage.getItem('auth-token');
 
-  if (!authToken) {
-    window.location.href = '/signup/registration';
-    return;
-  }
-
   return (
     <Layout className='full-bleed'>
       <div className={styles.plansWrapper}>

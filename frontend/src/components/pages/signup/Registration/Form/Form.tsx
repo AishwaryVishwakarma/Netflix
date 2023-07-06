@@ -5,6 +5,7 @@ import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
 import Loader from '@/utils/loader/loader';
+import {useRouter} from 'next/navigation';
 
 /*
  * Registration Form Screen
@@ -19,6 +20,8 @@ const Form: React.FC<{
   formData: FormData;
   propsOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({formData, propsOnChange}) => {
+  const router = useRouter();
+
   const {email, password} = formData;
 
   const [isInputFocused, setIsInputFocused] = React.useState<InputTouched>({
@@ -87,7 +90,7 @@ const Form: React.FC<{
 
       sessionStorage.setItem('email', trimmedEmail);
 
-      window.location.href = '/signup/plans';
+      router.push('/signup/plans');
     } catch (error: any) {
       const stateError = error?.response?.data?.detail;
 

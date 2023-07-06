@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Loader from '@/utils/loader/loader';
 import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
+import {useRouter} from 'next/navigation';
 
 /*
  * Sign Up Page
@@ -17,6 +18,8 @@ import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 let sessionEmail: string;
 
 const SignupPage: React.FC = () => {
+  const router = useRouter();
+
   const [email, setEmail] = React.useState<string>('');
 
   const [isEmailFocused, setIsEmailFocused] = React.useState<boolean>(false);
@@ -56,11 +59,11 @@ const SignupPage: React.FC = () => {
       });
 
       // Sending user back to login pack if the user account already exists
-      if (checkUserExist.status) window.location.href = '/';
+      if (checkUserExist.status) router.push('/');
     } catch (error: any) {
       const status = error.response.status;
 
-      if (status === 404) window.location.href = '/signup/registration';
+      if (status === 404) router.push('/signup/registration');
     }
   }
 
