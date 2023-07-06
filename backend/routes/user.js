@@ -15,7 +15,8 @@ router.post('/login', async(req,res) =>{
     const userData = req.body
     const userCreds = {
         email: userData.email,
-        password: userData.password
+        password: userData.password,
+        remember_me: ''
     }
 
     if (!userCreds.email || userCreds.email===""){
@@ -34,16 +35,19 @@ router.post('/login', async(req,res) =>{
     
     if (user){
         if (bcrypt.compare(userCreds.password, user.password)){
-            const jwtToken = userMiddleware.generateJWT({id: user.id})
+            userCreds.remember_me = Boolean(userCreds.remember_me)
+            console.log(userCreds.remember_me)
+            const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
+            user.last_log_in = Date.now()
+            await user.save()
             res.status(200).send({
                 "user": user, 
                 "jwtToken": jwtToken
             })
-            
             return 
         }
         else{
-            res.status(401).send({"detail":"Incorrect Password"})
+            res.status(401).send({"detail": "Incorrect Password"})
         }
     }
     else{
@@ -111,6 +115,7 @@ router.post('/checkuser', async(req, res) =>{
         .findOne({email: userCreds.email})
         .exec()
     
+
     if (found != null){
         res.status(200).send({"detail":"User Exists"})
         return 
@@ -182,10 +187,20 @@ router.get('/validate-token', async(req, res) => {
     }
     catch(err){
         res.status(401).send({ "detail": err.message })
-        return
+        return 
+    }
+
+    user = await userModel
+            .findOne({ _id: userId })
+            .exec()
+    
+    if (!user){
+        res.status(401).send({ "detail": "User Not Found"})
+        return 
     }
 
     res.status(200).send({ "detail": "Authorized" })
+    
 })
 
 module.exports = router

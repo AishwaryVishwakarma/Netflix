@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
+    last_log_in: {
+        type: Date,
+        required: false
+    },
     subscription:{
         type:{
             type: String,
