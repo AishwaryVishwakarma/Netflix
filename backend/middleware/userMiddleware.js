@@ -6,8 +6,11 @@ dotenv.config()
 const privateKey = process.env.PRIVATE_KEY
 
 
-function generateJWT(id){
-    return jwt.sign({ id: id }, privateKey)
+function generateJWT(id, remember_me){
+    if (remember_me === true){ 
+        return jwt.sign({ id: id }, privateKey)
+    }
+    return jwt.sign({ id: id}, privateKey, {expiresIn: '1d'})
 }
 
 

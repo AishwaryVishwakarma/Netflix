@@ -15,7 +15,8 @@ router.post('/login', async(req,res) =>{
     const userData = req.body
     const userCreds = {
         email: userData.email,
-        password: userData.password
+        password: userData.password,
+        remember_me: ''
     }
 
     if (!userCreds.email || userCreds.email===""){
@@ -32,25 +33,29 @@ router.post('/login', async(req,res) =>{
         .findOne({email: userCreds.email})
         .exec()
     
-    if (user){
-        if (bcrypt.compare(userCreds.password, user.password)){
-            const jwtToken = userMiddleware.generateJWT({id: user.id})
-            res.status(200).send({
-                "user": user, 
-                "jwtToken": jwtToken
-            })
-            
-            return 
-        }
-        else{
-            res.status(401).send({"detail":"Incorrect Password"})
-        }
-    }
-    else{
+    if (!user){
         res.status(401).send({"detail":"Invalid User"})
-
+        return 
     }
 
+    if (! await bcrypt.compare(userCreds.password, user.password)){
+        res.status(401).send({"detail": "Incorrect Password"})
+        return 
+    }
+
+    try{
+        userCreds.remember_me = Boolean(userCreds.remember_me)
+        const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
+        user.last_log_in = Date.now()
+        await user.save()
+        res.status(200).send({
+            "user": user, 
+            "jwtToken": jwtToken
+        })
+    }
+    catch(err){
+        res.status(401).send({"detail": err.message})
+    }
 })
 
 
@@ -76,27 +81,24 @@ router.post('/signup', async(req,res) =>{
         .exec()
     
     if (found != null){
-        res.status(409).send({"detail":"User Already Exists"}) // status code for conflict 
+        res.status(409).send({ "detail":"User Already Exists" }) // status code for conflict 
         return 
-        
     }
-    else{
-        try{
-            const salt = await bcrypt.genSalt(parseInt(saltSize))
-            const hashedPwd = await bcrypt.hash(userCreds.password, salt)
-            userCreds.password = hashedPwd
-            const newUser = new userModel(userCreds)
-            await newUser.save()
-            const jwtToken = userMiddleware.generateJWT({id: newUser.id})
-            res.status(201).send({
-                "id": newUser.id,
-                "jwtToken": jwtToken
-            })
-        }
 
-        catch (err){
-            res.send(err.message) // error cases to be discussed
-        }
+    try{
+        const salt = await bcrypt.genSalt(parseInt(saltSize))
+        const hashedPwd = await bcrypt.hash(userCreds.password, salt)
+        userCreds.password = hashedPwd
+        const newUser = new userModel(userCreds)
+        await newUser.save()
+        const jwtToken = userMiddleware.generateJWT({ id: newUser.id })
+        res.status(201).send({
+            "id": newUser.id,
+            "jwtToken": jwtToken
+        })
+    }
+    catch (err){
+        res.status(401).send(err.message) // error cases to be discussed
     }
 })
 
@@ -111,15 +113,13 @@ router.post('/checkuser', async(req, res) =>{
         .findOne({email: userCreds.email})
         .exec()
     
-    if (found != null){
-        res.status(200).send({"detail":"User Exists"})
-        return 
-    }
-    else{
-        res.status(404).send({"detail":"User not found"})
+
+    if (found === null){
+        res.status(404).send({ "detail":"User not found" })
         return 
     }
 
+    res.status(200).send({ "detail":"User Exists" })
 })
 
 
@@ -132,7 +132,7 @@ router.post('/set-subscription', async(req, res) =>{
     }
 
     if (!jwtToken || jwtToken===''){
-        res.status(401).send({"detail":"Unauthorized access, please login again"})
+        res.status(401).send({ "detail":"Unauthorized access, please login again" })
         return 
     }
 
@@ -141,13 +141,13 @@ router.post('/set-subscription', async(req, res) =>{
         userDetails.id = userMiddleware.verifyJWT(jwtToken)
     }
     catch(err){
-        res.status(401).send({"detail": err.message})
+        res.status(401).send({ "detail": err.message })
         return
     }
 
 
     if (!mongoose.Types.ObjectId.isValid(userDetails.id)){
-        res.status(400).send({"detail":"Invalid ID"})
+        res.status(400).send({ "detail":"Invalid ID" })
         return 
     }
     
@@ -155,16 +155,19 @@ router.post('/set-subscription', async(req, res) =>{
         .findOne({ _id: userDetails.id })
         .exec()
     
-    if (user != null){
+    if (user === null){
+        res.status(404).send({ "detail":"User Not Found" })
+        return 
+        
+    }
+    try{
         user.subscription.type = userDetails.subscription.type
         user.subscription.value = userDetails.subscription.value
         await user.save()
-        res.status(200).send({"detail":"Subscription details added successfully"})
-        return 
+        res.status(200).send({ "detail":"Subscription details added successfully" }) 
     }
-    else{
-        res.status(404).send({"detail":"User Not Found"})
-        return 
+    catch(err){
+        res.status(401).send({ "detail": err.message })
     }
     
 })
@@ -182,10 +185,20 @@ router.get('/validate-token', async(req, res) => {
     }
     catch(err){
         res.status(401).send({ "detail": err.message })
-        return
+        return 
+    }
+
+    user = await userModel
+            .findOne({ _id: userId })
+            .exec()
+    
+    if (!user){
+        res.status(401).send({ "detail": "User Not Found"})
+        return 
     }
 
     res.status(200).send({ "detail": "Authorized" })
+    
 })
 
 module.exports = router
