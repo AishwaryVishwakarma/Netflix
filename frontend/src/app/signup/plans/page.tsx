@@ -6,9 +6,10 @@ import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
 import Plans from '@/components/pages/signup/Plans/Plans/Plans';
+import Protected from '@/components/Protected/Protected';
 
 /*
- * Plans Page (Contains 2 screen)
+ * Plans Page (Contains 2 screen) [Protected]
  */
 
 export const SCREEN_STATE = {
@@ -22,7 +23,7 @@ const PlansPage: React.FC = () => {
   );
 
   // Setting plan in order to get a default plan
-  React.useEffect(() : void => {
+  React.useEffect((): void => {
     const subscription = {
       type: 'premium',
       value: '649',
@@ -30,8 +31,6 @@ const PlansPage: React.FC = () => {
 
     sessionStorage.setItem('subscription', JSON.stringify(subscription));
   }, []);
-
-  const authToken: string | null = localStorage.getItem('auth-token');
 
   return (
     <Layout className='full-bleed'>
@@ -48,4 +47,8 @@ const PlansPage: React.FC = () => {
   );
 };
 
-export default PlansPage;
+const Main: React.FC = () => {
+  return <Protected Page={PlansPage} />;
+};
+
+export default Main;

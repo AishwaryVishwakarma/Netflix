@@ -6,26 +6,17 @@ import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Link from 'next/link';
-import {useRouter} from 'next/navigation';
+import Protected from '@/components/Protected/Protected';
 
 /*
- * Payment Page
+ * Payment Page [Protected]
  */
 
 const PaymentPage: React.FC = () => {
-  const router = useRouter();
-
   const submitHandler = (): void => {
     sessionStorage.removeItem('subscription');
     sessionStorage.removeItem('userId');
   };
-
-  const authToken: string | null = localStorage.getItem('auth-token');
-
-  if (!authToken) {
-    router.push('/signup/registration');
-    return;
-  }
 
   return (
     <Layout className='full-bleed'>
@@ -53,4 +44,8 @@ const PaymentPage: React.FC = () => {
   );
 };
 
-export default PaymentPage;
+const Main: React.FC = () => {
+  return <Protected Page={PaymentPage} />;
+};
+
+export default Main;
