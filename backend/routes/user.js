@@ -33,13 +33,8 @@ router.post('/login', async(req,res) =>{
         .findOne({email: userCreds.email})
         .exec()
     
-    if (!user){
-        res.status(401).send({"detail":"Invalid User"})
-        return 
-    }
-
-    if (! await bcrypt.compare(userCreds.password, user.password)){
-        res.status(401).send({"detail": "Incorrect Password"})
+    if (!user || (! await bcrypt.compare(userCreds.password, user.password))){
+        res.status(401).send({"detail":"Invalid Credentials"})
         return 
     }
 
@@ -48,6 +43,7 @@ router.post('/login', async(req,res) =>{
         const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
         user.last_log_in = Date.now()
         await user.save()
+        user.password = undefined
         res.status(200).send({
             "user": user, 
             "jwtToken": jwtToken
