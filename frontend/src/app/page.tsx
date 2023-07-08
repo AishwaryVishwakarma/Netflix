@@ -5,7 +5,11 @@ import styles from './styles.module.scss';
 import React from 'react';
 import NetflixLogo from '@/utils/icons/NetflixLogo';
 import Link from 'next/link';
+import {login as LOGIN_URL} from '@/END_POINTS';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import axios from 'axios';
+import {useRouter} from 'next/navigation';
+import Loader from '@/utils/loader/loader';
 
 /*
  * Login Page
@@ -29,6 +33,8 @@ let localEmail: string;
 // Main function 👇
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
+
   const isMobile = useMediaQuery('(max-width: 800px)');
 
   const [isPasswordVisible, setIsPasswordVisibile] =
@@ -49,6 +55,9 @@ const LoginPage: React.FC = () => {
     email: false,
     password: false,
   });
+  const [loginError, setLoginError] = React.useState<string>('');
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const onChangeHandler = (
     event:
@@ -123,6 +132,38 @@ const LoginPage: React.FC = () => {
     isInputFocused.password &&
     isInputLostFocus.password;
 
+  // Sign In Handler
+
+  const loginHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    setLoginError('');
+
+    setIsLoading(true);
+
+    try {
+      const res = await axios.post(LOGIN_URL, {
+        email: formData.email.trim(),
+        password: formData.password,
+        remember_me: formData.rememberMe.toString(),
+      });
+
+      if (res.status === 200) {
+        const authToken: string = res.data?.jwtToken;
+        localStorage.setItem('auth-token', authToken);
+
+        router.push('/profile');
+      } else {
+        setIsLoading(false);
+      }
+    } catch (err: any) {
+      const message = err?.response?.data?.detail;
+      setLoginError(message);
+
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Layout className={`full-bleed ${isMobile && 'darkBg'}`} footerType='auth'>
       <section className={styles.loginWrapper}>
@@ -144,7 +185,7 @@ const LoginPage: React.FC = () => {
           <div className={styles.flexbox}>
             <div className={styles.formConatiner}>
               <h1>Sign In</h1>
-              <form action=''>
+              <form onSubmit={loginHandler}>
                 <div className={styles.inputs}>
                   <div className={styles.inputContainer}>
                     <input
@@ -199,7 +240,10 @@ const LoginPage: React.FC = () => {
                     </p>
                   )}
                 </div>
-                <button type='submit'>Sign In</button>
+                <button className={isLoading ? styles.loading : ''}>
+                  {isLoading ? <Loader /> : 'Sign In'}
+                </button>
+                {loginError && <p className={styles.error}>{loginError}</p>}
                 <div className={styles.helpSection}>
                   <div className={styles.rememberMe}>
                     <input

@@ -170,17 +170,6 @@ $input-padding-left-mobile: 6%;
                 cursor: pointer;
               }
             }
-
-            .error {
-              color: $orange;
-              font-size: 14px;
-              margin-top: -10px;
-              margin-left: 2px;
-
-              @media (max-width: 800px) {
-                font-size: 13px;
-              }
-            }
           }
 
           button {
@@ -194,10 +183,15 @@ $input-padding-left-mobile: 6%;
             cursor: pointer;
           }
 
+          .loading {
+            background: rgba($color: $primary-color, $alpha: 0.4) !important;
+            pointer-events: none;
+          }
+
           .helpSection {
             @include flexbox();
             justify-content: space-between;
-            margin-top: -20px;
+            margin-top: -10px;
 
             .rememberMe {
               @include flexbox();
@@ -234,6 +228,21 @@ $input-padding-left-mobile: 6%;
         }
       }
     }
+  }
+}
+
+.error {
+  color: $orange;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-left: 2px;
+
+  &:last-child {
+    margin-top: -20px !important;
+  }
+
+  @media (max-width: 800px) {
+    font-size: 13px;
   }
 }
 
