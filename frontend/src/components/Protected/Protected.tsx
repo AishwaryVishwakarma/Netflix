@@ -2,6 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import {validateToken as VALIDATE_TOKEN_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
+import Loader from '@/utils/loader/loader';
+import styles from './styles.module.scss';
 
 let authToken: string | null;
 
@@ -44,7 +46,13 @@ const Protected = ({
       });
   }, [router, redirectTo]);
 
-  return isAuthorized ? <Page /> : null;
+  return isAuthorized ? (
+    <Page />
+  ) : (
+    <div className={styles.loaderWrapper}>
+      <Loader />
+    </div>
+  );
 };
 
 export default Protected;

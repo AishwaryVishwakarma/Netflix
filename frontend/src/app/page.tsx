@@ -55,6 +55,7 @@ const LoginPage: React.FC = () => {
     email: false,
     password: false,
   });
+
   const [loginError, setLoginError] = React.useState<string>('');
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
