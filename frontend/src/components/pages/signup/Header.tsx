@@ -21,7 +21,7 @@ const Header: React.FC<{hasRegistered?: boolean}> = ({
     <header className={styles.header}>
       <NetflixLogo height={45} width={167} color='#e50914' />
       <Link href='/' onClick={submitHandler}>
-        {hasRegistered ? 'Sign Out' : 'Sign In'}
+        {hasRegistered ? 'Cancel' : 'Sign In'}
       </Link>
     </header>
   );

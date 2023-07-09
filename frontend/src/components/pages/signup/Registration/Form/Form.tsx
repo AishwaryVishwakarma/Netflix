@@ -84,7 +84,7 @@ const Form: React.FC<{
         password,
       });
 
-      const {jwtToken}: {id: string; jwtToken: string} = res?.data;
+      const {jwtToken}: {jwtToken: string} = res?.data;
 
       localStorage.setItem('auth-token', jwtToken);
 
@@ -156,6 +156,7 @@ const Form: React.FC<{
                 onFocus={setInputFocus}
                 onBlur={setInputBlur}
                 required
+                min={4}
               />
               <label htmlFor='password'>Password</label>
             </div>

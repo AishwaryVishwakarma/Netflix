@@ -237,10 +237,6 @@ $input-padding-left-mobile: 6%;
   margin-top: -10px;
   margin-left: 2px;
 
-  &:last-child {
-    margin-top: -20px !important;
-  }
-
   @media (max-width: 800px) {
     font-size: 13px;
   }
