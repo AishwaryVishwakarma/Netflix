@@ -5,12 +5,11 @@ const userMiddleware = require('../middleware/userMiddleware')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-
+const userProfileModel = require('../schema/userProfilesSchema')
 
 dotenv.config()
 
 const saltSize = process.env.SALT_SIZE
-
 
 router.post('/login', async(req,res) =>{
     const userData = req.body
@@ -44,14 +43,16 @@ router.post('/login', async(req,res) =>{
         const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
         user.last_log_in = Date.now()
         await user.save()
+        const userprofile = await userProfileModel.findOne({ user_id: user.id })
         user.password = undefined
         res.status(200).send({
             "user": user, 
-            "jwtToken": jwtToken
+            "jwtToken": jwtToken,
+            "userprofile": userprofile
         })
     }
     catch(err){
-        res.status(401).send({"detail": err.message})
+        res.status(401).send({ "detail": err.message })
     }
 })
 
@@ -88,10 +89,15 @@ router.post('/signup', async(req,res) =>{
         userCreds.password = hashedPwd
         const newUser = new userModel(userCreds)
         await newUser.save()
+        const userprofile = new userProfileModel({
+            user_id: newUser._id
+        })
+        await userprofile.save()
         const jwtToken = userMiddleware.generateJWT({ id: newUser.id })
         res.status(201).send({
             "id": newUser.id,
-            "jwtToken": jwtToken
+            "jwtToken": jwtToken,
+            "userprofile": userprofile
         })
     }
     catch (err){
