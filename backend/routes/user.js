@@ -8,6 +8,9 @@ const dotenv = require('dotenv')
 
 
 dotenv.config()
+
+/*global process*/
+
 const saltSize = process.env.SALT_SIZE
 
 
@@ -100,8 +103,8 @@ router.post('/signup', async(req,res) =>{
 
 
 router.post('/checkuser', async(req, res) =>{
-    userData = req.body
-    userCreds = {
+    const userData = req.body
+    const userCreds = {
         email : userData.email
     }
 
@@ -122,7 +125,7 @@ router.post('/checkuser', async(req, res) =>{
 router.post('/set-subscription', async(req, res) =>{
     const jwtToken = req.header('Authorization').split(' ')[1]
     const subData = req.body
-    userDetails = {
+    const userDetails = {
         subscription: subData.subscription,
         id: ''
     }
@@ -177,14 +180,14 @@ router.get('/validate-token', async(req, res) => {
     }
 
     try{
-        userId = userMiddleware.verifyJWT(jwtToken)
+        var userId = userMiddleware.verifyJWT(jwtToken)
     }
     catch(err){
         res.status(401).send({ "detail": err.message })
         return 
     }
-
-    user = await userModel
+    
+    const user = await userModel
             .findOne({ _id: userId })
             .exec()
     

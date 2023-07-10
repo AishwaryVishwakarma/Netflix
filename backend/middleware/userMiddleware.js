@@ -3,6 +3,9 @@ const dotenv = require('dotenv')
 
 
 dotenv.config()
+
+/*global process*/
+
 const privateKey = process.env.PRIVATE_KEY
 
 
