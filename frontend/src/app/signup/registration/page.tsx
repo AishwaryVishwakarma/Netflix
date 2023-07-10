@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -29,6 +30,8 @@ let sessionEmail: string;
  */
 
 const RegistrationPage = () => {
+  const isMobile = useMediaQuery('(max-width: 800px)');
+
   const [formData, setFormData] = React.useState<FormData>({
     email: '',
     password: '',
@@ -66,7 +69,7 @@ const RegistrationPage = () => {
   return (
     <Layout className='full-bleed'>
       <div className={styles.registrationWrapper}>
-        <Header />
+        <Header isMobile={isMobile} />
         {/* Intro Screen */}
         {screenState === SCREEN_STATE.INTRO && (
           <Intro changeFormState={setScreenState} />

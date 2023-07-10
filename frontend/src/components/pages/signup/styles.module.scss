@@ -7,11 +7,19 @@ $color-dark: #333333;
   padding: 22px 3%;
   box-shadow: 0 1px 0 0 rgb($color-dark, 0.1);
 
+  @media (max-width: 800px) {
+    padding: 15px 3%;
+  }
+
   & > a {
     text-decoration: none;
     font-size: 19px;
     color: $color-dark;
     font-weight: 600;
+
+    @media (max-width: 800px) {
+      font-size: 14px;
+    }
 
     &:hover {
       text-decoration: underline;

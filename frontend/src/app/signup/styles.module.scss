@@ -6,6 +6,7 @@ $input-field-height: 55px;
 $input-field-mobile-height: 50px;
 $input-left-padding: 6%;
 $button-width: 212px;
+$button-mobile-width: 166px;
 $mobile-max-width: 85%;
 
 @mixin flexbox {
@@ -142,6 +143,11 @@ $mobile-max-width: 85%;
             justify-content: flex-start;
             margin-top: 10px;
             position: absolute;
+
+            @media (max-width: 800px) {
+              font-size: 13px;
+              margin-top: 5px;
+            }
           }
 
           & > label {
@@ -170,6 +176,7 @@ $mobile-max-width: 85%;
 
             @media (max-width: 800px) {
               height: $input-field-mobile-height;
+              padding: 20px $input-left-padding 0;
             }
 
             &:-webkit-autofill {
@@ -205,6 +212,12 @@ $mobile-max-width: 85%;
           border-color: $primary-color;
         }
 
+        .inputNotValid ~ button {
+          @media (max-width: 800px) {
+            margin-top: 20px;
+          }
+        }
+
         & > button {
           @include flexbox();
           gap: 5px;
@@ -225,8 +238,8 @@ $mobile-max-width: 85%;
           @media (max-width: 800px) {
             font-size: 18px;
             padding: 13px 20px;
-            width: max-content;
-            height: max-content;
+            width: $button-mobile-width;
+            height: $input-field-mobile-height;
           }
 
           &:hover {

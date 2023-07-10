@@ -2,4 +2,8 @@
   background: #fff;
   height: 100vh;
   font-family: var(--font-rubik);
+
+  @media (max-width: 800px) {
+    height: 100%;
+  }
 }

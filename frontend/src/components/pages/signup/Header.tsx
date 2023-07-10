@@ -7,7 +7,8 @@ import styles from './styles.module.scss';
  * Registration Header
  */
 
-const Header: React.FC<{hasRegistered?: boolean}> = ({
+const Header: React.FC<{isMobile: boolean; hasRegistered?: boolean}> = ({
+  isMobile,
   hasRegistered = false,
 }) => {
   const submitHandler = () => {
@@ -19,7 +20,11 @@ const Header: React.FC<{hasRegistered?: boolean}> = ({
 
   return (
     <header className={styles.header}>
-      <NetflixLogo height={45} width={167} color='#e50914' />
+      <NetflixLogo
+        height={isMobile ? 20 : 45}
+        width={isMobile ? 75 : 167}
+        color='#e50914'
+      />
       <Link href='/' onClick={submitHandler}>
         {hasRegistered ? 'Cancel' : 'Sign In'}
       </Link>
