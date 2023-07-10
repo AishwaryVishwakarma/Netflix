@@ -10,6 +10,7 @@ import Loader from '@/utils/loader/loader';
 import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 /*
  * Sign Up Page
@@ -19,6 +20,8 @@ let sessionEmail: string;
 
 const SignupPage: React.FC = () => {
   const router = useRouter();
+
+  const isMobile = useMediaQuery('(max-width: 800px)');
 
   const [email, setEmail] = React.useState<string>('');
 
@@ -46,22 +49,26 @@ const SignupPage: React.FC = () => {
     wasEmailTouched &&
     (!email.includes('@') || !email.includes('.'));
 
+  // Form Submit Handler
+
   async function emailSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setIsLoading(true);
 
-    sessionStorage.setItem('email', email);
+    const trimmedEmail = email.trim().toLocaleLowerCase();
+
+    sessionStorage.setItem('email', trimmedEmail);
 
     try {
       const checkUserExist = await axios.post(CHECK_USER_EXIST_URL, {
-        email: email.trim().toLowerCase(),
+        email: trimmedEmail,
       });
 
       // Sending user back to login pack if the user account already exists
       if (checkUserExist.status) router.push('/');
     } catch (error: any) {
-      const status = error.response.status;
+      const status = error.response?.status;
 
       if (status === 404) router.push('/signup/registration');
     }
@@ -83,7 +90,11 @@ const SignupPage: React.FC = () => {
         />
         <div className={styles.heroSection}>
           <div className={styles.header}>
-            <NetflixLogo height={40} width={148} color='#e50914' />
+            <NetflixLogo
+              height={40}
+              width={isMobile ? 89 : 148}
+              color='#e50914'
+            />
             <Link href='/'>Sign In</Link>
           </div>
           <div className={styles.emailWrapper}>
@@ -110,7 +121,7 @@ const SignupPage: React.FC = () => {
                   onBlur={(): void => setIsEmailLostFocus(true)}
                   required
                 />
-                <label htmlFor='email'>Email or Phone Number</label>
+                <label htmlFor='email'>Email address</label>
                 {emailError && (
                   <p className={styles.errorField}>
                     <AiOutlineCloseCircle />
@@ -131,6 +142,7 @@ const SignupPage: React.FC = () => {
           </div>
         </div>
       </section>
+      {isMobile && <div className={styles.footerDivider} />}
     </Layout>
   );
 };

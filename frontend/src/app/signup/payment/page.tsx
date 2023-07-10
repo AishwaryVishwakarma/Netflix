@@ -15,7 +15,6 @@ import Protected from '@/components/Protected/Protected';
 const PaymentPage: React.FC = () => {
   const submitHandler = (): void => {
     sessionStorage.removeItem('subscription');
-    sessionStorage.removeItem('userId');
   };
 
   return (
