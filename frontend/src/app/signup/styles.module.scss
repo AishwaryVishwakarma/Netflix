@@ -29,6 +29,7 @@ $mobile-max-width: 85%;
 
   @media (max-width: 800px) {
     padding-bottom: 0;
+    height: 100vh;
   }
 
   .background {
@@ -248,7 +249,7 @@ $mobile-max-width: 85%;
         }
 
         .loading {
-          background: rgba($color: $primary-color, $alpha: 0.4);
+          background: rgba($color: $primary-color, $alpha: 0.4) !important;
           pointer-events: none;
         }
       }
