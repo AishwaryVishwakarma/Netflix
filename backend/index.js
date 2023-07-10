@@ -11,8 +11,6 @@ app.use(express.json())
 app.use(cors())
 app.use('/', userRoutes)
 
-/*global process*/
-
 
 const uri  = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/?retryWrites=true&w=majority`
 mongoose.connect(

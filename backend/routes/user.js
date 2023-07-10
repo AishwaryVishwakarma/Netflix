@@ -9,8 +9,6 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-/*global process*/
-
 const saltSize = process.env.SALT_SIZE
 
 
