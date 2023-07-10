@@ -22,8 +22,8 @@ const PlanCard: React.FC<{
 
   const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const subscription = {
-      type: event?.target?.value,
-      value: value?.toString(),
+      type: event.target.value,
+      value: value.toString(),
     };
 
     sessionStorage.setItem('subscription', JSON.stringify(subscription));

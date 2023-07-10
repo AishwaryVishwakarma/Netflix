@@ -87,7 +87,7 @@ interface ButtonProps {
   submitFunction: (
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
-  type?: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const Button: React.FC<ButtonProps> = ({submitFunction, type = 'button'}) => {

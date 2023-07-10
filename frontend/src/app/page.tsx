@@ -10,6 +10,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
 import Loader from '@/utils/loader/loader';
+import {type UserModel} from '@/types';
 
 /*
  * Login Page
@@ -144,14 +145,20 @@ const LoginPage: React.FC = () => {
 
     try {
       const res = await axios.post(LOGIN_URL, {
-        email: formData.email.trim(),
+        email: formData.email.trim().toLocaleLowerCase(),
         password: formData.password,
         remember_me: formData.rememberMe.toString(),
       });
 
       if (res.status === 200) {
-        const authToken: string = res.data?.jwtToken;
-        localStorage.setItem('auth-token', authToken);
+        const {user, jwtToken}: {user: UserModel; jwtToken: string} =
+          res.data ?? {};
+
+        localStorage.setItem('auth-token', jwtToken);
+
+        localStorage.setItem('user-data', JSON.stringify(user));
+
+        sessionStorage.clear();
 
         router.push('/profile');
       } else {
@@ -160,7 +167,6 @@ const LoginPage: React.FC = () => {
     } catch (err: any) {
       const message = err?.response?.data?.detail;
       setLoginError(message);
-
       setIsLoading(false);
     }
   };
@@ -224,6 +230,7 @@ const LoginPage: React.FC = () => {
                       onFocus={setInputFocus}
                       onBlur={setInputBlur}
                       required
+                      min={4}
                     />
                     <label htmlFor='password'>Password</label>
                     <p

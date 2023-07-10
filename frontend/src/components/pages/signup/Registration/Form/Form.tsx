@@ -84,7 +84,7 @@ const Form: React.FC<{
         password,
       });
 
-      const {jwtToken}: {id: string; jwtToken: string} = res?.data;
+      const {jwtToken}: {jwtToken: string} = res?.data;
 
       localStorage.setItem('auth-token', jwtToken);
 
@@ -133,11 +133,11 @@ const Form: React.FC<{
                 onBlur={setInputBlur}
                 required
               />
-              <label htmlFor='email'>Email or Phone Number</label>
+              <label htmlFor='email'>Email address</label>
             </div>
             {emailInputError && (
               <p className={styles.error}>
-                Please enter a valid email address or phone number.
+                Please enter a valid email address
               </p>
             )}
             <div className={styles.inputContainer}>
@@ -156,6 +156,7 @@ const Form: React.FC<{
                 onFocus={setInputFocus}
                 onBlur={setInputBlur}
                 required
+                min={4}
               />
               <label htmlFor='password'>Password</label>
             </div>

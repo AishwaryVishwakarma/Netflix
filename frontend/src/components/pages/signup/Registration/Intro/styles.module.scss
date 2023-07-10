@@ -14,12 +14,23 @@ $max-width-allowed: 340px;
   height: 100%;
   padding: 8% 0;
 
+  @media (max-width: 800px) {
+    align-items: center;
+    padding: 120px 0;
+    width: 100%;
+  }
+
   & > div {
     position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 20px;
+
+    @media (max-width: 800px) {
+      align-items: flex-start;
+      max-width: 85%;
+    }
 
     .stepLogo {
       height: 65px;
@@ -30,6 +41,11 @@ $max-width-allowed: 340px;
     h3 {
       max-width: $max-width-allowed;
       text-align: center;
+
+      @media (max-width: 800px) {
+        text-align: left;
+        max-width: 100%;
+      }
     }
 
     p {
@@ -45,6 +61,7 @@ $max-width-allowed: 340px;
 
     h3 {
       font-weight: 400;
+      font-size: 18px;
     }
 
     button {
@@ -58,6 +75,10 @@ $max-width-allowed: 340px;
       background: $primary-color;
       cursor: pointer;
 
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+
       &:hover {
         background: $primary-hover-color;
       }
@@ -69,6 +90,12 @@ $max-width-allowed: 340px;
   opacity: 0;
   transform: translateX(100px);
   animation: fade-in-from-right 1s forwards;
+
+  @media (max-width: 800px) {
+    transform: translateX(0);
+    opacity: 1;
+    animation: none;
+  }
 
   @keyframes fade-in-from-right {
     100% {
