@@ -94,7 +94,7 @@ router.post('/signup', async(req,res) =>{
         })
     }
     catch (err){
-        res.status(401).send(err.message) // error cases to be discussed
+        res.status(401).send({ "detail": err.message }) // error cases to be discussed
     }
 })
 
