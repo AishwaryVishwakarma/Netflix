@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     email:{
         type: String,
-        required: true
+        required: true,
+        // eslint-disable-next-line no-useless-escape
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Email is invalid']
     },
     password:{
         type: String,
@@ -31,5 +33,5 @@ const userSchema = new mongoose.Schema({
 }) 
 
 
-userModel = mongoose.model('users', userSchema)
+const userModel = mongoose.model('users', userSchema)
 module.exports = userModel
