@@ -8,6 +8,7 @@ import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import {clearLocalStorage} from '@/functions';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -31,6 +32,8 @@ let sessionEmail: string;
 
 const RegistrationPage = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');
+
+  clearLocalStorage(['user-data', 'auth-token']);
 
   const [formData, setFormData] = React.useState<FormData>({
     email: '',

@@ -7,13 +7,10 @@ import {type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import Protected from '@/components/Protected/Protected';
 import {userprofile as GET_USER_PROFILE_URL} from '@/END_POINTS';
+import {clearLocalStorage} from '@/functions';
 import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
-
-function clearLocalStorage([...args]: Array<string>): void {
-  args.map((key): void => localStorage.removeItem(key));
-}
 
 const ProfilesPage: React.FC = () => {
   const router = useRouter();

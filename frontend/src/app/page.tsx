@@ -10,7 +10,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
 import Loader from '@/utils/loader/loader';
-import {type UserProfileModel, type UserModel} from '@/types';
+import {type UserModel} from '@/types';
 
 /*
  * Login Page
@@ -151,10 +151,7 @@ const LoginPage: React.FC = () => {
       });
 
       if (res.status === 200) {
-        const {
-          user,
-          jwtToken,
-        }: {user: UserModel; jwtToken: string} =
+        const {user, jwtToken}: {user: UserModel; jwtToken: string} =
           res.data ?? {};
 
         localStorage.setItem('auth-token', jwtToken);
