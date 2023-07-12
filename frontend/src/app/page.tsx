@@ -29,7 +29,7 @@ interface InputTouched {
 
 const PASSWORD_STATE = ['Hide', 'Show'];
 
-let localEmail: string;
+let sessionEmail: string | null;
 
 // Main function 👇
 
@@ -41,10 +41,14 @@ const LoginPage: React.FC = () => {
   const [isPasswordVisible, setIsPasswordVisibile] =
     React.useState<boolean>(false);
 
-  const [formData, setFormData] = React.useState<FormData>({
-    email: '',
-    password: '',
-    rememberMe: true,
+  const [formData, setFormData] = React.useState<FormData>((): FormData => {
+    sessionEmail = sessionStorage.getItem('email');
+
+    return {
+      email: sessionEmail ? sessionEmail : '',
+      password: '',
+      rememberMe: true,
+    };
   });
 
   const [isInputFocused, setIsInputFocused] = React.useState<InputTouched>({
@@ -111,18 +115,6 @@ const LoginPage: React.FC = () => {
       };
     });
   };
-
-  React.useEffect((): void => {
-    localEmail = sessionStorage.getItem('email') as string;
-
-    if (localEmail)
-      setFormData((prev): FormData => {
-        return {
-          ...prev,
-          email: localEmail,
-        };
-      });
-  }, []);
 
   const emailInputError =
     formData.email.length == 0 &&

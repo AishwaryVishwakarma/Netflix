@@ -11,19 +11,26 @@ import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import {clearLocalStorage} from '@/functions';
 
 /*
  * Sign Up Page
  */
 
-let sessionEmail: string;
+let sessionEmail: string | null;
 
 const SignupPage: React.FC = () => {
   const router = useRouter();
 
+  clearLocalStorage(['user-data', 'auth-token']);
+
   const isMobile = useMediaQuery('(max-width: 800px)');
 
-  const [email, setEmail] = React.useState<string>('');
+  const [email, setEmail] = React.useState<string>((): string => {
+    sessionEmail = sessionStorage.getItem('email');
+
+    return sessionEmail ? sessionEmail : '';
+  });
 
   const [isEmailFocused, setIsEmailFocused] = React.useState<boolean>(false);
 
@@ -73,12 +80,6 @@ const SignupPage: React.FC = () => {
       if (status === 404) router.push('/signup/registration');
     }
   }
-
-  React.useEffect((): void => {
-    sessionEmail = sessionStorage.getItem('email') as string;
-
-    if (sessionEmail) setEmail(sessionEmail);
-  }, []);
 
   return (
     <Layout className='full-bleed' footerType='auth'>

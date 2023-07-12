@@ -8,7 +8,6 @@ import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import {clearLocalStorage} from '@/functions';
 
 /*
  * Registration Page (Contains 2 screens)
@@ -24,7 +23,7 @@ export const SCREEN_STATE = {
   FORM: 'form',
 };
 
-let sessionEmail: string;
+let sessionEmail: string | null;
 
 /*
  * Registration Page
@@ -33,11 +32,13 @@ let sessionEmail: string;
 const RegistrationPage = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');
 
-  clearLocalStorage(['user-data', 'auth-token']);
+  const [formData, setFormData] = React.useState<FormData>((): FormData => {
+    sessionEmail = sessionStorage.getItem('email');
 
-  const [formData, setFormData] = React.useState<FormData>({
-    email: '',
-    password: '',
+    return {
+      email: sessionEmail ? sessionEmail : '',
+      password: '',
+    };
   });
 
   const [screenState, setScreenState] = React.useState<string>(
@@ -55,19 +56,6 @@ const RegistrationPage = () => {
       };
     });
   };
-
-  // Get the email that was stored in local storage by email screen in SignUp Page
-  React.useEffect((): void => {
-    sessionEmail = sessionStorage.getItem('email') as string;
-
-    if (sessionEmail)
-      setFormData((prev): FormData => {
-        return {
-          ...prev,
-          email: sessionEmail,
-        };
-      });
-  }, []);
 
   return (
     <Layout className='full-bleed' fixedFooter>
