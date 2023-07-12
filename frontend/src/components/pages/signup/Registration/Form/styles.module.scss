@@ -40,14 +40,6 @@ $button-height: 68px;
         margin-top: -10px;
         margin-bottom: 0;
       }
-
-      &:last-child {
-        margin-top: 0;
-
-        @media (max-width: 800px) {
-          margin-top: -10px;
-        }
-      }
     }
 
     h1 {
@@ -56,6 +48,7 @@ $button-height: 68px;
 
     h3 {
       font-weight: 400;
+      font-size: 18px;
     }
 
     form {
@@ -184,8 +177,8 @@ $button-height: 68px;
 
 .error {
   color: $primary-color;
-  font-size: 12px;
-  margin-top: -10px;
+  font-size: 12px !important;
+  margin-top: 0px !important;
   margin-left: 2px;
 }
 

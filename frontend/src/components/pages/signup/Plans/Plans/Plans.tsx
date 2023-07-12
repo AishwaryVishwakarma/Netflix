@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
-import {PLANS} from '@/DUMMY_DATA/PLANS';
+import {PLANS} from '@/DATA/PLANS';
 import {nanoid} from 'nanoid';
 import Loader from '@/utils/loader/loader';
 import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';

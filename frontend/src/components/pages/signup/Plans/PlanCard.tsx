@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import CheckMarkCircle from '@/utils/icons/CheckMarkCircle';
 import CheckMark from '@/utils/icons/CheckMark';
-import {type PlanData} from '@/DUMMY_DATA/PLANS';
+import {type PlanData} from '@/DATA/PLANS';
 
 /*
  * Plans Card (Plans Screen)

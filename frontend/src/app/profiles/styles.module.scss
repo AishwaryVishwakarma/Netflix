@@ -1,5 +1,6 @@
 $primary-color: #fff;
 $secondary-color: grey;
+$icon-width: 10vw;
 $profile-name-font-size: 1.2vw;
 
 @mixin flexbox {
@@ -19,6 +20,19 @@ $profile-name-font-size: 1.2vw;
   top: 0;
   z-index: 1;
   width: 100%;
+}
+
+.loaderContainer {
+  height: 100%;
+  width: 100%;
+  @include flexbox();
+
+  & > svg {
+    fill: $primary-color;
+    height: 30px;
+    width: 30px;
+    filter: blur(1px);
+  }
 }
 
 .profilesWrapper {
@@ -45,8 +59,8 @@ $profile-name-font-size: 1.2vw;
       cursor: pointer;
 
       & > img {
-        height: 10vw;
-        width: 10vw;
+        height: $icon-width;
+        width: $icon-width;
         border-radius: 4px;
         object-fit: cover;
         max-height: 200px;
@@ -58,6 +72,10 @@ $profile-name-font-size: 1.2vw;
       & > p {
         color: $secondary-color;
         font-size: $profile-name-font-size;
+        max-width: calc($icon-width * 0.9);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       &:hover {

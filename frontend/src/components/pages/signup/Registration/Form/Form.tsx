@@ -92,7 +92,7 @@ const Form: React.FC<{
 
       router.push('/signup/plans');
     } catch (error: any) {
-      const stateError = error?.response?.data?.detail;
+      const stateError = error.response?.data?.detail;
 
       setError(stateError);
 

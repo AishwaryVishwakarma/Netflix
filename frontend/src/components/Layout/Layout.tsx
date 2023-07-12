@@ -6,6 +6,7 @@ interface LayoutProps {
   footer?: boolean;
   className?: string;
   footerType?: 'auth' | 'home';
+  fixedFooter?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -13,11 +14,12 @@ const Layout: React.FC<LayoutProps> = ({
   footer = true,
   className = 'layouted full-bleed defaultBg',
   footerType = 'home',
+  fixedFooter = false,
 }) => {
   return (
     <>
       <main className={className}>{children}</main>
-      {footer && <Footer type={footerType} />}
+      {footer && <Footer type={footerType} fixed={fixedFooter} />}
     </>
   );
 };

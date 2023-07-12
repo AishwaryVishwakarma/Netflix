@@ -6,12 +6,15 @@ import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
  * Footer
  */
 
-const Footer: React.FC<{type: 'auth' | 'home'}> = ({type}) => {
+const Footer: React.FC<{type: 'auth' | 'home'; fixed: boolean}> = ({
+  type,
+  fixed,
+}) => {
   return (
     <footer
       className={`${styles.footerWrapper} ${type === 'home' && 'defaultBg'} ${
         type === 'auth' && 'transparentBg'
-      }`}
+      } ${fixed && styles.fixedOnBottom}`}
     >
       {type === 'home' && <HomeFooter />}
       {type === 'auth' && <AuthFooter />}

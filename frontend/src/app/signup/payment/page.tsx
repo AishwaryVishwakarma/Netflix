@@ -7,20 +7,23 @@ import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Link from 'next/link';
 import Protected from '@/components/Protected/Protected';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 /*
  * Payment Page [Protected]
  */
 
 const PaymentPage: React.FC = () => {
+  const isMobile = useMediaQuery('(max-width: 800px)');
+
   const submitHandler = (): void => {
     sessionStorage.removeItem('subscription');
   };
 
   return (
-    <Layout className='full-bleed'>
+    <Layout className='full-bleed' fixedFooter>
       <div className={styles.paymentWrapper}>
-        <Header hasRegistered />
+        <Header isMobile={isMobile} hasRegistered />
         <div>
           <div className={styles.fadeInFromRight}>
             <img

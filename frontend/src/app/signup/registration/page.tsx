@@ -67,7 +67,7 @@ const RegistrationPage = () => {
   }, []);
 
   return (
-    <Layout className='full-bleed'>
+    <Layout className='full-bleed' fixedFooter>
       <div className={styles.registrationWrapper}>
         <Header isMobile={isMobile} />
         {/* Intro Screen */}
