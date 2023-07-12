@@ -37,10 +37,6 @@ const profileSchema = new mongoose.Schema({
 
 
 const userProfileSchema = new mongoose.Schema({
-    user_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-    },
     meta:{
         _index:{
             type: Number,
@@ -50,18 +46,22 @@ const userProfileSchema = new mongoose.Schema({
             type: Boolean,
             default: true,
             required: true
+        },
+        user_id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users'
         }
     },
-    profile: [profileSchema]
+    profiles: [profileSchema]
 
 })
 
 
 userProfileSchema.pre('save', async function() {
     if (!this.meta._index){
-        const userInstance = await userModel.findOne({ _id: this.user_id })
+        const userInstance = await userModel.findOne({ _id: this.meta.user_id })
         this.meta._index = Math.floor(Math.random() * 10)
-        this.profile = [{
+        this.profiles = [{
             name: userInstance.email,
             icon: ICONS_ARRAY[this.meta._index]
         }]
@@ -70,5 +70,5 @@ userProfileSchema.pre('save', async function() {
 })
 
 
-const userProfileModel = mongoose.model('userprofiles', userProfileSchema)
+const userProfileModel = mongoose.model('user_profiles', userProfileSchema)
 module.exports = userProfileModel

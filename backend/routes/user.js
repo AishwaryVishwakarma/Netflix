@@ -43,12 +43,10 @@ router.post('/login', async(req,res) =>{
         const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
         user.last_log_in = Date.now()
         await user.save()
-        const userprofile = await userProfileModel.findOne({ user_id: user.id })
         user.password = undefined
         res.status(200).send({
             "user": user, 
-            "jwtToken": jwtToken,
-            "userprofile": userprofile
+            "jwtToken": jwtToken
         })
     }
     catch(err){
@@ -90,14 +88,14 @@ router.post('/signup', async(req,res) =>{
         const newUser = new userModel(userCreds)
         await newUser.save()
         const userprofile = new userProfileModel({
-            user_id: newUser._id
+            meta:{user_id: newUser._id}
         })
         await userprofile.save()
+        newUser.meta.profile_id = userprofile._id
+        newUser.save()
         const jwtToken = userMiddleware.generateJWT({ id: newUser.id })
         res.status(201).send({
-            "id": newUser.id,
-            "jwtToken": jwtToken,
-            "userprofile": userprofile
+            "jwtToken": jwtToken
         })
     }
     catch (err){
