@@ -29,6 +29,13 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: false
         }
+    },
+    meta:{
+        profile_id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user_profiles',
+            required: false
+        }
     }
 }) 
 
