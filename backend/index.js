@@ -5,6 +5,7 @@ const cors = require('cors')
 const dotenv = require("dotenv")
 const userRoutes = require('./routes/user')
 const userProfileRoutes = require('./routes/userProfile')
+const imageRoutes = require('./routes/image.js')
 
 dotenv.config()
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(cors())
 app.use('/', userRoutes)
 app.use('/', userProfileRoutes)
+app.use('/', imageRoutes)
 
 
 const uri  = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/?retryWrites=true&w=majority`
