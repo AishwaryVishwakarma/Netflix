@@ -85,7 +85,7 @@ $auth-footer-font-size: 13px;
 
 //Fixing the footer on very large screens
 .fixedOnBottom {
-  @media (min-width: 1350px) {
+  @media (min-width: 2040px) {
     position: fixed;
     bottom: 0;
     width: 100%;

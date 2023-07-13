@@ -15,6 +15,7 @@ $button-height: 68px;
 .flexBox {
   @include flexbox();
   position: relative;
+  padding-bottom: 120px;
 
   .formWrapper {
     display: flex;

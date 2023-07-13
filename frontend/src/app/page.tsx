@@ -164,7 +164,11 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Layout className={`full-bleed ${isMobile && 'darkBg'}`} footerType='auth'>
+    <Layout
+      className={`full-bleed ${isMobile && 'darkBg'}`}
+      footerType='auth'
+      fixedFooter
+    >
       <section className={styles.loginWrapper}>
         <img
           src={
