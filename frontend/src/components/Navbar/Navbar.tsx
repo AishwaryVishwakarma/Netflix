@@ -10,7 +10,7 @@ import {
 import {FaRegBell} from 'react-icons/fa';
 import {MdOutlineAccountCircle} from 'react-icons/md';
 import {BiHelpCircle} from 'react-icons/bi';
-import DUMMY_PROFILES from '@/DUMMY_DATA/DUMMY_PROFILES';
+// import DUMMY_PROFILES from '@/DUMMY_DATA/DUMMY_PROFILES';
 
 const TABS = [
   'Home',
@@ -84,12 +84,12 @@ const Navbar = () => {
               }`}
             >
               <div className={styles.itemsContainer}>
-                {DUMMY_PROFILES.map((profile, idx) => (
+                {/* {DUMMY_PROFILES.map((profile, idx) => (
                   <div key={idx} className={styles.profiles}>
                     <img src={profile.url} alt='' />
                     <p>{profile.name}</p>
                   </div>
-                ))}
+                ))} */}
                 {DROPDOWN_ITEMS.map((item, idx) => (
                   <div key={idx} className={styles.utilityItems}>
                     {item.element}
