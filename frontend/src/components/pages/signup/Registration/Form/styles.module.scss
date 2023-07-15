@@ -17,6 +17,10 @@ $button-height: 68px;
   position: relative;
   padding-bottom: 120px;
 
+  @media (max-width: 800px) {
+    padding: 0;
+  }
+
   .formWrapper {
     display: flex;
     align-items: flex-start;

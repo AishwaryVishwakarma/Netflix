@@ -7,25 +7,42 @@ import {type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import Protected from '@/components/Protected/Protected';
 import {userprofile as GET_USER_PROFILE_URL} from '@/END_POINTS';
-import {clearLocalStorage} from '@/functions';
-import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
+import {clearLocalStorage} from '@/FUNCTIONS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
+import Link from 'next/link';
+import Default from '@/components/pages/profiles/Default/Default';
+import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
+
+/*
+/ Profiles Page
+*/
+
+export const SCREEN_STATE = {
+  DEFAULT: 'default',
+  ADD_PROFILE: 'addProfile',
+};
 
 const ProfilesPage: React.FC = () => {
   const router = useRouter();
 
+  const [screenState, setScreenState] = React.useState<string>(
+    SCREEN_STATE.DEFAULT
+  );
+
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const [profiles, setProfiles] = React.useState<UserProfileModel['profiles']>(
-    []
-  );
+  const [profileData, setProfileData] = React.useState<UserProfileModel>();
+
+  const [refreshProfiles, setRefreshProfiles] = React.useState<boolean>(true);
 
   const userData = localStorage.getItem('user-data');
 
   const authToken = localStorage.getItem('auth-token');
 
   React.useEffect(() => {
+    if (screenState === SCREEN_STATE.ADD_PROFILE || !refreshProfiles) return;
+
     setIsLoading(true);
 
     if (!userData || !authToken) {
@@ -41,9 +58,8 @@ const ProfilesPage: React.FC = () => {
         },
       })
       .then((res) => {
-        const profiles: UserProfileModel['profiles'] =
-          res.data?.user_profile?.profiles;
-        setProfiles(profiles);
+        const profiles: UserProfileModel = res.data?.user_profile;
+        setProfileData(profiles);
       })
       .catch((err) => {
         clearLocalStorage(['user-data', 'auth-token']);
@@ -52,7 +68,7 @@ const ProfilesPage: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [authToken, userData, router]);
+  }, [authToken, userData, router, screenState, refreshProfiles]);
 
   if (!userData || !authToken) {
     clearLocalStorage(['user-data', 'auth-token']);
@@ -62,24 +78,27 @@ const ProfilesPage: React.FC = () => {
 
   return (
     <Layout className='full-bleed full-height defaultBg' footer={false}>
-      <div className={styles.header}></div>
+      <div className={styles.header} />
       {isLoading ? (
         <div className={styles.loaderContainer}>
           <Loader />
         </div>
       ) : (
-        <div className={styles.profilesWrapper}>
-          <h1>Who&apos;s Watching?</h1>
-          <div className={styles.profiles}>
-            {profiles.map((profile) => (
-              <div className={styles.profileCard} key={profile._id}>
-                <img src={profile.icon} alt='' />
-                <p>{profile.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.manageProfiles}>Manage Profiles</div>
-        </div>
+        <>
+          {screenState === SCREEN_STATE.DEFAULT && (
+            <Default
+              profileData={profileData as UserProfileModel}
+              changeScreen={setScreenState}
+            />
+          )}
+          {screenState === SCREEN_STATE.ADD_PROFILE && (
+            <AddProfile
+              profileData={profileData as UserProfileModel}
+              changeScreen={setScreenState}
+              refreshProfileData={setRefreshProfiles}
+            />
+          )}
+        </>
       )}
     </Layout>
   );

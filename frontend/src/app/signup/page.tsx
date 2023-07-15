@@ -11,7 +11,7 @@ import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import {clearLocalStorage} from '@/functions';
+import {clearLocalStorage} from '@/FUNCTIONS';
 
 /*
  * Sign Up Page
