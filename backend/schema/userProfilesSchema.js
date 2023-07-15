@@ -40,7 +40,9 @@ const userProfileSchema = new mongoose.Schema({
     meta:{
         _index:{
             type: Number,
-            required: false
+            required: false,
+            max: 9,
+            min: 0
         },
         profile_creation_available:{
             type: Boolean,
@@ -58,7 +60,7 @@ const userProfileSchema = new mongoose.Schema({
 
 
 userProfileSchema.pre('save', async function() {
-    if (!this.meta._index){
+    if ( this.meta._index === null ){
         const userInstance = await userModel.findOne({ _id: this.meta.user_id })
         this.meta._index = Math.floor(Math.random() * 10)
         this.profiles = [{
@@ -66,7 +68,6 @@ userProfileSchema.pre('save', async function() {
             icon: ICONS_ARRAY[this.meta._index]
         }]
     }
-    
 })
 
 
