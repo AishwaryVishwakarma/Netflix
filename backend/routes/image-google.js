@@ -115,5 +115,5 @@ async function uploadFile(authClient) {
     }
 }
 
-// authorize().then(listFiles).catch(console.error);
+authorize().then(listFiles).catch(console.error);
 authorize().then(uploadFile).catch(console.error);

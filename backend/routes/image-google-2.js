@@ -7,6 +7,7 @@ const process = require('process');
 const {authenticate} = require('@google-cloud/local-auth');
 const {google} = require('googleapis');
 const multer = require('multer')
+const stream = require('stream');
 
 const upload = multer({
     storage: multer.diskStorage({}),
@@ -111,14 +112,11 @@ router.get('/all-files', async(req, res) => {
 
 async function uploadFile(authClient, file_path)  {
     console.log(file_path)
-    // console.log(h)
     const drive = google.drive({version: 'v3', auth: authClient})
-    // eslint-disable-next-line no-undef
-    // const filePath = path.join(__dirname, 'hero.jpg');
     try{
       const response = await drive.files.create({
             requestBody: {
-                name: 'hero.png', //file name
+                name: file_path, //file name
                 mimeType: 'image/png',
             },
             media: {
@@ -138,11 +136,44 @@ async function uploadFile(authClient, file_path)  {
 
 router.post('/upload', upload.single("image"), async(req, res) => {
     const file_path = req.file.path
-    console.log(typeof(file_path))
-    const h = String("something")
-    const upload = await authorize().then(uploadFile).catch(console.error)
-    //  await authorize()
-    res.send(upload)
+    const name = req.body.name
+    const upload = await authorize().then(() => uploadFile(file_path, name)).catch(console.error)
+    console.log(upload)
+    res.send()
 })
+
+const uploadFile1 = async (fileObject) => {
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(fileObject.buffer);
+  const { data } = await google.drive({ version: 'v3' }).files.create({
+    media: {
+      mimeType: fileObject.mimeType,
+      body: bufferStream,
+    },
+    requestBody: {
+      name: fileObject.originalname,
+      parents: ['DRIVE_FOLDER_ID'],
+    },
+    fields: 'id,name',
+  });
+  console.log(`Uploaded file ${data.name} ${data.id}`);
+};
+
+router.post('/upload1', upload.single("image"), async (req, res) => {
+  try {
+    const file_path = req.file.path
+    // const { body, files } = req;
+    
+    await authorize()
+    // for (let f = 0; f < files.length; f += 1) {
+      await uploadFile1(file_path);
+    // }
+
+    // console.log(body);
+    res.status(200).send('Form Submitted');
+  } catch (f) {
+    res.send(f.message);
+  }
+});
 
 module.exports = router
