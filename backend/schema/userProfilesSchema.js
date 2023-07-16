@@ -32,6 +32,17 @@ const profileSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
         required: false
+    },
+    meta:{
+        deletable:{
+            type: Boolean,
+            required: true,
+            default: true
+        }
+    },
+    game_handle:{
+        type: String,
+        required: false
     }
 })
 
@@ -65,7 +76,10 @@ userProfileSchema.pre('save', async function() {
         this.meta._index = Math.floor(Math.random() * 10)
         this.profiles = [{
             name: userInstance.email,
-            icon: ICONS_ARRAY[this.meta._index]
+            icon: ICONS_ARRAY[this.meta._index],
+            meta: {
+                deletable: false
+            }
         }]
     }
 })

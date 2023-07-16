@@ -57,12 +57,10 @@ router.post('/create-profile', async(req, res) =>{
         return
     }
 
-    if ( userProfile.profiles.length === 4){
-        userProfile.meta.profile_creation_available = false
-        await userProfile.save()
-    }
-
     try{
+        if ( userProfile.profiles.length === 4){
+            userProfile.meta.profile_creation_available = false
+        }
         userProfile.profiles.push({
             name: newProfile.name,
             icon: newProfile.icon
