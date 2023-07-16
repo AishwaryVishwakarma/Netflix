@@ -14,27 +14,29 @@ const Default: React.FC<{
 
   return (
     <section className={styles.profilesWrapper}>
-      <h1>Who&apos;s Watching?</h1>
-      <ul className={styles.profiles}>
-        {profiles.map((profile) => (
-          <li className={styles.profileCard} key={profile._id}>
-            <img src={profile.icon} alt='profile' />
-            <p>{profile.name}</p>
-          </li>
-        ))}
-        {profile_creation_available && (
-          <li
-            className={styles.profileCard}
-            onClick={() => changeScreen(SCREEN_STATE.ADD_PROFILE)}
-          >
-            <div className={styles.newProfile} />
-            <p>Add Profile</p>
-          </li>
-        )}
-      </ul>
-      {/* <Link className={styles.manageProfiles} href='/ManageProfiles'>
+      <div>
+        <h1>Who&apos;s Watching?</h1>
+        <ul className={styles.profiles}>
+          {profiles.map((profile) => (
+            <li className={styles.profileCard} key={profile._id}>
+              <img src={profile.icon} alt='profile' />
+              <p>{profile.name}</p>
+            </li>
+          ))}
+          {profile_creation_available && (
+            <li
+              className={styles.profileCard}
+              onClick={() => changeScreen(SCREEN_STATE.ADD_PROFILE)}
+            >
+              <div className={styles.newProfile} />
+              <p>Add Profile</p>
+            </li>
+          )}
+        </ul>
+        {/* <Link className={styles.manageProfiles} href='/ManageProfiles'>
             Manage Profiles
           </Link> */}
+      </div>
     </section>
   );
 };

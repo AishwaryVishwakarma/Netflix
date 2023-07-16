@@ -10,7 +10,6 @@ import {userprofile as GET_USER_PROFILE_URL} from '@/END_POINTS';
 import {clearLocalStorage} from '@/FUNCTIONS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
-import Link from 'next/link';
 import Default from '@/components/pages/profiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 

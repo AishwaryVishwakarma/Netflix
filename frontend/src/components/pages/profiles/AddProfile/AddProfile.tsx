@@ -34,42 +34,44 @@ const AddProfile: React.FC<{
 
   return (
     <section className={styles.addProfileWrapper}>
-      <h1>Add Profile</h1>
-      <h5>Add a profile for another person watching Netflix.</h5>
-      <div className={styles.profileEntry}>
-        <img src={icon} alt='profile-icon' />
-        <form onSubmit={submitHandler}>
-          <input
-            className={isError ? styles.errorInput : ''}
-            id='add-profile-name'
-            name='addProfileName'
-            type='text'
-            placeholder='Name'
-            value={profilename}
-            onChange={(e): void => setProfileName(e.target.value)}
-          />
-          {isError && <p>{error}</p>}
-        </form>
-      </div>
-      <div className={styles.controls}>
-        <button
-          data-button-disabled={profilename ? false : true}
-          className={styles.continueButton}
-          type='button'
-          onClick={submitHandler}
-        >
-          Continue
-        </button>
-        <button
-          className={styles.cancelButton}
-          type='button'
-          onClick={() => {
-            changeScreen(SCREEN_STATE.DEFAULT);
-            refreshProfileData(false);
-          }}
-        >
-          Cancel
-        </button>
+      <div>
+        <h1>Add Profile</h1>
+        <h5>Add a profile for another person watching Netflix.</h5>
+        <div className={styles.profileEntry}>
+          <img src={icon} alt='profile-icon' />
+          <form onSubmit={submitHandler}>
+            <input
+              className={isError ? styles.errorInput : ''}
+              id='add-profile-name'
+              name='addProfileName'
+              type='text'
+              placeholder='Name'
+              value={profilename}
+              onChange={(e): void => setProfileName(e.target.value)}
+            />
+            {isError && <p>{error}</p>}
+          </form>
+        </div>
+        <div className={styles.controls}>
+          <button
+            data-button-disabled={profilename ? false : true}
+            className={styles.continueButton}
+            type='button'
+            onClick={submitHandler}
+          >
+            Continue
+          </button>
+          <button
+            className={styles.cancelButton}
+            type='button'
+            onClick={() => {
+              changeScreen(SCREEN_STATE.DEFAULT);
+              refreshProfileData(false);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </section>
   );
