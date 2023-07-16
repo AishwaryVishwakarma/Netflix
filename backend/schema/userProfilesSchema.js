@@ -42,7 +42,8 @@ const profileSchema = new mongoose.Schema({
     },
     game_handle:{
         type: String,
-        required: false
+        required: false,
+        default: ''
     }
 })
 

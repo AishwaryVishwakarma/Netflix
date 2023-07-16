@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         // eslint-disable-next-line no-useless-escape
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Email is invalid']
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email is invalid']
     },
     password:{
         type: String,
@@ -23,11 +23,30 @@ const userSchema = new mongoose.Schema({
     subscription:{
         type:{
             type: String,
-            required: false
+            required: false,
+            enum: {
+                values: ["basic", "mobile", "premium", "standard"],
+                message: '{VALUE} is not a type of subscription'
+            }
         },
         value:{
             type: String,
-            required: false
+            required: false,
+            validate: { 
+                validator (v) {
+                    switch ( this.subscription.type ){
+                        case 'basic':
+                            return v == "199"
+                        case 'mobile':
+                            return v == "149"
+                        case 'premium':
+                            return v == "649"
+                        case 'standard':
+                            return v == "499"
+                        }
+                    },
+                message: `{VALUE} doesn't match subscription type`
+            }
         }
     },
     meta:{
@@ -37,7 +56,7 @@ const userSchema = new mongoose.Schema({
             required: false
         }
     }
-}) 
+})
 
 
 const userModel = mongoose.model('users', userSchema)
