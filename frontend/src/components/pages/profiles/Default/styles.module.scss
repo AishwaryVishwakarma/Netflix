@@ -1,0 +1,106 @@
+$primary-color: #fff;
+$secondary-color: grey;
+$icon-width: 10vw;
+$profile-name-font-size: 1.2vw;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profilesWrapper {
+  height: 100%;
+  @include flexbox();
+  flex-direction: column;
+  gap: 30px;
+  font-family: var(--font-rubik);
+
+  h1 {
+    color: $primary-color;
+    font-size: 3.5vw;
+    font-weight: 400;
+    user-select: none;
+  }
+
+  .profiles {
+    @include flexbox();
+    gap: 30px;
+
+    .profileCard {
+      @include flexbox();
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+
+      & > img,
+      .newProfile {
+        height: $icon-width;
+        width: $icon-width;
+        border-radius: 4px;
+        object-fit: cover;
+        max-height: 200px;
+        max-width: 200px;
+        min-height: 84px;
+        min-width: 84px;
+      }
+
+      & > p {
+        color: $secondary-color;
+        font-size: $profile-name-font-size;
+        max-width: calc($icon-width * 0.9);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &:hover {
+        img {
+          outline: 2px solid $primary-color;
+        }
+
+        p {
+          color: $primary-color;
+        }
+
+        .newProfile {
+          background: $primary-color;
+        }
+
+        .newProfile::before {
+          color: $primary-color;
+        }
+      }
+    }
+
+    .newProfile {
+      @include flexbox();
+    }
+
+    .newProfile::before {
+      content: '+';
+      color: var(--background);
+      font-size: 5vw;
+      font-weight: 700;
+      text-align: center;
+      background: $secondary-color;
+      border-radius: 50%;
+      padding: 0 1.4vw;
+    }
+  }
+
+  .manageProfiles {
+    margin-top: 25px;
+    color: $secondary-color;
+    padding: 0.5em 1.5em;
+    font-size: $profile-name-font-size;
+    border: 1px solid $secondary-color;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+}

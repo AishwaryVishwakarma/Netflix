@@ -1,0 +1,140 @@
+$primary-color: #fff;
+$secondary-color: grey;
+$hover-color: #e50914;
+$container-max-width: 40vw;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addProfileWrapper {
+  height: 100%;
+  @include flexbox();
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-rubik);
+  color: $primary-color;
+  max-width: $container-max-width;
+  margin: auto;
+  align-items: flex-start;
+
+  h1 {
+    font-size: 4vw;
+    font-weight: 400;
+  }
+
+  h5 {
+    font-size: 1.3vw;
+    color: $secondary-color;
+    font-weight: 300;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $secondary-color;
+    width: 100%;
+  }
+
+  .profileEntry {
+    --column-gap: 2vw;
+    --image-width: 8vw;
+    display: grid;
+    width: 100%;
+    column-gap: var(--column-gap);
+    grid-template-columns: 8vw calc(
+        $container-max-width - var(--column-gap) - var(--image-width)
+      );
+    padding: 13px 0 23px;
+    border-bottom: 1px solid $secondary-color;
+
+    img {
+      width: var(--image-width) !important;
+      height: auto;
+      border-radius: 4px;
+      position: relative;
+      animation: scale-out 0.4s forwards 0.1s ease-in-out;
+      transform: scale(0);
+
+      @keyframes scale-out {
+        100% {
+          transform: scale(1)
+        }
+      }
+    }
+
+    form {
+      @include flexbox();
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+
+      input {
+        width: 80%;
+        background: #666;
+        outline: none;
+        border: none;
+        color: $primary-color;
+        height: 2em;
+        text-indent: 0.1vw;
+        font-size: 1.3vw;
+        padding: 2vh 0.6vw;
+        border-radius: 2px;
+        display: block;
+
+        &::placeholder {
+          color: darkgray;
+        }
+      }
+
+      .errorInput {
+        outline: 1px solid red;
+      }
+
+      p {
+        color: red;
+        font-size: 1vw;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    gap: 2vw;
+    margin-top: 20px;
+
+    button {
+      font-size: 1.2vw;
+      cursor: pointer;
+      padding: 8px 20px;
+      font-weight: 600;
+      outline: none;
+      border: none;
+      border-radius: 2px;
+    }
+
+    .continueButton {
+      color: #000;
+      background: $primary-color;
+
+      &:hover {
+        color: $primary-color;
+        background: $hover-color;
+      }
+    }
+
+    .cancelButton {
+      background: transparent;
+      color: $secondary-color;
+      border: 1px solid $secondary-color;
+
+      &:hover {
+        border-color: $primary-color;
+        color: $primary-color;
+      }
+    }
+
+    [data-button-disabled='false'] {
+      color: $primary-color;
+      background: $hover-color;
+    }
+  }
+}

@@ -11,4 +11,10 @@ const ICONS_ARRAY = [
   'https://occ-0-2482-3646.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABQNA13q-hMGbmuhvHbTvIkxaROY7kVf4QtGMco1CDTTPDZsEbrWtZu0x2vNOnsR1tIOJ71KinrhYET2hP4n_zbeFIxR0tWJ3b7V4.png?r=6a6',
 ];
 
+export function getNextIcon(index: number): string {
+  if (index >= ICONS_ARRAY.length - 1) return ICONS_ARRAY[0];
+
+  return ICONS_ARRAY[index + 1];
+}
+
 export default ICONS_ARRAY;
