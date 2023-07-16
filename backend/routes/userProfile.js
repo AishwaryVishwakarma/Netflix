@@ -52,11 +52,14 @@ router.post('/create-profile', async(req, res) =>{
         .exec()
 
 
-    if ( userProfile.profiles.length === 5){
-        userProfile.meta.profile_creation_available = false
-        await userProfile.save()
+    if (userProfile.meta.profile_creation_available === false){
         res.status(406).send({ 'detail': 'Exceeded Number of Profiles' }) // status code for 'Not Acceptable'
         return
+    }
+
+    if ( userProfile.profiles.length === 4){
+        userProfile.meta.profile_creation_available = false
+        await userProfile.save()
     }
 
     try{
