@@ -60,7 +60,7 @@ const userProfileSchema = new mongoose.Schema({
 
 
 userProfileSchema.pre('save', async function() {
-    if ( this.meta._index === null ){
+    if ( this.meta._index == null ){
         const userInstance = await userModel.findOne({ _id: this.meta.user_id })
         this.meta._index = Math.floor(Math.random() * 10)
         this.profiles = [{
