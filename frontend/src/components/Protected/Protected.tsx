@@ -4,6 +4,7 @@ import {validateToken as VALIDATE_TOKEN_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import Loader from '@/utils/loader/loader';
 import styles from './styles.module.scss';
+import {clearStorage} from '@/FUNCTIONS';
 
 let authToken: string | null;
 
@@ -37,11 +38,12 @@ const Protected = ({
           return;
         }
 
-        localStorage.removeItem('auth-token');
+        clearStorage(['auth-token'], localStorage);
         router.push(redirectTo);
       })
       .catch((err) => {
-        localStorage.removeItem('auth-token');
+        console.log(err);
+        clearStorage(['auth-token'], localStorage);
         router.push(redirectTo);
       });
   }, [router, redirectTo]);

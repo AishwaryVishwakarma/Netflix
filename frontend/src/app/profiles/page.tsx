@@ -7,7 +7,7 @@ import {type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import Protected from '@/components/Protected/Protected';
 import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
-import {clearLocalStorage} from '@/FUNCTIONS';
+import {clearStorage} from '@/FUNCTIONS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
 import Default from '@/components/pages/profiles/Default/Default';
@@ -40,15 +40,16 @@ const ProfilesPage: React.FC = () => {
   const authToken = localStorage.getItem('auth-token');
 
   React.useEffect(() => {
+    // Only fetching the data when user has added a profile
     if (screenState === SCREEN_STATE.ADD_PROFILE || !refreshProfiles) return;
 
-    setIsLoading(true);
-
     if (!userData || !authToken) {
-      clearLocalStorage(['user-data', 'auth-token']);
+      clearStorage(['user-data', 'auth-token'], localStorage);
       router.push('/');
       return;
     }
+
+    setIsLoading(true);
 
     axios
       .get(GET_USER_PROFILE_URL, {
@@ -58,11 +59,10 @@ const ProfilesPage: React.FC = () => {
       })
       .then((res) => {
         const profiles: UserProfileModel = res.data?.user_profile;
-        console.log(profiles);
         setProfileData(profiles);
       })
       .catch((err) => {
-        clearLocalStorage(['user-data', 'auth-token']);
+        clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
       })
       .finally(() => {
@@ -71,7 +71,7 @@ const ProfilesPage: React.FC = () => {
   }, [authToken, userData, router, screenState, refreshProfiles]);
 
   if (!userData || !authToken) {
-    clearLocalStorage(['user-data', 'auth-token']);
+    clearStorage(['user-data', 'auth-token'], localStorage);
     router.push('/');
     return;
   }

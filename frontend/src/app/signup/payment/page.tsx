@@ -8,6 +8,7 @@ import Header from '@/components/pages/signup/Header';
 import Link from 'next/link';
 import Protected from '@/components/Protected/Protected';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import {clearStorage} from '@/FUNCTIONS';
 
 /*
  * Payment Page [Protected]
@@ -17,7 +18,7 @@ const PaymentPage: React.FC = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');
 
   const submitHandler = (): void => {
-    sessionStorage.removeItem('subscription');
+    clearStorage(['subscription'], sessionStorage);
   };
 
   return (

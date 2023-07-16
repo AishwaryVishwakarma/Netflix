@@ -6,7 +6,7 @@ import {type UserProfileModel} from '@/types';
 import {createProfile as CREATE_PROFILE_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import {clearLocalStorage} from '@/FUNCTIONS';
+import {clearStorage} from '@/FUNCTIONS';
 
 const AddProfile: React.FC<{
   profileData: UserProfileModel;
@@ -29,7 +29,7 @@ const AddProfile: React.FC<{
   const authToken = localStorage.getItem('auth-token');
 
   if (!authToken) {
-    clearLocalStorage(['user-data', 'auth-token']);
+    clearStorage(['user-data', 'auth-token'], localStorage);
     router.push('/');
     return;
   }

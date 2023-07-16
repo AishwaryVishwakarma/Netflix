@@ -22,7 +22,7 @@ const Form: React.FC<{
 }> = ({formData, propsOnChange}) => {
   const router = useRouter();
 
-  const {email, password} = formData;
+  const {email, password} = formData ?? {};
 
   const [isInputFocused, setIsInputFocused] = React.useState<InputTouched>({
     email: false,
@@ -136,9 +136,7 @@ const Form: React.FC<{
               <label htmlFor='email'>Email address</label>
             </div>
             {emailInputError && (
-              <p className={styles.error}>
-                Please enter a valid email address
-              </p>
+              <p className={styles.error}>Please enter a valid email address</p>
             )}
             <div className={styles.inputContainer}>
               <input

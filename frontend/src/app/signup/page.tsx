@@ -11,7 +11,7 @@ import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import {clearLocalStorage} from '@/FUNCTIONS';
+import {clearStorage} from '@/FUNCTIONS';
 
 /*
  * Sign Up Page
@@ -22,7 +22,7 @@ let sessionEmail: string | null;
 const SignupPage: React.FC = () => {
   const router = useRouter();
 
-  clearLocalStorage(['user-data', 'auth-token']);
+  clearStorage(['user-data', 'auth-token'], localStorage);
 
   const isMobile = useMediaQuery('(max-width: 800px)');
 

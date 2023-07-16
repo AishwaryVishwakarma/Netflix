@@ -56,7 +56,6 @@ const HomePage = () => {
   function openMovieModal(data: any): void {
     setIsModalOpen(true);
     setModalData(data);
-    // console.log(data)
   }
 
   function closeMovieModal(): void {

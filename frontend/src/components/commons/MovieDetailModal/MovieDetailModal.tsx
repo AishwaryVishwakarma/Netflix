@@ -41,8 +41,6 @@ const MovieDetailModal: React.FC<any> = ({data}) => {
     };
   }, []);
 
-  // console.log(genres)
-
   return createPortal(
     <div>
       <div className={styles.modalBackdrop} onClick={closeMovieModal}>
