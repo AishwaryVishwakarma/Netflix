@@ -85,7 +85,7 @@ export const PLANS: PlanData[] = [
     features: [
       {
         title: 'Monthly Price',
-        description: '₹ 649',
+        description: '₹ 199',
       },
       {
         title: 'Resolution',
@@ -114,7 +114,7 @@ export const PLANS: PlanData[] = [
     features: [
       {
         title: 'Monthly Price',
-        description: '₹ 649',
+        description: '₹ 149',
       },
       {
         title: 'Resolution',

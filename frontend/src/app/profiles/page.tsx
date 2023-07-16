@@ -6,7 +6,7 @@ import Layout from '@/components/Layout/Layout';
 import {type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import Protected from '@/components/Protected/Protected';
-import {userprofile as GET_USER_PROFILE_URL} from '@/END_POINTS';
+import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
 import {clearLocalStorage} from '@/FUNCTIONS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
@@ -58,6 +58,7 @@ const ProfilesPage: React.FC = () => {
       })
       .then((res) => {
         const profiles: UserProfileModel = res.data?.user_profile;
+        console.log(profiles);
         setProfileData(profiles);
       })
       .catch((err) => {

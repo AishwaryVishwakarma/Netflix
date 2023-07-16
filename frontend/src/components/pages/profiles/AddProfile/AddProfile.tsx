@@ -3,6 +3,10 @@ import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/profiles/page';
 import {getNextIcon} from '@/DATA/PROFILE_ICONS';
 import {type UserProfileModel} from '@/types';
+import {createProfile as CREATE_PROFILE_URL} from '@/END_POINTS';
+import axios from 'axios';
+import {useRouter} from 'next/navigation';
+import {clearLocalStorage} from '@/FUNCTIONS';
 
 const AddProfile: React.FC<{
   profileData: UserProfileModel;
@@ -12,6 +16,7 @@ const AddProfile: React.FC<{
   const {
     meta: {_index},
   } = profileData ?? {};
+  const router = useRouter();
 
   const [profilename, setProfileName] = React.useState<string>('');
 
@@ -21,13 +26,44 @@ const AddProfile: React.FC<{
 
   const icon = getNextIcon(_index);
 
-  function submitHandler() {
+  const authToken = localStorage.getItem('auth-token');
+
+  if (!authToken) {
+    clearLocalStorage(['user-data', 'auth-token']);
+    router.push('/');
+    return;
+  }
+
+  async function submitHandler(
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    event.preventDefault();
     if (!isSubmitClicked) setIsSubmitClicked(true);
     if (!profilename) {
       setError('Please enter a name');
       return;
     }
     refreshProfileData(true);
+    try {
+      const res = await axios.post(
+        CREATE_PROFILE_URL,
+        {
+          name: profilename.trim(),
+          icon,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      if (res.status === 201) changeScreen(SCREEN_STATE.DEFAULT);
+    } catch (error) {
+      console.log(error);
+      changeScreen(SCREEN_STATE.DEFAULT);
+    }
   }
 
   const isError = isSubmitClicked && error && !profilename;
