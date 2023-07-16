@@ -7,6 +7,7 @@ import Loader from '@/utils/loader/loader';
 import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
+import {clearStorage} from '@/FUNCTIONS';
 
 /*
  * Plans Screen (Plans Page)
@@ -43,7 +44,7 @@ const Plans: React.FC = () => {
       );
 
       if (res.status === 200) {
-        sessionStorage.removeItem('subscription');
+        clearStorage(['subscription'], sessionStorage);
         router.push('/signup/payment');
       }
     } catch (error) {

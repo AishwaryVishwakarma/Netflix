@@ -1,5 +1,6 @@
 $primary-color: #fff;
 $secondary-color: grey;
+$hover-color: #e50914;
 $icon-width: 10vw;
 $profile-name-font-size: 1.2vw;
 
@@ -9,7 +10,7 @@ $profile-name-font-size: 1.2vw;
   justify-content: center;
 }
 
-.profilesWrapper {
+.manageProfilesWrapper {
   @include flexbox();
   height: 100%;
   font-family: var(--font-rubik);
@@ -56,6 +57,16 @@ $profile-name-font-size: 1.2vw;
           max-width: 200px;
           min-height: 84px;
           min-width: 84px;
+          filter: brightness(0.6);
+        }
+
+        & > svg {
+          position: absolute;
+          z-index: 1;
+          top: 45%;
+          transform: translateY(-50%);
+          color: $primary-color;
+          width: 3rem;
         }
 
         & > p {
@@ -88,6 +99,7 @@ $profile-name-font-size: 1.2vw;
 
       .newProfile {
         @include flexbox();
+        filter: brightness(1) !important;
       }
 
       .newProfile::before {
@@ -104,16 +116,18 @@ $profile-name-font-size: 1.2vw;
 
     & > a {
       margin-top: 25px;
-      color: $secondary-color;
+      color: #000;
       padding: 0.5em 1.5em;
       font-size: $profile-name-font-size;
-      border: 1px solid $secondary-color;
+      font-weight: 600;
+      background: $primary-color;
       cursor: pointer;
+      border-radius: 2px;
       text-decoration: none;
 
       &:hover {
         color: $primary-color;
-        border-color: $primary-color;
+        background: $hover-color;
       }
     }
   }

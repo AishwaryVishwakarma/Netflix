@@ -1,12 +1,9 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import {SCREEN_STATE} from '@/app/profiles/page';
+import Edit from '@/utils/icons/Edit';
+import {SCREEN_STATE} from '@/app/ManageProfiles/page';
 import Link from 'next/link';
-
-/*
- * Default Screen
- */
 
 const Default: React.FC<{
   profileData: UserProfileModel;
@@ -18,12 +15,13 @@ const Default: React.FC<{
   } = profileData ?? {};
 
   return (
-    <section className={styles.profilesWrapper}>
+    <section className={styles.manageProfilesWrapper}>
       <div>
-        <h1>Who&apos;s Watching?</h1>
+        <h1>Manage Profiles</h1>
         <ul className={styles.profiles}>
           {profiles?.map((profile) => (
             <li className={styles.profileCard} key={profile._id}>
+              <Edit />
               <img src={profile.icon} alt='profile' />
               <p>{profile.name}</p>
             </li>
@@ -38,8 +36,8 @@ const Default: React.FC<{
             </li>
           )}
         </ul>
-        <Link href='/ManageProfiles' className={styles.manageProfiles}>
-          Manage Profiles
+        <Link href='/profiles' className={styles.doneButton}>
+          Done
         </Link>
       </div>
     </section>
