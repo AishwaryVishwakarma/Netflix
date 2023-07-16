@@ -8,6 +8,10 @@ import axios from 'axios';
 import {useRouter} from 'next/navigation';
 import {clearStorage} from '@/FUNCTIONS';
 
+/*
+ * Add profile Screen
+ */
+
 const AddProfile: React.FC<{
   profileData: UserProfileModel;
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
@@ -17,6 +21,8 @@ const AddProfile: React.FC<{
     meta: {_index},
   } = profileData ?? {};
   const router = useRouter();
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [profilename, setProfileName] = React.useState<string>('');
 
@@ -28,12 +34,18 @@ const AddProfile: React.FC<{
 
   const authToken = localStorage.getItem('auth-token');
 
+  React.useEffect(() => {
+    // Focusing the input element when the component is rendered
+    inputRef.current?.focus();
+  }, []);
+
   if (!authToken) {
     clearStorage(['user-data', 'auth-token'], localStorage);
     router.push('/');
     return;
   }
 
+  // Create profile handler
   async function submitHandler(
     event:
       | React.FormEvent<HTMLFormElement>
@@ -77,6 +89,7 @@ const AddProfile: React.FC<{
           <img src={icon} alt='profile-icon' />
           <form onSubmit={submitHandler}>
             <input
+              ref={inputRef}
               className={isError ? styles.errorInput : ''}
               id='add-profile-name'
               name='addProfileName'

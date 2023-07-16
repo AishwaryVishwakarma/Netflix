@@ -2,27 +2,26 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {SCREEN_STATE} from '@/app/profiles/page';
+import Edit from '@/utils/icons/Edit';
 
-/*
- * Default Screen
- */
-
-const Default: React.FC<{
+const ManageProfiles: React.FC<{
   profileData: UserProfileModel;
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
-}> = ({profileData, changeScreen}) => {
+  refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({profileData, changeScreen, refreshProfileData}) => {
   const {
     meta: {profile_creation_available},
     profiles,
   } = profileData ?? {};
 
   return (
-    <section className={styles.profilesWrapper}>
+    <section className={styles.manageProfilesWrapper}>
       <div>
-        <h1>Who&apos;s Watching?</h1>
+        <h1>Manage Profiles</h1>
         <ul className={styles.profiles}>
           {profiles?.map((profile) => (
             <li className={styles.profileCard} key={profile._id}>
+              <Edit />
               <img src={profile.icon} alt='profile' />
               <p>{profile.name}</p>
             </li>
@@ -37,15 +36,19 @@ const Default: React.FC<{
             </li>
           )}
         </ul>
-        <div
-          className={styles.manageProfiles}
-          onClick={(): void => changeScreen(SCREEN_STATE.MANAGE_PROFILES)}
+        <button
+          type='button'
+          className={styles.doneButton}
+          onClick={(): void => {
+            changeScreen(SCREEN_STATE.DEFAULT);
+            refreshProfileData(false);
+          }}
         >
-          Manage Profiles
-        </div>
+          Done
+        </button>
       </div>
     </section>
   );
 };
 
-export default Default;
+export default ManageProfiles;

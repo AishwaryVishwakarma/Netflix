@@ -6,6 +6,10 @@ import Loader from '@/utils/loader/loader';
 import styles from './styles.module.scss';
 import {clearStorage} from '@/FUNCTIONS';
 
+/*
+ * Protected Wrapper (For Validation)
+ */
+
 let authToken: string | null;
 
 const Protected = ({

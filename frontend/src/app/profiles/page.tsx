@@ -12,6 +12,7 @@ import axios from 'axios';
 import Loader from '@/utils/loader/loader';
 import Default from '@/components/pages/profiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
+import ManageProfiles from '@/components/pages/profiles/ManageProfiles/ManageProfiles';
 
 /*
 / Profiles Page
@@ -20,6 +21,7 @@ import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 export const SCREEN_STATE = {
   DEFAULT: 'default',
   ADD_PROFILE: 'addProfile',
+  MANAGE_PROFILES: 'manageProfiles',
 };
 
 const ProfilesPage: React.FC = () => {
@@ -41,7 +43,7 @@ const ProfilesPage: React.FC = () => {
 
   React.useEffect(() => {
     // Only fetching the data when user has added a profile
-    if (screenState === SCREEN_STATE.ADD_PROFILE || !refreshProfiles) return;
+    if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
 
     if (!userData || !authToken) {
       clearStorage(['user-data', 'auth-token'], localStorage);
@@ -93,6 +95,13 @@ const ProfilesPage: React.FC = () => {
           )}
           {screenState === SCREEN_STATE.ADD_PROFILE && (
             <AddProfile
+              profileData={profileData as UserProfileModel}
+              changeScreen={setScreenState}
+              refreshProfileData={setRefreshProfiles}
+            />
+          )}
+          {screenState === SCREEN_STATE.MANAGE_PROFILES && (
+            <ManageProfiles
               profileData={profileData as UserProfileModel}
               changeScreen={setScreenState}
               refreshProfileData={setRefreshProfiles}
