@@ -28,4 +28,54 @@ router.get('/user-profile', async(req, res) => {
     res.send({ "user_profile": profile })
 })
 
+
+router.post('/create-profile', async(req, res) =>{
+    const newProfile = req.body
+
+    const jwtToken = req.header('Authorization').split(' ')[1]
+
+    if (!jwtToken || jwtToken===''){
+        res.status(401).send({ "detail": "Unathorized access, please login again" })
+        return
+    }
+
+    try{
+        var user_id = userMiddleware.verifyJWT(jwtToken)
+    }
+    catch(err){
+        res.status(401).send({ "detail": err.message })
+        return
+    }
+
+    const userProfile = await userProfileModel
+        .findOne({ 'meta.user_id': user_id })
+        .exec()
+
+
+    if ( userProfile.profiles.length === 5){
+        userProfile.meta.profile_creation_available = false
+        await userProfile.save()
+        res.status(406).send({ 'detail': 'Exceeded Number of Profiles' }) // status code for 'Not Acceptable'
+        return
+    }
+
+    try{
+        userProfile.profiles.push({
+            name: newProfile.name,
+            icon: newProfile.icon
+        })
+
+        if ( userProfile.meta._index === 9 ){
+            userProfile.meta._index = -1
+        }
+
+        userProfile.meta._index += 1
+        await userProfile.save()
+        res.status(201).send({ 'detail': 'User Profile Created' })
+    }
+    catch(err){ 
+        res.status(406).send({ 'detail': err.message })
+    }
+
+})
 module.exports = router
