@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {SCREEN_STATE} from '@/app/profiles/page';
+import Link from 'next/link';
 
 /*
  * Default Screen
@@ -37,12 +38,9 @@ const Default: React.FC<{
             </li>
           )}
         </ul>
-        <div
-          className={styles.manageProfiles}
-          onClick={(): void => changeScreen(SCREEN_STATE.MANAGE_PROFILES)}
-        >
+        <Link href='/ManageProfiles' className={styles.manageProfiles}>
           Manage Profiles
-        </div>
+        </Link>
       </div>
     </section>
   );

@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import {SCREEN_STATE} from '@/app/profiles/page';
 import Edit from '@/utils/icons/Edit';
+import {SCREEN_STATE} from '@/app/ManageProfiles/page';
+import Link from 'next/link';
 
-const ManageProfiles: React.FC<{
+const Default: React.FC<{
   profileData: UserProfileModel;
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
-  refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({profileData, changeScreen, refreshProfileData}) => {
+}> = ({profileData, changeScreen}) => {
   const {
     meta: {profile_creation_available},
     profiles,
@@ -36,19 +36,12 @@ const ManageProfiles: React.FC<{
             </li>
           )}
         </ul>
-        <button
-          type='button'
-          className={styles.doneButton}
-          onClick={(): void => {
-            changeScreen(SCREEN_STATE.DEFAULT);
-            refreshProfileData(false);
-          }}
-        >
+        <Link href='/profiles' className={styles.doneButton}>
           Done
-        </button>
+        </Link>
       </div>
     </section>
   );
 };
 
-export default ManageProfiles;
+export default Default;

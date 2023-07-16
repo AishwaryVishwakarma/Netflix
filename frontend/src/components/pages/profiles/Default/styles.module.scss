@@ -102,13 +102,14 @@ $profile-name-font-size: 1.2vw;
       }
     }
 
-    .manageProfiles {
+    & > a {
       margin-top: 25px;
       color: $secondary-color;
       padding: 0.5em 1.5em;
       font-size: $profile-name-font-size;
       border: 1px solid $secondary-color;
       cursor: pointer;
+      text-decoration: none;
 
       &:hover {
         color: $primary-color;

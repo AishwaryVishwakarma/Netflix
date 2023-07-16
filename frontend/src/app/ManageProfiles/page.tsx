@@ -2,27 +2,23 @@
 
 import React from 'react';
 import styles from './styles.module.scss';
-import Layout from '@/components/Layout/Layout';
 import {type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
-import Protected from '@/components/Protected/Protected';
-import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
 import {clearStorage} from '@/FUNCTIONS';
 import axios from 'axios';
+import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
+import Protected from '@/components/Protected/Protected';
+import Layout from '@/components/Layout/Layout';
 import Loader from '@/utils/loader/loader';
-import Default from '@/components/pages/profiles/Default/Default';
+import Default from '@/components/pages/manageProfiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
-
-/*
-/ Profiles Page
-*/
 
 export const SCREEN_STATE = {
   DEFAULT: 'default',
   ADD_PROFILE: 'addProfile',
 };
 
-const ProfilesPage: React.FC = () => {
+const ManageProfilesPage: React.FC = () => {
   const router = useRouter();
 
   const [screenState, setScreenState] = React.useState<string>(
@@ -105,7 +101,7 @@ const ProfilesPage: React.FC = () => {
 };
 
 const Main: React.FC = () => {
-  return <Protected Page={ProfilesPage} />;
+  return <Protected Page={ManageProfilesPage} />;
 };
 
 export default Main;

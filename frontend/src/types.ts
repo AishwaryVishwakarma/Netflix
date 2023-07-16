@@ -26,9 +26,13 @@ export interface UserProfileModel {
     _index: number;
   };
   profiles: Array<{
+    meta: {
+      deletable: boolean;
+    }
     _id: string;
     icon: string;
     name: string;
+    game_handle: string;
     autoplay_next_episode: boolean;
     autoplay_previews: boolean;
   }>;
