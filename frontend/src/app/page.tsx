@@ -66,16 +66,14 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const onChangeHandler = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const {name, value, type} = event.target;
+    const {name, value, type, checked} = event.target;
     setFormData((prev): FormData => {
       if (type === 'checkbox') {
         return {
           ...prev,
-          [name]: !prev.rememberMe,
+          [name]: checked,
         };
       }
 

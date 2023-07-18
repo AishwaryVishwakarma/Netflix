@@ -7,8 +7,9 @@ $primary-color: #e50914;
 }
 
 .loaderWrapper {
-  height: 100%;
   @include flexbox();
+  height: 100%;
+  background: var(--background-color);
 
   & > svg {
     fill: $primary-color;
