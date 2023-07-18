@@ -22,6 +22,7 @@ const AddProfile: React.FC<{
   } = profileData ?? {};
   const router = useRouter();
 
+  // Using ref to focus on the input when the component is loaded
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [profilename, setProfileName] = React.useState<string>('');

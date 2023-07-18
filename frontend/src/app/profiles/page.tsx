@@ -33,6 +33,7 @@ const ProfilesPage: React.FC = () => {
 
   const [profileData, setProfileData] = React.useState<UserProfileModel>();
 
+  // Decide whether to refresh the profiles
   const [refreshProfiles, setRefreshProfiles] = React.useState<boolean>(true);
 
   const userData = localStorage.getItem('user-data');

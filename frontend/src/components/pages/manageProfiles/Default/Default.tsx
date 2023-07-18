@@ -8,7 +8,8 @@ import Link from 'next/link';
 const Default: React.FC<{
   profileData: UserProfileModel;
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
-}> = ({profileData, changeScreen}) => {
+  getEditProfileData: (id: string) => void;
+}> = ({profileData, changeScreen, getEditProfileData}) => {
   const {
     meta: {profile_creation_available},
     profiles,
@@ -20,7 +21,14 @@ const Default: React.FC<{
         <h1>Manage Profiles</h1>
         <ul className={styles.profiles}>
           {profiles?.map((profile) => (
-            <li className={styles.profileCard} key={profile._id}>
+            <li
+              className={styles.profileCard}
+              key={profile._id}
+              onClick={(): void => {
+                getEditProfileData(profile._id);
+                changeScreen(SCREEN_STATE.EDIT_PROFILE);
+              }}
+            >
               <Edit />
               <img src={profile.icon} alt='profile' />
               <p>{profile.name}</p>

@@ -53,7 +53,7 @@ $container-max-width: 40vw;
       display: grid;
       width: 100%;
       column-gap: var(--column-gap);
-      grid-template-columns: 8vw calc(
+      grid-template-columns: var(--image-width) calc(
           $container-max-width - var(--column-gap) - var(--image-width)
         );
       padding: 13px 0 23px;

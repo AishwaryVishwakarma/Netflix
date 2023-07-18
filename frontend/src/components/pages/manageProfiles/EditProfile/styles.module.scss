@@ -1,0 +1,203 @@
+$primary-color: #fff;
+$secondary-color: #ccc;
+$hover-color: #e50914;
+$icon-width: 8vw;
+$profile-name-font-size: 1.2vw;
+$container-max-width: 60vw;
+$divider-opacity: 0.3;
+
+@mixin flexbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editProfileWrapper {
+  @include flexbox();
+  align-items: flex-start;
+  height: 100%;
+  font-family: var(--font-rubik);
+  padding: 12vh 0;
+
+  & > div {
+    @include flexbox();
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+    animation: scale-in forwards 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(1.1);
+    width: $container-max-width;
+
+    @keyframes scale-in {
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      width: 100%;
+      color: $primary-color;
+      font-size: 4vw;
+      font-weight: 400;
+      user-select: none;
+      border-bottom: 1px solid
+        rgba($color: $secondary-color, $alpha: $divider-opacity);
+    }
+
+    .profileEntry {
+      width: 100%;
+      --column-gap: 2vw;
+      column-gap: var(--column-gap);
+      display: grid;
+      grid-template-columns: $icon-width calc(
+          $container-max-width - var(--column-gap) - $icon-width
+        );
+
+      & > img {
+        height: $icon-width;
+        width: $icon-width;
+        max-height: 180px;
+        max-width: 180px;
+        min-height: 80px;
+        min-width: 80px;
+        border-radius: 4px;
+      }
+
+      & > form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+
+        input[type='text'] {
+          color: $primary-color;
+          background: #666;
+          outline: none;
+          border: none;
+          padding: 0.2em 0.6em;
+          height: 2em;
+          border-radius: 2px;
+        }
+
+        input[type='text'][data-error='true'] {
+          outline: 1px solid $hover-color;
+        }
+
+        input[type='text']::placeholder {
+          color: #eee;
+        }
+
+        .error {
+          color: red;
+          margin-top: -12px;
+          font-size: 1vw;
+        }
+
+        .gameHandle {
+          width: 100%;
+          @include flexbox();
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+          border-bottom: 1px solid
+            rgba($color: $secondary-color, $alpha: $divider-opacity);
+          padding-bottom: 30px;
+          position: relative;
+
+          label {
+            color: $secondary-color;
+            font-size: 1.3vw;
+            font-weight: 400;
+          }
+
+          p {
+            color: $primary-color;
+            font-size: 1vw;
+
+            &:last-child {
+              position: absolute;
+              bottom: 10px;
+              right: 0;
+            }
+          }
+
+          input {
+            width: 100%;
+          }
+        }
+
+        .autoplayControls {
+          @include flexbox();
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+
+          h4 {
+            color: $secondary-color;
+            font-size: 1.3vw;
+            font-weight: 400;
+          }
+
+          span {
+            display: flex;
+            font-size: 0.9vw;
+            align-items: center;
+            gap: 5px;
+          }
+
+          label {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+
+    .controls {
+      @include flexbox();
+      justify-content: flex-start;
+      gap: 2vw;
+      width: 100%;
+      border-top: 1px solid
+        rgba($color: $secondary-color, $alpha: $divider-opacity);
+      padding-top: 20px;
+
+      button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0.5em 1.5em;
+        font-size: 1.2vw;
+        outline: 1px solid grey;
+        border-radius: 2px;
+        font-weight: 600;
+
+        &:first-child {
+          outline: none;
+
+          &:hover {
+            background: $hover-color;
+            color: $primary-color;
+          }
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          background: transparent;
+          color: grey;
+
+          &:hover {
+            color: $primary-color;
+            outline-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
