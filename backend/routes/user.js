@@ -5,7 +5,7 @@ const userMiddleware = require('../middleware/userMiddleware')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const userProfileModel = require('../schema/userProfilesSchema')
+const userProfileModel= require('../schema/userProfilesSchema')
 
 dotenv.config()
 
@@ -39,8 +39,7 @@ router.post('/login', async(req,res) =>{
     }
 
     try{
-        userCreds.remember_me = Boolean(userCreds.remember_me)
-        const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: userCreds.remember_me })
+        const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: Boolean(userCreds.remember_me) })
         user.last_log_in = Date.now()
         await user.save()
         user.password = undefined
@@ -124,28 +123,13 @@ router.post('/checkuser', async(req, res) =>{
 })
 
 
-router.post('/set-subscription', async(req, res) =>{
-    const jwtToken = req.header('Authorization').split(' ')[1]
+router.post('/set-subscription', userMiddleware.authenticateJWT, async(req, res) =>{
+    const userId = req.user
     const subData = req.body
     const userDetails = {
         subscription: subData.subscription,
-        id: ''
+        id: userId
     }
-
-    if (!jwtToken || jwtToken===''){
-        res.status(401).send({ "detail":"Unauthorized access, please login again" })
-        return 
-    }
-
-
-    try{
-        userDetails.id = userMiddleware.verifyJWT(jwtToken)
-    }
-    catch(err){
-        res.status(401).send({ "detail": err.message })
-        return
-    }
-
 
     if (!mongoose.Types.ObjectId.isValid(userDetails.id)){
         res.status(400).send({ "detail":"Invalid ID" })
@@ -173,21 +157,8 @@ router.post('/set-subscription', async(req, res) =>{
     
 })
 
-router.get('/validate-token', async(req, res) => {
-    const jwtToken = req.header('Authorization').split(' ')[1]
-
-    if (!jwtToken || jwtToken===''){
-        res.status(401).send({ "detail":"Unauthorized access, please login again" })
-        return 
-    }
-
-    try{
-        var userId = userMiddleware.verifyJWT(jwtToken)
-    }
-    catch(err){
-        res.status(401).send({ "detail": err.message })
-        return 
-    }
+router.get('/validate-token', userMiddleware.authenticateJWT, async(req, res) => {
+    const userId = req.user
     
     const user = await userModel
             .findOne({ _id: userId })
