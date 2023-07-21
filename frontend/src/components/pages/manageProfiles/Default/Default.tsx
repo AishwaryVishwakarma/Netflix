@@ -5,6 +5,10 @@ import Edit from '@/utils/icons/Edit';
 import {SCREEN_STATE} from '@/app/ManageProfiles/page';
 import Link from 'next/link';
 
+/*
+ * Default Screen for Manage Profiles
+ */
+
 const Default: React.FC<{
   profileData: UserProfileModel;
   changeScreen: React.Dispatch<React.SetStateAction<string>>;

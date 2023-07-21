@@ -42,6 +42,11 @@ const ManageProfilesPage: React.FC = () => {
 
   const authToken = localStorage.getItem('auth-token');
 
+  // Getting the associated profiles object ID
+  const {
+    meta: {profile_id: user_profile_id},
+  } = JSON.parse(userData ?? '');
+
   React.useEffect(() => {
     // Only fetching the data when user has added a profile
     if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
@@ -115,6 +120,7 @@ const ManageProfilesPage: React.FC = () => {
               profileData={editProfileData as UserProfileModel['profiles']}
               changeScreen={setScreenState}
               refreshProfileData={setRefreshProfiles}
+              userProfileId={user_profile_id}
             />
           )}
         </>

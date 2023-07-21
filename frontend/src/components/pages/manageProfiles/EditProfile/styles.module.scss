@@ -19,16 +19,32 @@ $divider-opacity: 0.3;
   font-family: var(--font-rubik);
   padding: 12vh 0;
 
-  & > div {
+  .loaderWrapper {
+    position: absolute;
+    inset: 0;
+    @include flexbox();
+    z-index: 1;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+    filter: brightness(0.6);
+
+    & > svg {
+      fill: $hover-color;
+      height: 2vw;
+      width: 2vw;
+    }
+  }
+
+  .main {
     @include flexbox();
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-    position: relative;
     animation: scale-in forwards 0.3s ease-in-out;
     opacity: 0;
     transform: scale(1.1);
     width: $container-max-width;
+    position: relative;
 
     @keyframes scale-in {
       100% {
@@ -104,7 +120,7 @@ $divider-opacity: 0.3;
           gap: 10px;
           border-bottom: 1px solid
             rgba($color: $secondary-color, $alpha: $divider-opacity);
-          padding-bottom: 30px;
+          padding-bottom: 3vw;
           position: relative;
 
           label {
