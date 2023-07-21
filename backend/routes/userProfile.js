@@ -95,15 +95,21 @@ router.delete('/delete-profile/:user_profile_id', userMiddleware.authenticateJWT
 
         const deleteProfile = userProfile.profiles.id(profile._id)
 
+        if ( deleteProfile == null ){
+            res.status(404).send({"detail":"Profile Not Found"})
+            return 
+        }
+
         if ( deleteProfile.meta.deletable === false ){
             res.status(406).send({"detail": "Cannot delete this profile"})
             return 
         }
 
         deleteProfile.deleteOne()
+        userProfile.meta.profile_creation_available = true
         await userProfile.save()
         
-        res.status(204) // accepted but nothing to return
+        res.status(200).send({"detail":"Successful"}) // accepted but nothing to return
 
     }
     catch(err){

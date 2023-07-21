@@ -14,6 +14,8 @@ const ICONS_ARRAY = [
     'https://occ-0-2482-3646.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABQNA13q-hMGbmuhvHbTvIkxaROY7kVf4QtGMco1CDTTPDZsEbrWtZu0x2vNOnsR1tIOJ71KinrhYET2hP4n_zbeFIxR0tWJ3b7V4.png?r=6a6',
   ]
 
+
+
 const profileSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -66,8 +68,12 @@ const userProfileSchema = new mongoose.Schema({
             ref: 'users'
         }
     },
-    profiles: [profileSchema]
-
+    profiles: {
+        type: [profileSchema], 
+        validate: function arrayLimit(val) {
+            return val.length <= 5
+        }
+    }
 })
 
 
@@ -84,6 +90,8 @@ userProfileSchema.pre('save', async function() {
         }]
     }
 })
+
+
 
 
 const userProfileModel = mongoose.model('user_profiles', userProfileSchema)
