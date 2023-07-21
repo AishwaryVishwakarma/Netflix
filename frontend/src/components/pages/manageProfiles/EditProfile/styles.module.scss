@@ -20,22 +20,6 @@ $divider-opacity: 0.3;
   font-family: var(--font-rubik);
   padding: 12vh 0;
 
-  .loaderWrapper {
-    position: absolute;
-    inset: 0;
-    @include flexbox();
-    z-index: 1;
-    -webkit-backdrop-filter: blur(1px);
-    backdrop-filter: blur(1px);
-    filter: brightness(0.6);
-
-    & > svg {
-      fill: $hover-color;
-      height: 2vw;
-      width: 2vw;
-    }
-  }
-
   .main {
     @include flexbox();
     flex-direction: column;
@@ -220,7 +204,7 @@ $divider-opacity: 0.3;
   @include flexbox();
   color: $primary-color;
 
-  & > div {
+  .main {
     @include flexbox();
     flex-direction: column;
     align-items: flex-start;
@@ -242,6 +226,7 @@ $divider-opacity: 0.3;
     h1 {
       font-size: 4vw;
       font-weight: 400;
+      border: none;
     }
 
     .profileEntry {
@@ -288,6 +273,8 @@ $divider-opacity: 0.3;
       @include flexbox();
       justify-content: flex-start;
       gap: 2vw;
+      border: none;
+      padding: 0;
 
       button {
         margin-top: 10px;
@@ -317,6 +304,22 @@ $divider-opacity: 0.3;
         }
       }
     }
+  }
+}
+
+.loaderWrapper {
+  position: absolute;
+  inset: 0;
+  @include flexbox();
+  z-index: 1;
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  filter: brightness(0.6);
+
+  & > svg {
+    fill: $hover-color;
+    height: 2vw;
+    width: 2vw;
   }
 }
 

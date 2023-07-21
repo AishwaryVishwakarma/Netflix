@@ -283,13 +283,38 @@ const Delete: React.FC<DeleteScreenProps> = ({
 }) => {
   const {_id, name, icon} = profileData[0] ?? {};
 
-  const deleteProfileHandler = () => {
-    console.log(_id);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const deleteProfileHandler = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        data: {
+          _id,
+        },
+      });
+      if (res.status === 200) {
+        refreshProfileData(true);
+        changeScreen(SCREEN_STATE.DEFAULT);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <section className={styles.deleteProfileWrapper}>
-      <div>
+      {isLoading && (
+        <div className={styles.loaderWrapper}>
+          <Loader />
+        </div>
+      )}
+      <div className={styles.main}>
         <h1>Delete Profile?</h1>
         <div className={styles.profileEntry}>
           <div>
