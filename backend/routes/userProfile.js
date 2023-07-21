@@ -5,50 +5,28 @@ const userMiddleware = require('../middleware/userMiddleware')
 
 
 
-router.get('/user-profile', async(req, res) => {
-    const jwtToken = req.header('Authorization').split(' ')[1]
-
-    if (!jwtToken || jwtToken===''){
-        res.status(401).send({ "detail":"Unauthorized access, please login again" })
-        return 
-    }
+router.get('/user-profile', userMiddleware.authenticateJWT, async(req, res) => {
+    const userId = req.user
 
     try{
-        var user_id = userMiddleware.verifyJWT(jwtToken)
+        const profile = await userProfileModel
+            .findOne({ 'meta.user_id': userId })
+            .exec()
+            
+        res.status(200).send({ "user_profile": profile })
     }
     catch(err){
-        res.status(401).send({ "detail": err.message })
-        return
+        res.status(404).send({ "detail": err.message })
     }
-
-    const profile = await userProfileModel
-        .findOne({ 'meta.user_id': user_id })
-        .exec()
-
-    res.send({ "user_profile": profile })
 })
 
 
-router.post('/create-profile', async(req, res) =>{
+router.post('/create-profile', userMiddleware.authenticateJWT, async(req, res) => {
+    const userId = req.user
     const newProfile = req.body
 
-    const jwtToken = req.header('Authorization').split(' ')[1]
-
-    if (!jwtToken || jwtToken===''){
-        res.status(401).send({ "detail": "Unathorized access, please login again" })
-        return
-    }
-
-    try{
-        var user_id = userMiddleware.verifyJWT(jwtToken)
-    }
-    catch(err){
-        res.status(401).send({ "detail": err.message })
-        return
-    }
-
     const userProfile = await userProfileModel
-        .findOne({ 'meta.user_id': user_id })
+        .findOne({ 'meta.user_id': userId })
         .exec()
 
 
@@ -79,4 +57,60 @@ router.post('/create-profile', async(req, res) =>{
     }
 
 })
+
+router.put('/update-profile/:user_profile_id', userMiddleware.authenticateJWT, async(req, res) => {
+    const userId = req.user
+    const userProfileId = req.params.user_profile_id
+    const profile = req.body
+
+    try{
+        const userProfile = await userProfileModel.findOne({ _id: userProfileId })
+        if (userProfile.meta.user_id.equals(userId) === false){
+            res.status(400).send({"detail": "User Mismatch"})
+            return
+        }
+        const updateProfile = userProfile.profiles.id(profile._id)
+        updateProfile.set(profile)
+        await userProfile.save()
+        res.status(200).send({ "user_profile": userProfile })
+    }
+    catch(err){
+        res.status(400).send({ "detail": err.message })
+    }
+
+})
+
+router.delete('/delete-profile/:user_profile_id', userMiddleware.authenticateJWT, async(req, res) =>{
+    const userId = req.user
+    const profile = req.body
+    const userProfileId = req.params.user_profile_id
+
+    try{
+        const userProfile = await userProfileModel.findOne({ _id: userProfileId})
+
+        if (userProfile.meta.user_id.equals(userId) === false){
+            res.status(400).send({"detail": "User Mismatch"})
+            return
+        }
+
+        const deleteProfile = userProfile.profiles.id(profile._id)
+
+        if ( deleteProfile.meta.deletable === false ){
+            res.status(406).send({"detail": "Cannot delete this profile"})
+            return 
+        }
+
+        deleteProfile.deleteOne()
+        await userProfile.save()
+        
+        res.status(204) // accepted but nothing to return
+
+    }
+    catch(err){
+        res.send({ "detail": err.message })
+    }
+
+})
+
+
 module.exports = router

@@ -4,14 +4,30 @@ import {type UserProfileModel} from '@/types';
 import {clearStorage} from '@/FUNCTIONS';
 import {useRouter} from 'next/navigation';
 import {SCREEN_STATE} from '@/app/ManageProfiles/page';
+import {
+  deleteProfile as DELETE_PROFILE_URL,
+  updateProfile as UPDATE_PROFILE_URL,
+} from '@/END_POINTS';
+import axios from 'axios';
+import Loader from '@/utils/loader/loader';
 
-type ProfileData = Omit<UserProfileModel['profiles'][0], '_id' | 'meta'>;
+/*
+ * Edit Profile Screen
+ */
+
+type ProfileData = Omit<UserProfileModel['profiles'][0], 'meta'>;
 
 const EditProfile: React.FC<{
   profileData: UserProfileModel['profiles'];
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
   refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({profileData, changeScreen, refreshProfileData}) => {
+  userProfileId: string;
+}> = ({
+  profileData,
+  changeScreen,
+  refreshProfileData,
+  userProfileId: USER_PROFILE_ID,
+}) => {
   const {
     _id,
     meta: {deletable},
@@ -25,6 +41,7 @@ const EditProfile: React.FC<{
   const router = useRouter();
 
   const [data, setData] = React.useState<ProfileData>({
+    _id,
     name,
     icon,
     game_handle: game_handle || '',
@@ -35,6 +52,8 @@ const EditProfile: React.FC<{
   const [isGameHandleUnderFocus, setIsGameHandleUnderFocus] =
     React.useState<boolean>(false);
 
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   // Using ref to focus on the input when the component is loaded
   const nameInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -44,7 +63,7 @@ const EditProfile: React.FC<{
     nameInputRef.current?.focus();
   }, []);
 
-  if (!authToken) {
+  if (!authToken || !USER_PROFILE_ID) {
     clearStorage(['user-data', 'auth-token'], localStorage);
     router.push('/');
     return;
@@ -70,32 +89,68 @@ const EditProfile: React.FC<{
     });
   };
 
-  //Form submit handler
-  const saveDatahandler = (
+  // Fired when the User clicks on Save button
+  const saveProfileHandler = async (
     event:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    const {name, icon, game_handle, autoplay_next_episode, autoplay_previews} =
-      data;
-    const body = {
-      name,
-      icon,
-      game_handle,
-      autoplay_next_episode,
-      autoplay_previews,
-    };
-    console.log(body);
+    nameInputRef.current?.blur();
+    setIsLoading(true);
+    try {
+      const res = await axios.put(
+        UPDATE_PROFILE_URL + USER_PROFILE_ID,
+        {
+          ...data,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        refreshProfileData(true);
+        changeScreen(SCREEN_STATE.DEFAULT);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  const deleteProfileHandler = async () => {
+    // try {
+    //   const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
+    //     headers: {
+    //       Authorization: `Bearer ${authToken}`,
+    //     },
+    //     data: {
+    //       _id,
+    //     },
+    //   });
+    //   refreshProfileData(true);
+    //   changeScreen(SCREEN_STATE.DEFAULT);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    console.log(_id);
   };
 
   return (
     <section className={styles.editProfileWrapper}>
-      <div>
+      {isLoading && (
+        <div className={styles.loaderWrapper}>
+          <Loader />
+        </div>
+      )}
+      {/* Changing the tabIndex when it's loading in order to prevent navigation through tab */}
+      <div className={styles.main} tabIndex={isLoading ? -1 : 0}>
         <h1>Edit Profile</h1>
         <div className={styles.profileEntry}>
           <img src={icon} alt={name} />
-          <form onSubmit={saveDatahandler}>
+          <form onSubmit={saveProfileHandler}>
             <input
               ref={nameInputRef}
               data-error={data.name.length === 0}
@@ -122,8 +177,6 @@ const EditProfile: React.FC<{
                 id='game_handle'
                 name='game_handle'
                 placeholder='Create Game Handle'
-                min={2}
-                max={16}
                 onChange={handleDataChange}
               />
               {isGameHandleUnderFocus && <p>{data.game_handle?.length}/16</p>}
@@ -137,7 +190,6 @@ const EditProfile: React.FC<{
                   id='autoplay_next_episode'
                   checked={data.autoplay_next_episode}
                   onChange={handleDataChange}
-                  required
                 />
                 <label htmlFor='autoplay_next_episode'>
                   Autoplay next episode in a series on all devices.
@@ -150,7 +202,6 @@ const EditProfile: React.FC<{
                   id='autoplay_previews'
                   checked={data.autoplay_previews}
                   onChange={handleDataChange}
-                  required
                 />
                 <label htmlFor='autoplay_previews'>
                   Autoplay previews while browsing on all devices.
@@ -165,7 +216,7 @@ const EditProfile: React.FC<{
           <button
             type='submit'
             onClick={(e) => {
-              saveDatahandler(e);
+              saveProfileHandler(e);
             }}
           >
             Save
@@ -178,7 +229,9 @@ const EditProfile: React.FC<{
           >
             Cancel
           </button>
-          {deletable && <button>Delete Profile</button>}
+          {deletable && (
+            <button onClick={deleteProfileHandler}>Delete Profile</button>
+          )}
         </div>
       </div>
     </section>
