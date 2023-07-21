@@ -106,6 +106,7 @@ router.delete('/delete-profile/:user_profile_id', userMiddleware.authenticateJWT
         }
 
         deleteProfile.deleteOne()
+        userProfile.meta.profile_creation_available = true
         await userProfile.save()
         
         res.status(200).send({"detail":"Successful"}) // accepted but nothing to return
