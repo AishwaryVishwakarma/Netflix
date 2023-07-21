@@ -12,21 +12,82 @@ import axios from 'axios';
 import Loader from '@/utils/loader/loader';
 
 /*
- * Edit Profile Screen
+ * Edit Profile Screen [contains 2 screens]
  */
+
+const LOCAL_SCREEN_STATE = {
+  DEFAULT: 'default',
+  DELETE: 'delete',
+};
 
 type ProfileData = Omit<UserProfileModel['profiles'][0], 'meta'>;
 
-const EditProfile: React.FC<{
+// Parent Component props
+interface ComponentProps {
   profileData: UserProfileModel['profiles'];
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
   refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
   userProfileId: string;
-}> = ({
+}
+
+interface DefaultScreenProps extends ComponentProps {
+  authToken: string;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface DeleteScreenProps extends ComponentProps {
+  authToken: string;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const EditProfile: React.FC<ComponentProps> = ({
   profileData,
   changeScreen,
   refreshProfileData,
+  userProfileId,
+}) => {
+  const authToken = localStorage.getItem('auth-token');
+
+  const router = useRouter();
+
+  const [localScreenState, setLocalScreenState] = React.useState<string>(
+    LOCAL_SCREEN_STATE.DEFAULT
+  );
+
+  if (!authToken || !userProfileId) {
+    clearStorage(['user-data', 'auth-token'], localStorage);
+    router.push('/');
+    return;
+  }
+
+  const screenProps = {
+    authToken,
+    userProfileId,
+    profileData,
+    changeScreen,
+    refreshProfileData,
+    changeLocalSreen: setLocalScreenState,
+  };
+
+  return (
+    <>
+      {localScreenState === LOCAL_SCREEN_STATE.DEFAULT && (
+        <Default {...screenProps} />
+      )}
+      {localScreenState === LOCAL_SCREEN_STATE.DELETE && (
+        <Delete {...screenProps} />
+      )}
+    </>
+  );
+};
+
+const Default: React.FC<DefaultScreenProps> = ({
+  profileData,
+  authToken,
   userProfileId: USER_PROFILE_ID,
+  changeScreen,
+  refreshProfileData,
+  changeLocalSreen,
 }) => {
   const {
     _id,
@@ -37,8 +98,6 @@ const EditProfile: React.FC<{
     autoplay_next_episode,
     autoplay_previews,
   } = profileData[0] ?? {};
-
-  const router = useRouter();
 
   const [data, setData] = React.useState<ProfileData>({
     _id,
@@ -57,17 +116,9 @@ const EditProfile: React.FC<{
   // Using ref to focus on the input when the component is loaded
   const nameInputRef = React.useRef<HTMLInputElement>(null);
 
-  const authToken = localStorage.getItem('auth-token');
-
   React.useEffect(() => {
     nameInputRef.current?.focus();
   }, []);
-
-  if (!authToken || !USER_PROFILE_ID) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
 
   // Handle Profile data changes
   const handleDataChange = (
@@ -118,24 +169,6 @@ const EditProfile: React.FC<{
       setIsLoading(false);
       console.log(error);
     }
-  };
-
-  const deleteProfileHandler = async () => {
-    // try {
-    //   const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
-    //     headers: {
-    //       Authorization: `Bearer ${authToken}`,
-    //     },
-    //     data: {
-    //       _id,
-    //     },
-    //   });
-    //   refreshProfileData(true);
-    //   changeScreen(SCREEN_STATE.DEFAULT);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log(_id);
   };
 
   return (
@@ -230,8 +263,52 @@ const EditProfile: React.FC<{
             Cancel
           </button>
           {deletable && (
-            <button onClick={deleteProfileHandler}>Delete Profile</button>
+            <button onClick={() => changeLocalSreen(LOCAL_SCREEN_STATE.DELETE)}>
+              Delete Profile
+            </button>
           )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Delete: React.FC<DeleteScreenProps> = ({
+  profileData,
+  authToken,
+  userProfileId: USER_PROFILE_ID,
+  changeScreen,
+  refreshProfileData,
+  changeLocalSreen,
+}) => {
+  const {_id, name, icon} = profileData[0] ?? {};
+
+  const deleteProfileHandler = () => {
+    console.log(_id);
+  };
+
+  return (
+    <section className={styles.deleteProfileWrapper}>
+      <div>
+        <h1>Delete Profile?</h1>
+        <div className={styles.profileEntry}>
+          <div>
+            <img src={icon} alt='' />
+            <p>{name}</p>
+          </div>
+          <h3>
+            This profile&apos;s history - including My List , ratings and
+            activity - will be gone forever, and you won&apos;t be able to
+            access it again
+          </h3>
+        </div>
+        <div className={styles.controls}>
+          <button
+            onClick={(): void => changeLocalSreen(LOCAL_SCREEN_STATE.DEFAULT)}
+          >
+            Keep Profile
+          </button>
+          <button onClick={deleteProfileHandler}>Delete Profile</button>
         </div>
       </div>
     </section>

@@ -12,7 +12,8 @@ $divider-opacity: 0.3;
   justify-content: center;
 }
 
-.editProfileWrapper {
+.editProfileWrapper,
+.deleteProfileWrapper {
   @include flexbox();
   align-items: flex-start;
   height: 100%;
@@ -203,6 +204,111 @@ $divider-opacity: 0.3;
         &:nth-child(3) {
           background: transparent;
           color: grey;
+
+          &:hover {
+            color: $primary-color;
+            outline-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.deleteProfileWrapper {
+  --max-width: 40vw;
+  @include flexbox();
+  color: $primary-color;
+
+  & > div {
+    @include flexbox();
+    flex-direction: column;
+    align-items: flex-start;
+    animation: scale-in forwards 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(1.1);
+    margin: auto;
+    width: var(--max-width);
+    position: relative;
+    gap: 15px;
+
+    @keyframes scale-in {
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      font-size: 4vw;
+      font-weight: 400;
+    }
+
+    .profileEntry {
+      --column-gap: 20px;
+      padding: 1.5em 0;
+      border-bottom: 1px solid #333;
+      border-top: 1px solid #333;
+      display: grid;
+      column-gap: var(--column-gap);
+      grid-template-columns: $icon-width calc(
+          var(--max-width) - var(--column-gap) - $icon-width
+        );
+
+      & > div {
+        @include flexbox();
+        flex-direction: column;
+
+        img {
+          height: $icon-width;
+          width: $icon-width;
+        }
+
+        p {
+          color: grey;
+          display: block;
+          font-size: 1.3vw;
+          line-height: 1.2em;
+          margin: 0.6em 0 0;
+          min-height: 1.8em;
+          overflow: hidden;
+          text-align: center;
+          text-overflow: ellipsis;
+        }
+      }
+
+      h3 {
+        font-size: 1.2vw;
+        font-weight: 400;
+        align-self: center;
+      }
+    }
+
+    .controls {
+      @include flexbox();
+      justify-content: flex-start;
+      gap: 2vw;
+
+      button {
+        margin-top: 10px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0.5em 1.5em;
+        border-radius: 2px;
+        font-size: 1.2vw;
+
+        &:nth-child(1) {
+          &:hover {
+            background: $hover-color;
+            color: $primary-color;
+          }
+        }
+
+        &:nth-child(2) {
+          background: transparent;
+          color: grey;
+          outline: 1px solid grey;
 
           &:hover {
             color: $primary-color;
