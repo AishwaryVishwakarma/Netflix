@@ -12,6 +12,7 @@ import axios from 'axios';
 import Loader from '@/utils/loader/loader';
 import Edit from '@/utils/icons/Edit';
 import {BiArrowBack} from 'react-icons/bi';
+import {AiOutlineRight} from 'react-icons/ai';
 import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
 import {nanoid} from 'nanoid';
 
@@ -26,6 +27,11 @@ const LOCAL_SCREEN_STATE = {
   CONFIRM_UPDATE_ICON: 'confirmUpdateIcon',
 };
 
+interface IconState {
+  current: string;
+  new: string;
+}
+
 type ProfileData = Omit<UserProfileModel['profiles'][0], 'meta'>;
 
 // Parent Component props
@@ -37,8 +43,8 @@ interface ComponentProps {
 }
 
 interface DefaultScreenProps extends ComponentProps {
-  stateData: ProfileData;
-  setStateData: React.Dispatch<React.SetStateAction<ProfileData>>;
+  localProfileData: ProfileData;
+  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
   authToken: string;
   changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -51,12 +57,7 @@ interface DeleteScreenProps extends ComponentProps {
 interface UpdateIconScreenProps {
   profileData: UserProfileModel['profiles'];
   changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
-  changeIconState: React.Dispatch<
-    React.SetStateAction<{
-      original: string;
-      updated: string;
-    }>
-  >;
+  changeIconState: React.Dispatch<React.SetStateAction<IconState>>;
 }
 
 const EditProfile: React.FC<ComponentProps> = ({
@@ -78,6 +79,7 @@ const EditProfile: React.FC<ComponentProps> = ({
 
   const router = useRouter();
 
+  // Local Profile Data
   const [data, setData] = React.useState<ProfileData>({
     _id,
     name,
@@ -92,9 +94,9 @@ const EditProfile: React.FC<ComponentProps> = ({
   );
 
   // Using this state in order to retrieve both icons in confirmation state
-  const [updateIconState, setUpdateIconState] = React.useState({
-    original: icon,
-    updated: '',
+  const [iconState, setIconState] = React.useState<IconState>({
+    current: icon,
+    new: '',
   });
 
   if (!authToken || !userProfileId) {
@@ -114,8 +116,8 @@ const EditProfile: React.FC<ComponentProps> = ({
 
   const defaultScreenProps = {
     ...deleteScreenProps,
-    stateData: data,
-    setStateData: setData,
+    localProfileData: data,
+    setLocalProfileData: setData,
   };
 
   return (
@@ -130,11 +132,15 @@ const EditProfile: React.FC<ComponentProps> = ({
         <UpdateIcon
           profileData={profileData}
           changeLocalSreen={setLocalScreenState}
-          changeIconState={setUpdateIconState}
+          changeIconState={setIconState}
         />
       )}
       {localScreenState === LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON && (
-        <ConfirmChangeIcon />
+        <ConfirmChangeIcon
+          setLocalProfileData={setData}
+          icons={iconState}
+          changeLocalSreen={setLocalScreenState}
+        />
       )}
     </>
   );
@@ -143,8 +149,8 @@ const EditProfile: React.FC<ComponentProps> = ({
 // Default Screen [ Has the form and all the controls ]
 const Default: React.FC<DefaultScreenProps> = ({
   profileData,
-  stateData: data,
-  setStateData: setData,
+  localProfileData: data,
+  setLocalProfileData: setData,
   authToken,
   userProfileId: USER_PROFILE_ID,
   changeScreen,
@@ -153,9 +159,9 @@ const Default: React.FC<DefaultScreenProps> = ({
 }) => {
   const {
     meta: {deletable},
-    name,
-    icon,
   } = profileData[0] ?? {};
+
+  const {icon, name} = data ?? {};
 
   const [isGameHandleUnderFocus, setIsGameHandleUnderFocus] =
     React.useState<boolean>(false);
@@ -339,7 +345,7 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
 }) => {
   const {name, icon} = profileData[0] ?? {};
   return (
-    <section className={styles.updateProfileWrapper}>
+    <section className={styles.updateIconWrapper}>
       <div className={styles.main}>
         <span className={styles.topBar}>
           <button
@@ -364,14 +370,15 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
               <li
                 key={nanoid()}
                 // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
-                onClick={() =>
-                  changeIconState((prev) => {
+                onClick={(): void => {
+                  changeIconState((prev): IconState => {
                     return {
                       ...prev,
-                      updated: icon,
+                      new: icon,
                     };
-                  })
-                }
+                  });
+                  changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
+                }}
               >
                 <img src={icon} alt='' />
               </li>
@@ -384,8 +391,53 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
 };
 
 // Icon Change Confirmation Screen
-const ConfirmChangeIcon: React.FC = () => {
-  return <div>ihewf</div>;
+const ConfirmChangeIcon: React.FC<{
+  icons: IconState;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+}> = ({icons, changeLocalSreen, setLocalProfileData}) => {
+  const {current, new: newIcon} = icons ?? {};
+
+  return (
+    <section className={styles.confirmChangeIconWrapper}>
+      <div className={styles.main}>
+        <h1>Change profile icon?</h1>
+        <div className={styles.iconsContainer}>
+          <span>
+            <img src={current} alt='' />
+            <p>Current</p>
+          </span>
+          <AiOutlineRight />
+          <span>
+            <img src={newIcon} alt='' />
+            <p>New</p>
+          </span>
+        </div>
+        <div className={styles.controls}>
+          <button
+            onClick={() => {
+              setLocalProfileData((prev): ProfileData => {
+                return {
+                  ...prev,
+                  icon: newIcon,
+                };
+              });
+              changeLocalSreen(LOCAL_SCREEN_STATE.DEFAULT);
+            }}
+          >
+            Let&apos;s Do it
+          </button>
+          <button
+            onClick={() => {
+              changeLocalSreen(LOCAL_SCREEN_STATE.UPDATE_ICON);
+            }}
+          >
+            Not yet
+          </button>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 // Delete Profile Screen

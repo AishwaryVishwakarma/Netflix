@@ -226,7 +226,7 @@ $header-height: 68px;
 }
 
 // Update Profile Icon Styles
-.updateProfileWrapper {
+.updateIconWrapper {
   height: 100%;
   width: 100%;
   color: $primary-color;
@@ -312,13 +312,17 @@ $header-height: 68px;
 
     .iconsContainer {
       padding: 2vw var(--horizontal-padding);
+      width: 100%;
 
       ul {
-        @include flexbox();
-        justify-content: flex-start;
+        --grid-gap: 1.8vw;
         list-style: none;
-        flex-wrap: wrap;
-        gap: 1.8vw;
+        gap: var(--grid-gap);
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(calc($icon-width + var(--grid-gap)), auto)
+        );
 
         li {
           cursor: pointer;
@@ -344,10 +348,121 @@ $header-height: 68px;
   }
 }
 
+// Confirm Update Icon Screen STyles
+.confirmChangeIconWrapper {
+  @include flexbox();
+  align-items: flex-start;
+  height: 100%;
+  font-family: var(--font-rubik);
+  padding: 12vh 0;
+  color: $primary-color;
+
+  .main {
+    @include flexbox();
+    flex-direction: column;
+    animation: scale-in forwards 0.3s ease-in-out;
+    opacity: 0;
+    transform: scale(1.1);
+    margin: auto;
+    width: var(--max-width);
+    position: relative;
+    gap: 15px;
+
+    @keyframes scale-in {
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    h1 {
+      font-weight: 500;
+    }
+
+    .iconsContainer {
+      @include flexbox();
+      padding: 3vw 0;
+      gap: 2vw;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+
+      span {
+        @include flexbox();
+        flex-direction: column;
+        gap: 1vw;
+
+        img {
+          border-radius: 4px;
+          height: calc($icon-width + 2vw);
+          width: calc($icon-width + 2vw);
+          max-height: 150px;
+          max-width: 150px;
+          min-height: 40px;
+          min-width: 40px;
+        }
+
+        p {
+          font-size: 1vw;
+          color: $secondary-color;
+        }
+
+        &:hover {
+          img {
+            outline: 2px solid $secondary-color;
+          }
+        }
+      }
+
+      svg {
+        fill: $primary-color;
+        height: 3vw;
+        width: 3vw;
+        transform: translateY(-calc($icon-width/2));
+      }
+    }
+
+    .controls {
+      @include flexbox();
+      gap: 2vw;
+      margin-top: 20px;
+
+      button {
+        outline: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px;
+        padding: 0.5em 1.5em;
+        font-size: 1.2vw;
+        font-weight: 600;
+
+        &:nth-child(1) {
+          background: $primary-color;
+          color: #000;
+
+          &:hover {
+            background-color: $hover-color;
+            color: $primary-color;
+          }
+        }
+
+        &:nth-child(2) {
+          background: transparent;
+          outline: 1px solid $secondary-color;
+          color: $secondary-color;
+
+          &:hover {
+            outline-color: $primary-color;
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
 // Delete Profile Screen Styles
 .deleteProfileWrapper {
   --max-width: 40vw;
-  @include flexbox();
   color: $primary-color;
 
   .main {
