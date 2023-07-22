@@ -10,27 +10,64 @@ import {
 } from '@/END_POINTS';
 import axios from 'axios';
 import Loader from '@/utils/loader/loader';
+import Edit from '@/utils/icons/Edit';
+import {BiArrowBack} from 'react-icons/bi';
+import {AiOutlineRight} from 'react-icons/ai';
+import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
+import {nanoid} from 'nanoid';
 
 /*
- * Edit Profile Screen
+ * Edit Profile Screen [contains 4 screens]
  */
+
+const LOCAL_SCREEN_STATE = {
+  DEFAULT: 'default',
+  DELETE: 'delete',
+  UPDATE_ICON: 'updateIcon',
+  CONFIRM_UPDATE_ICON: 'confirmUpdateIcon',
+};
+
+interface IconState {
+  current: string;
+  new: string;
+}
 
 type ProfileData = Omit<UserProfileModel['profiles'][0], 'meta'>;
 
-const EditProfile: React.FC<{
+// Parent Component props
+interface ComponentProps {
   profileData: UserProfileModel['profiles'];
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
   refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
   userProfileId: string;
-}> = ({
+}
+
+interface DefaultScreenProps extends ComponentProps {
+  localProfileData: ProfileData;
+  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+  authToken: string;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface DeleteScreenProps extends ComponentProps {
+  authToken: string;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface UpdateIconScreenProps {
+  profileData: UserProfileModel['profiles'];
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+  changeIconState: React.Dispatch<React.SetStateAction<IconState>>;
+}
+
+const EditProfile: React.FC<ComponentProps> = ({
   profileData,
   changeScreen,
   refreshProfileData,
-  userProfileId: USER_PROFILE_ID,
+  userProfileId,
 }) => {
   const {
     _id,
-    meta: {deletable},
     name,
     icon,
     game_handle,
@@ -38,8 +75,11 @@ const EditProfile: React.FC<{
     autoplay_previews,
   } = profileData[0] ?? {};
 
+  const authToken = localStorage.getItem('auth-token');
+
   const router = useRouter();
 
+  // Local Profile Data
   const [data, setData] = React.useState<ProfileData>({
     _id,
     name,
@@ -49,6 +89,80 @@ const EditProfile: React.FC<{
     autoplay_previews,
   });
 
+  const [localScreenState, setLocalScreenState] = React.useState<string>(
+    LOCAL_SCREEN_STATE.DEFAULT
+  );
+
+  // Using this state in order to retrieve both icons in confirmation state
+  const [iconState, setIconState] = React.useState<IconState>({
+    current: icon,
+    new: '',
+  });
+
+  if (!authToken || !userProfileId) {
+    clearStorage(['user-data', 'auth-token'], localStorage);
+    router.push('/');
+    return;
+  }
+
+  const deleteScreenProps = {
+    authToken,
+    userProfileId,
+    profileData,
+    changeScreen,
+    refreshProfileData,
+    changeLocalSreen: setLocalScreenState,
+  };
+
+  const defaultScreenProps = {
+    ...deleteScreenProps,
+    localProfileData: data,
+    setLocalProfileData: setData,
+  };
+
+  return (
+    <>
+      {localScreenState === LOCAL_SCREEN_STATE.DEFAULT && (
+        <Default {...defaultScreenProps} />
+      )}
+      {localScreenState === LOCAL_SCREEN_STATE.DELETE && (
+        <Delete {...deleteScreenProps} />
+      )}
+      {localScreenState === LOCAL_SCREEN_STATE.UPDATE_ICON && (
+        <UpdateIcon
+          profileData={profileData}
+          changeLocalSreen={setLocalScreenState}
+          changeIconState={setIconState}
+        />
+      )}
+      {localScreenState === LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON && (
+        <ConfirmChangeIcon
+          setLocalProfileData={setData}
+          icons={iconState}
+          changeLocalSreen={setLocalScreenState}
+        />
+      )}
+    </>
+  );
+};
+
+// Default Screen [ Has the form and all the controls ]
+const Default: React.FC<DefaultScreenProps> = ({
+  profileData,
+  localProfileData: data,
+  setLocalProfileData: setData,
+  authToken,
+  userProfileId: USER_PROFILE_ID,
+  changeScreen,
+  refreshProfileData,
+  changeLocalSreen,
+}) => {
+  const {
+    meta: {deletable},
+  } = profileData[0] ?? {};
+
+  const {icon, name} = data ?? {};
+
   const [isGameHandleUnderFocus, setIsGameHandleUnderFocus] =
     React.useState<boolean>(false);
 
@@ -57,17 +171,9 @@ const EditProfile: React.FC<{
   // Using ref to focus on the input when the component is loaded
   const nameInputRef = React.useRef<HTMLInputElement>(null);
 
-  const authToken = localStorage.getItem('auth-token');
-
   React.useEffect(() => {
     nameInputRef.current?.focus();
   }, []);
-
-  if (!authToken || !USER_PROFILE_ID) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
 
   // Handle Profile data changes
   const handleDataChange = (
@@ -120,24 +226,6 @@ const EditProfile: React.FC<{
     }
   };
 
-  const deleteProfileHandler = async () => {
-    // try {
-    //   const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
-    //     headers: {
-    //       Authorization: `Bearer ${authToken}`,
-    //     },
-    //     data: {
-    //       _id,
-    //     },
-    //   });
-    //   refreshProfileData(true);
-    //   changeScreen(SCREEN_STATE.DEFAULT);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log(_id);
-  };
-
   return (
     <section className={styles.editProfileWrapper}>
       {isLoading && (
@@ -149,7 +237,16 @@ const EditProfile: React.FC<{
       <div className={styles.main} tabIndex={isLoading ? -1 : 0}>
         <h1>Edit Profile</h1>
         <div className={styles.profileEntry}>
-          <img src={icon} alt={name} />
+          <div>
+            <img src={icon} alt={name} />
+            <span
+              onClick={(): void =>
+                changeLocalSreen(LOCAL_SCREEN_STATE.UPDATE_ICON)
+              }
+            >
+              <Edit />
+            </span>
+          </div>
           <form onSubmit={saveProfileHandler}>
             <input
               ref={nameInputRef}
@@ -230,8 +327,181 @@ const EditProfile: React.FC<{
             Cancel
           </button>
           {deletable && (
-            <button onClick={deleteProfileHandler}>Delete Profile</button>
+            <button onClick={() => changeLocalSreen(LOCAL_SCREEN_STATE.DELETE)}>
+              Delete Profile
+            </button>
           )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Update Icon Screen
+const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
+  profileData,
+  changeLocalSreen,
+  changeIconState,
+}) => {
+  const {name, icon} = profileData[0] ?? {};
+  return (
+    <section className={styles.updateIconWrapper}>
+      <div className={styles.main}>
+        <span className={styles.topBar}>
+          <button
+            role='button'
+            type='button'
+            onClick={(): void => changeLocalSreen(LOCAL_SCREEN_STATE.DEFAULT)}
+          >
+            <BiArrowBack />
+          </button>
+          <div>
+            <h2>Edit Profile</h2>
+            <h4>Choose a profile icon.</h4>
+          </div>
+          <div className={styles.profileDetail}>
+            <h3>{name}</h3>
+            <img src={icon} alt='' />
+          </div>
+        </span>
+        <div className={styles.iconsContainer}>
+          <ul>
+            {ICONS_ARRAY.map((icon) => (
+              <li
+                key={nanoid()}
+                // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
+                onClick={(): void => {
+                  changeIconState((prev): IconState => {
+                    return {
+                      ...prev,
+                      new: icon,
+                    };
+                  });
+                  changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
+                }}
+              >
+                <img src={icon} alt='' />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Icon Change Confirmation Screen
+const ConfirmChangeIcon: React.FC<{
+  icons: IconState;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+}> = ({icons, changeLocalSreen, setLocalProfileData}) => {
+  const {current, new: newIcon} = icons ?? {};
+
+  return (
+    <section className={styles.confirmChangeIconWrapper}>
+      <div className={styles.main}>
+        <h1>Change profile icon?</h1>
+        <div className={styles.iconsContainer}>
+          <span>
+            <img src={current} alt='' />
+            <p>Current</p>
+          </span>
+          <AiOutlineRight />
+          <span>
+            <img src={newIcon} alt='' />
+            <p>New</p>
+          </span>
+        </div>
+        <div className={styles.controls}>
+          <button
+            onClick={() => {
+              setLocalProfileData((prev): ProfileData => {
+                return {
+                  ...prev,
+                  icon: newIcon,
+                };
+              });
+              changeLocalSreen(LOCAL_SCREEN_STATE.DEFAULT);
+            }}
+          >
+            Let&apos;s Do it
+          </button>
+          <button
+            onClick={() => {
+              changeLocalSreen(LOCAL_SCREEN_STATE.UPDATE_ICON);
+            }}
+          >
+            Not yet
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Delete Profile Screen
+const Delete: React.FC<DeleteScreenProps> = ({
+  profileData,
+  authToken,
+  userProfileId: USER_PROFILE_ID,
+  changeScreen,
+  refreshProfileData,
+  changeLocalSreen,
+}) => {
+  const {_id, name, icon} = profileData[0] ?? {};
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  const deleteProfileHandler = async () => {
+    setIsLoading(true);
+    try {
+      const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        data: {
+          _id,
+        },
+      });
+      if (res.status === 200) {
+        refreshProfileData(true);
+        changeScreen(SCREEN_STATE.DEFAULT);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <section className={styles.deleteProfileWrapper}>
+      {isLoading && (
+        <div className={styles.loaderWrapper}>
+          <Loader />
+        </div>
+      )}
+      <div className={styles.main}>
+        <h1>Delete Profile?</h1>
+        <div className={styles.profileEntry}>
+          <div>
+            <img src={icon} alt='' />
+            <p>{name}</p>
+          </div>
+          <h3>
+            This profile&apos;s history - including My List , ratings and
+            activity - will be gone forever, and you won&apos;t be able to
+            access it again
+          </h3>
+        </div>
+        <div className={styles.controls}>
+          <button
+            onClick={(): void => changeLocalSreen(LOCAL_SCREEN_STATE.DEFAULT)}
+          >
+            Keep Profile
+          </button>
+          <button onClick={deleteProfileHandler}>Delete Profile</button>
         </div>
       </div>
     </section>

@@ -86,10 +86,18 @@ const ManageProfilesPage: React.FC = () => {
   }
 
   // Get the profile data for the profile that is currently editing
-  const get_edit_profile_data = (id: string): void => {
-    profileData?.profiles.forEach((profile) => {
-      if (id === profile._id) setEditProfileData([profile]);
-    });
+  const get_edit_profile_data = (id: string): null | void => {
+    const profilesArray = profileData?.profiles;
+    if (!profilesArray) {
+      return null;
+    }
+
+    for (const profile of profilesArray) {
+      if (id === profile._id) {
+        setEditProfileData([profile]);
+        break;
+      }
+    }
   };
 
   return (

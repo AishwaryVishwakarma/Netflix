@@ -42,7 +42,9 @@ const LoginPage: React.FC = () => {
     React.useState<boolean>(false);
 
   const [formData, setFormData] = React.useState<FormData>((): FormData => {
-    sessionEmail = sessionStorage.getItem('email');
+    if (typeof window !== 'undefined') {
+      sessionEmail = sessionStorage.getItem('email');
+    }
 
     return {
       email: sessionEmail ? sessionEmail : '',
