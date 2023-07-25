@@ -65,11 +65,21 @@ router.put('/update-profile/:user_profile_id', userMiddleware.authenticateJWT, a
 
     try{
         const userProfile = await userProfileModel.findOne({ _id: userProfileId })
+
         if (userProfile.meta.user_id.equals(userId) === false){
             res.status(400).send({"detail": "User Mismatch"})
             return
         }
+        
         const updateProfile = userProfile.profiles.id(profile._id)
+        const profileIcons = updateProfile.meta.icon_history
+        const newIcon = profile.icon
+        const iconFound = profileIcons.find(e => e === newIcon)
+
+        if ( iconFound == undefined ){
+            updateProfile.meta.icon_history.push(newIcon)
+        }
+
         updateProfile.set(profile)
         await userProfile.save()
         res.status(200).send({ "user_profile": userProfile })

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const userModel = require('./userSchema')
+const arrayUniquePlugin = require('mongoose-unique-array')
 
 const ICONS_ARRAY = [
     'https://occ-0-2482-3646.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABfNXUMVXGhnCZwPI1SghnGpmUgqS_J-owMff-jig42xPF7vozQS1ge5xTgPTzH7ttfNYQXnsYs4vrMBaadh4E6RTJMVepojWqOXx.png?r=1d4',
@@ -40,6 +41,10 @@ const profileSchema = new mongoose.Schema({
             type: Boolean,
             required: true,
             default: true
+        },
+        icon_history: {
+            type: [String],
+            unique: true // used as a validator because of plugin added
         }
     },
     game_handle:{
@@ -76,16 +81,19 @@ const userProfileSchema = new mongoose.Schema({
     }
 })
 
+userProfileSchema.plugin(arrayUniquePlugin) 
 
 userProfileSchema.pre('save', async function() {
     if ( this.meta._index == null ){
         const userInstance = await userModel.findOne({ _id: this.meta.user_id })
         this.meta._index = Math.floor(Math.random() * 10)
+        const icon = ICONS_ARRAY[this.meta._index]
         this.profiles = [{
             name: userInstance.email,
-            icon: ICONS_ARRAY[this.meta._index],
+            icon: icon,
             meta: {
-                deletable: false
+                deletable: false,
+                icon_history: [icon]
             }
         }]
     }
