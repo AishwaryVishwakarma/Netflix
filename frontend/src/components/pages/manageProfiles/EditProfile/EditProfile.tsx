@@ -343,7 +343,12 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
   changeLocalSreen,
   changeIconState,
 }) => {
-  const {name, icon} = profileData[0] ?? {};
+  const {
+    name,
+    icon,
+    meta: {icon_history},
+  } = profileData[0] ?? {};
+
   return (
     <section className={styles.updateIconWrapper}>
       <div className={styles.main}>
@@ -365,8 +370,29 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
           </div>
         </span>
         <div className={styles.iconsContainer}>
+          <p>History</p>
           <ul>
-            {ICONS_ARRAY.map((icon) => (
+            {icon_history?.map((icon) => (
+              <li
+                key={nanoid()}
+                // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
+                onClick={(): void => {
+                  changeIconState((prev): IconState => {
+                    return {
+                      ...prev,
+                      new: icon,
+                    };
+                  });
+                  changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
+                }}
+              >
+                <img src={icon} alt='' />
+              </li>
+            ))}
+          </ul>
+          <p>Available</p>
+          <ul>
+            {ICONS_ARRAY?.map((icon) => (
               <li
                 key={nanoid()}
                 // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen

@@ -212,8 +212,11 @@ $input-padding-left-mobile: 6%;
         }
 
         .signUp {
+          @include flexbox();
+          justify-content: flex-start;
           color: $secondary-color;
           font-size: $input-font-size;
+          white-space: pre;
 
           & > a {
             color: #fff;
@@ -223,6 +226,10 @@ $input-padding-left-mobile: 6%;
             &:hover {
               text-decoration: underline;
             }
+          }
+
+          span {
+            margin-left: 10px;
           }
         }
       }

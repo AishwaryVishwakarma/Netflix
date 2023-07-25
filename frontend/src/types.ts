@@ -28,7 +28,7 @@ export interface UserProfileModel {
   profiles: Array<{
     meta: {
       deletable: boolean;
-      icons_history: Array<string>;
+      icon_history: Array<string>;
     };
     _id: string;
     icon: string;

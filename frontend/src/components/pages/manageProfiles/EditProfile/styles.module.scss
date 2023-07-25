@@ -314,6 +314,15 @@ $header-height: 68px;
       padding: 2vw var(--horizontal-padding);
       width: 100%;
 
+      p {
+        font-size: 2vw;
+        font-weight: 400;
+
+        &:not(:first-child) {
+          margin-top: 2vw;
+        }
+      }
+
       ul {
         --grid-gap: 1.8vw;
         list-style: none;
@@ -323,6 +332,7 @@ $header-height: 68px;
           auto-fill,
           minmax(calc($icon-width + var(--grid-gap)), auto)
         );
+        margin-top: 1.5vw;
 
         li {
           cursor: pointer;

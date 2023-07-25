@@ -11,6 +11,7 @@ import axios from 'axios';
 import {useRouter} from 'next/navigation';
 import Loader from '@/utils/loader/loader';
 import {type UserModel} from '@/types';
+import BubbleLoader from '@/utils/BubbleLoader/BubbleLoader';
 
 /*
  * Login Page
@@ -53,6 +54,7 @@ const LoginPage: React.FC = () => {
     };
   });
 
+  // Using these states in order to determine the input box errors
   const [isInputFocused, setIsInputFocused] = React.useState<InputTouched>({
     email: false,
     password: false,
@@ -66,6 +68,10 @@ const LoginPage: React.FC = () => {
   const [loginError, setLoginError] = React.useState<string>('');
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+  // Using this state to show a loader while the next page is loading
+  const [isNextPageLoading, setIsNextPageLoading] =
+    React.useState<boolean>(false);
 
   const onChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -263,7 +269,13 @@ const LoginPage: React.FC = () => {
                 </div>
               </form>
               <div className={styles.signUp}>
-                New to Netflix? <Link href='/signup'>Sign up now.</Link>
+                New to Netflix?{' '}
+                <Link
+                  href='/signup'
+                  onClick={(): void => setIsNextPageLoading(true)}
+                >
+                  {isNextPageLoading ? <BubbleLoader /> : 'Sign up now.'}
+                </Link>
               </div>
             </div>
           </div>

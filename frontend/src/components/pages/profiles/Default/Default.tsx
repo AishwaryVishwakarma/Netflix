@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {SCREEN_STATE} from '@/app/profiles/page';
 import Link from 'next/link';
+import BubbleLoader from '@/utils/BubbleLoader/BubbleLoader';
 
 /*
  * Default Screen
@@ -16,6 +17,9 @@ const Default: React.FC<{
     meta: {profile_creation_available},
     profiles,
   } = profileData ?? {};
+
+  const [isNextPageLoading, setIsNextPageLoading] =
+    React.useState<boolean>(false);
 
   return (
     <section className={styles.profilesWrapper}>
@@ -38,9 +42,16 @@ const Default: React.FC<{
             </li>
           )}
         </ul>
-        <Link href='/ManageProfiles' className={styles.manageProfiles}>
-          Manage Profiles
-        </Link>
+        {isNextPageLoading ? (
+          <BubbleLoader />
+        ) : (
+          <Link
+            href='/ManageProfiles'
+            onClick={(): void => setIsNextPageLoading(true)}
+          >
+            Manage Profiles
+          </Link>
+        )}
       </div>
     </section>
   );

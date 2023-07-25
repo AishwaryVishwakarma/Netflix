@@ -116,5 +116,10 @@ $profile-name-font-size: 1.2vw;
         border-color: $primary-color;
       }
     }
+
+    & > span {
+      margin-top: calc(25px + 0.5em);
+      margin-bottom: 0.5em;
+    }
   }
 }

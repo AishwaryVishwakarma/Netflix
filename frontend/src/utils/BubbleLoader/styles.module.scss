@@ -1,0 +1,34 @@
+@for $i from 1 through 10 {
+  .bubble:nth-child(#{$i}n) {
+    animation-delay: #{$i * 0.1}s !important;
+  }
+}
+
+.container {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+
+  .bubble {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    animation: jump 1s linear infinite;
+    box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  @keyframes jump {
+    0% {
+      transform: translateY(-4px);
+    }
+
+    25%,
+    75% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(-4px);
+    }
+  }
+}
