@@ -16,7 +16,7 @@ router.post('/login', async(req,res) =>{
     const userCreds = {
         email: userData.email,
         password: userData.password,
-        remember_me: ''
+        remember_me: userData.remember_me
     }
 
     if (!userCreds.email || userCreds.email===""){
@@ -39,7 +39,8 @@ router.post('/login', async(req,res) =>{
     }
 
     try{
-        const jwtToken = userMiddleware.generateJWT({ id: user.id, remember_me: Boolean(userCreds.remember_me) })
+        console.log(Boolean(userCreds.remember_me))
+        const jwtToken = userMiddleware.generateJWT(user.id, Boolean(userCreds.remember_me))
         user.last_log_in = Date.now()
         await user.save()
         user.password = undefined
