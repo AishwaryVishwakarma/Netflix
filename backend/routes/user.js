@@ -39,7 +39,6 @@ router.post('/login', async(req,res) =>{
     }
 
     try{
-        console.log(Boolean(userCreds.remember_me))
         const jwtToken = userMiddleware.generateJWT(user.id, Boolean(userCreds.remember_me))
         user.last_log_in = Date.now()
         await user.save()
@@ -93,7 +92,7 @@ router.post('/signup', async(req,res) =>{
         await userprofile.save()
         newUser.meta.profile_id = userprofile._id
         newUser.save()
-        const jwtToken = userMiddleware.generateJWT({ id: newUser.id })
+        const jwtToken = userMiddleware.generateJWT(newUser.id)
         res.status(201).send({
             "jwtToken": jwtToken
         })
@@ -160,7 +159,7 @@ router.post('/set-subscription', userMiddleware.authenticateJWT, async(req, res)
 
 router.get('/validate-token', userMiddleware.authenticateJWT, async(req, res) => {
     const userId = req.user
-    
+
     const user = await userModel
             .findOne({ _id: userId })
             .exec()

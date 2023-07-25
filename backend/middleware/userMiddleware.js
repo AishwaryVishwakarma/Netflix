@@ -7,7 +7,7 @@ dotenv.config()
 const privateKey = process.env.PRIVATE_KEY
 
 
-function generateJWT(id, remember_me){
+function generateJWT(id, remember_me=false){
     if (remember_me == true){ 
         return jwt.sign({ id: id }, privateKey, { expiresIn: '30d' })
     }
@@ -25,7 +25,7 @@ function authenticateJWT(req, res, next) {
             if (err) {
                 return res.status(401).send({ "detail": err.message })
             }
-            req.user = user.id.id
+            req.user = user.id
             next()
         })
     } else {
