@@ -29,8 +29,12 @@ router.post('/create-profile', userMiddleware.authenticateJWT, async(req, res) =
         .findOne({ 'meta.user_id': userId })
         .exec()
 
+    if ( userProfile == null ){
+        res.status(404).send({ 'detail': 'User not found'})
+        return
+    }
 
-    if (userProfile.meta.profile_creation_available === false){
+    if (userProfile.meta.profile_creation_available == false){
         res.status(406).send({ 'detail': 'Exceeded Number of Profiles' }) // status code for 'Not Acceptable'
         return
     }
