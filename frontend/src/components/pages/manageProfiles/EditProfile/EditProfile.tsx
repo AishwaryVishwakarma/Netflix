@@ -349,6 +349,17 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
     meta: {icon_history},
   } = profileData[0] ?? {};
 
+  // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
+  const updateIconHandler = (icon: string) => {
+    changeIconState((prev): IconState => {
+      return {
+        ...prev,
+        new: icon,
+      };
+    });
+    changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
+  };
+
   return (
     <section className={styles.updateIconWrapper}>
       <div className={styles.main}>
@@ -370,42 +381,25 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
           </div>
         </span>
         <div className={styles.iconsContainer}>
-          <p>History</p>
-          <ul>
-            {icon_history?.map((icon) => (
-              <li
-                key={nanoid()}
-                // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
-                onClick={(): void => {
-                  changeIconState((prev): IconState => {
-                    return {
-                      ...prev,
-                      new: icon,
-                    };
-                  });
-                  changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
-                }}
-              >
-                <img src={icon} alt='' />
-              </li>
-            ))}
-          </ul>
+          {icon_history.length > 1 && (
+            <>
+              <p>History</p>
+              <ul>
+                {icon_history?.map((icon) => (
+                  <li
+                    key={nanoid()}
+                    onClick={(): void => updateIconHandler(icon)}
+                  >
+                    <img src={icon} alt='' />
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <p>Available</p>
           <ul>
             {ICONS_ARRAY?.map((icon) => (
-              <li
-                key={nanoid()}
-                // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
-                onClick={(): void => {
-                  changeIconState((prev): IconState => {
-                    return {
-                      ...prev,
-                      new: icon,
-                    };
-                  });
-                  changeLocalSreen(LOCAL_SCREEN_STATE.CONFIRM_UPDATE_ICON);
-                }}
-              >
+              <li key={nanoid()} onClick={(): void => updateIconHandler(icon)}>
                 <img src={icon} alt='' />
               </li>
             ))}
