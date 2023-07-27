@@ -70,9 +70,9 @@ const ManageProfilesPage: React.FC = () => {
         setProfileData(profiles);
       })
       .catch((err) => {
+        console.log(err);
         clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
-        console.log(err);
       })
       .finally(() => {
         setIsLoading(false);

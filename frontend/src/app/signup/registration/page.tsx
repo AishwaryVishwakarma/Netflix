@@ -25,10 +25,6 @@ export const SCREEN_STATE = {
 
 let sessionEmail: string | null;
 
-/*
- * Registration Page
- */
-
 const RegistrationPage = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');
 

@@ -63,6 +63,7 @@ const ProfilesPage: React.FC = () => {
         setProfileData(profiles);
       })
       .catch((err) => {
+        console.log(err);
         clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
       })

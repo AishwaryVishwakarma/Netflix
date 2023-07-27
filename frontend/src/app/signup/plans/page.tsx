@@ -7,6 +7,7 @@ import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
 import Plans from '@/components/pages/signup/Plans/Plans/Plans';
 import Protected from '@/components/Protected/Protected';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 /*
  * Plans Page (Contains 2 screen) [Protected]
@@ -18,6 +19,8 @@ export const SCREEN_STATE = {
 };
 
 const PlansPage: React.FC = () => {
+  const isMobile = useMediaQuery('(max-width: 800px)');
+
   const [screenState, setScreenState] = React.useState<string>(
     SCREEN_STATE.INTRO
   );
@@ -35,7 +38,7 @@ const PlansPage: React.FC = () => {
   return (
     <Layout className='full-bleed'>
       <div className={styles.plansWrapper}>
-        <Header hasRegistered />
+        <Header hasRegistered isMobile={isMobile} />
         {/* Intro Screen */}
         {screenState === SCREEN_STATE.INTRO && (
           <Intro changeFormState={setScreenState} />

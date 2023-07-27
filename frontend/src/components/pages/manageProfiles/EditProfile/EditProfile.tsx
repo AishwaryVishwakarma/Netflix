@@ -469,6 +469,8 @@ const Delete: React.FC<DeleteScreenProps> = ({
   refreshProfileData,
   changeLocalSreen,
 }) => {
+  const router = useRouter();
+
   const {_id, name, icon} = profileData[0] ?? {};
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -490,6 +492,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
       }
     } catch (error) {
       console.log(error);
+      router.push('/');
     } finally {
       setIsLoading(false);
     }
