@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
  * Registration Header
  */
 
-const LINK_STATE = ['Cancel', 'Sign In'];
+const LINK_TEXT = ['Cancel', 'Sign In'];
 
 const Header: React.FC<{isMobile: boolean; hasRegistered?: boolean}> = ({
   isMobile,
@@ -28,7 +28,7 @@ const Header: React.FC<{isMobile: boolean; hasRegistered?: boolean}> = ({
         color='#e50914'
       />
       <Link href='/' onClick={submitHandler}>
-        {LINK_STATE[hasRegistered ? 0 : 1]}
+        {LINK_TEXT[hasRegistered ? 0 : 1]}
       </Link>
     </header>
   );

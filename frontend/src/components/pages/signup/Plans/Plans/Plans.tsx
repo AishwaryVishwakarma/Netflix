@@ -18,7 +18,7 @@ const Plans: React.FC = () => {
 
   const submitHandler = async (
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
+  ): Promise<void> => {
     const subscription = JSON.parse(
       sessionStorage.getItem('subscription') as string
     );
@@ -50,6 +50,7 @@ const Plans: React.FC = () => {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
+      router.push('/signup');
     }
   };
 

@@ -35,7 +35,7 @@ const AddProfile: React.FC<{
 
   const authToken = localStorage.getItem('auth-token');
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     // Focusing the input element when the component is rendered
     inputRef.current?.focus();
   }, []);
@@ -51,7 +51,7 @@ const AddProfile: React.FC<{
     event:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
+  ): Promise<void> {
     event.preventDefault();
     if (!isSubmitClicked) setIsSubmitClicked(true);
     if (!profilename) {
@@ -75,8 +75,8 @@ const AddProfile: React.FC<{
       if (res.status === 201) changeScreen(SCREEN_STATE.DEFAULT);
     } catch (error) {
       console.log(error);
-      router.push('/');
       clearStorage(['auth-token', 'user-data'], localStorage);
+      router.push('/');
     }
   }
 
@@ -115,7 +115,7 @@ const AddProfile: React.FC<{
           <button
             className={styles.cancelButton}
             type='button'
-            onClick={() => {
+            onClick={(): void => {
               changeScreen(SCREEN_STATE.DEFAULT);
               refreshProfileData(false);
             }}

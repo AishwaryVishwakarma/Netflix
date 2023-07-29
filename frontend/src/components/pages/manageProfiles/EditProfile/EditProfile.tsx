@@ -35,21 +35,21 @@ interface IconState {
 type ProfileData = Omit<UserProfileModel['profiles'][0], 'meta'>;
 
 // Parent Component props
-interface ComponentProps {
+interface MainComponentProps {
   profileData: UserProfileModel['profiles'];
   changeScreen: React.Dispatch<React.SetStateAction<string>>;
   refreshProfileData: React.Dispatch<React.SetStateAction<boolean>>;
   userProfileId: string;
 }
 
-interface DefaultScreenProps extends ComponentProps {
+interface DefaultScreenProps extends MainComponentProps {
   localProfileData: ProfileData;
   setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
   authToken: string;
   changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface DeleteScreenProps extends ComponentProps {
+interface DeleteScreenProps extends MainComponentProps {
   authToken: string;
   changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -60,7 +60,13 @@ interface UpdateIconScreenProps {
   changeIconState: React.Dispatch<React.SetStateAction<IconState>>;
 }
 
-const EditProfile: React.FC<ComponentProps> = ({
+interface ConfirmationScreenProps {
+  icons: IconState;
+  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
+  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
+}
+
+const EditProfile: React.FC<MainComponentProps> = ({
   profileData,
   changeScreen,
   refreshProfileData,
@@ -171,7 +177,7 @@ const Default: React.FC<DefaultScreenProps> = ({
   // Using ref to focus on the input when the component is loaded
   const nameInputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     nameInputRef.current?.focus();
   }, []);
 
@@ -337,7 +343,7 @@ const Default: React.FC<DefaultScreenProps> = ({
   );
 };
 
-// Update Icon Screen
+// Update Icon Screen [ Contains all the icons user can select from ]
 const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
   profileData,
   changeLocalSreen,
@@ -350,7 +356,7 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
   } = profileData[0] ?? {};
 
   // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
-  const updateIconHandler = (icon: string) => {
+  const updateIconHandler = (icon: string): void => {
     changeIconState((prev): IconState => {
       return {
         ...prev,
@@ -411,11 +417,11 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
 };
 
 // Icon Change Confirmation Screen
-const ConfirmChangeIcon: React.FC<{
-  icons: IconState;
-  changeLocalSreen: React.Dispatch<React.SetStateAction<string>>;
-  setLocalProfileData: React.Dispatch<React.SetStateAction<ProfileData>>;
-}> = ({icons, changeLocalSreen, setLocalProfileData}) => {
+const ConfirmChangeIcon: React.FC<ConfirmationScreenProps> = ({
+  icons,
+  changeLocalSreen,
+  setLocalProfileData,
+}) => {
   const {current, new: newIcon} = icons ?? {};
 
   return (
@@ -435,7 +441,7 @@ const ConfirmChangeIcon: React.FC<{
         </div>
         <div className={styles.controls}>
           <button
-            onClick={() => {
+            onClick={(): void => {
               setLocalProfileData((prev): ProfileData => {
                 return {
                   ...prev,
@@ -448,7 +454,7 @@ const ConfirmChangeIcon: React.FC<{
             Let&apos;s Do it
           </button>
           <button
-            onClick={() => {
+            onClick={(): void => {
               changeLocalSreen(LOCAL_SCREEN_STATE.UPDATE_ICON);
             }}
           >
@@ -475,7 +481,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const deleteProfileHandler = async () => {
+  const deleteProfileHandler = async (): Promise<void> => {
     setIsLoading(true);
     try {
       const res = await axios.delete(DELETE_PROFILE_URL + USER_PROFILE_ID, {
@@ -492,6 +498,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
       }
     } catch (error) {
       console.log(error);
+      clearStorage(['auth-token', 'user-data'], localStorage);
       router.push('/');
     } finally {
       setIsLoading(false);

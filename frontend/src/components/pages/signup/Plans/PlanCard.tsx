@@ -20,7 +20,7 @@ const PlanCard: React.FC<{
     features,
   } = data ?? {};
 
-  const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const subscription = {
       type: event.target.value,
       value: value.toString(),

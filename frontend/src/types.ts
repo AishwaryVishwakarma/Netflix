@@ -1,5 +1,3 @@
-// Used in login page
-
 export interface UserModel {
   _id: string;
   __v: number;
@@ -14,8 +12,6 @@ export interface UserModel {
     value: string;
   };
 }
-
-// Used in profile page
 
 export interface UserProfileModel {
   _id: string;
