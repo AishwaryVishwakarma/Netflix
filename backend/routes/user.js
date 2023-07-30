@@ -157,20 +157,5 @@ router.post('/set-subscription', userMiddleware.authenticateJWT, async(req, res)
     
 })
 
-router.get('/validate-token', userMiddleware.authenticateJWT, async(req, res) => {
-    const userId = req.user
-
-    const user = await userModel
-            .findOne({ _id: userId })
-            .exec()
-    
-    if (!user){
-        res.status(401).send({ "detail": "User Not Found"})
-        return 
-    }
-
-    res.status(200).send({ "detail": "Authorized" })
-    
-})
 
 module.exports = router

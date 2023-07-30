@@ -5,14 +5,18 @@ const userMiddleware = require('../middleware/userMiddleware')
 
 
 
-router.get('/user-profile', userMiddleware.authenticateJWT, async(req, res) => {
-    const userId = req.user
+router.get('/profile/:profile_id', userMiddleware.authenticateJWT, async(req, res) => {
+    const profile_id = req.params.profile_id
 
     try{
         const profile = await userProfileModel
-            .findOne({ 'meta.user_id': userId })
+            .findOne({ _id: profile_id })
             .exec()
-            
+        
+        if ( !profile ) {
+            res.status(404).send({ "detail": "Profile Not Found" })
+            return
+        }
         res.status(200).send({ "user_profile": profile })
     }
     catch(err){
