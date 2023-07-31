@@ -5,8 +5,8 @@ const userMiddleware = require('../middleware/userMiddleware')
 
 
 
-router.get('/profile/:profile_id', userMiddleware.authenticateJWT, async(req, res) => {
-    const profile_id = req.params.profile_id
+router.get('/profile/:id', userMiddleware.authenticateJWT, async(req, res) => {
+    const profile_id = req.params.id
 
     try{
         const profile = await userProfileModel

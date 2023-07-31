@@ -90,7 +90,7 @@ router.post('/signup', async(req,res) =>{
             meta:{user_id: newUser._id}
         })
         await userprofile.save()
-        newUser.meta.profile_id = userprofile._id
+        newUser.meta.profiles_id = userprofile._id
         newUser.save()
         const jwtToken = userMiddleware.generateJWT(newUser.id)
         res.status(201).send({
