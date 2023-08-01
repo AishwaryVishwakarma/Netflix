@@ -20,7 +20,7 @@ const MovieCard: React.FC<any> = ({movieData}) => {
         setDetail(res.data);
         setGenres(res.data.genres);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.debug(err));
   }, [movieData.id]);
 
   return (

@@ -40,7 +40,7 @@ const MovieSection: React.FC<MovieSectionProps> = ({movieName, query}) => {
         setMovies(res.data.results);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.debug(err));
   }, [URL]);
 
   return (

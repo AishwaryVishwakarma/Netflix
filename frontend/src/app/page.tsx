@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  // Using this state to show a loader while the next page is loading
+  // Using this state to show a loader while the next page is under fetching+
   const [isNextPageLoading, setIsNextPageLoading] =
     React.useState<boolean>(false);
 
@@ -148,20 +148,16 @@ const LoginPage: React.FC = () => {
         remember_me: formData.rememberMe.toString(),
       });
 
-      if (res.status === 200) {
-        const {user, jwtToken}: {user: UserModel; jwtToken: string} =
-          res.data ?? {};
+      const {user, jwtToken}: {user: UserModel; jwtToken: string} =
+        res.data ?? {};
 
-        localStorage.setItem('auth-token', jwtToken);
+      localStorage.setItem('auth-token', jwtToken);
 
-        localStorage.setItem('user-data', JSON.stringify(user));
+      localStorage.setItem('user-data', JSON.stringify(user));
 
-        sessionStorage.clear();
+      sessionStorage.clear();
 
-        router.push('/profiles');
-      } else {
-        setIsLoading(false);
-      }
+      router.push('/profiles');
     } catch (err: any) {
       const message = err?.response?.data?.detail;
       setLoginError(message);
@@ -208,6 +204,7 @@ const LoginPage: React.FC = () => {
                       onFocus={setInputFocus}
                       onBlur={setInputBlur}
                       required
+                      autoComplete='on'
                     />
                     <label htmlFor='email'>Email or Phone Number</label>
                   </div>
@@ -233,6 +230,7 @@ const LoginPage: React.FC = () => {
                       onBlur={setInputBlur}
                       required
                       min={4}
+                      autoComplete='on'
                     />
                     <label htmlFor='password'>Password</label>
                     <p

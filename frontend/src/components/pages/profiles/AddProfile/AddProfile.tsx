@@ -74,7 +74,7 @@ const AddProfile: React.FC<{
       );
       if (res.status === 201) changeScreen(SCREEN_STATE.DEFAULT);
     } catch (error) {
-      console.log(error);
+      console.debug(error);
       clearStorage(['auth-token', 'user-data'], localStorage);
       router.push('/');
     }

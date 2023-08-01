@@ -37,7 +37,7 @@ $input-padding-left-mobile: 6%;
     filter: brightness(0.6);
     object-fit: cover;
 
-    // Hack to match background color in mobile
+    // To match background color in mobile
     @media (max-width: 800px) {
       background: #000;
     }
@@ -151,8 +151,8 @@ $input-padding-left-mobile: 6%;
                   top: 30%;
                 }
 
-                &:focus ~ label ~ .passwordVisibilty,
-                &:not(:placeholder-shown) ~ label ~ .passwordVisibilty {
+                &:focus ~ .passwordVisibilty,
+                &:not(:placeholder-shown) ~ .passwordVisibilty {
                   opacity: 1;
                 }
               }
@@ -230,6 +230,7 @@ $input-padding-left-mobile: 6%;
 
           span {
             margin-left: 10px;
+            transform: translateY(1px);
           }
         }
       }
