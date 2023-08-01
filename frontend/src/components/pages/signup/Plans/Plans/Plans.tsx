@@ -48,7 +48,7 @@ const Plans: React.FC = () => {
         router.push('/signup/payment');
       }
     } catch (error) {
-      console.log(error);
+      console.debug(error);
       setIsLoading(false);
       router.push('/signup');
     }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styles from './styles.module.scss';
-import {type UserProfileModel} from '@/types';
+import {type UserModel, type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import {clearStorage} from '@/FUNCTIONS';
 import axios from 'axios';
@@ -44,23 +44,17 @@ const ManageProfilesPage: React.FC = () => {
 
   // Getting the associated profiles object ID
   const {
-    meta: {profile_id: user_profile_id},
-  } = JSON.parse(userData ?? '');
+    meta: {profile_id: USER_PROFILES_ID},
+  }: UserModel = JSON.parse(userData ?? '');
 
   React.useEffect(() => {
     // Only fetching the data when user has added a profile
     if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
 
-    if (!userData || !authToken) {
-      clearStorage(['user-data', 'auth-token'], localStorage);
-      router.push('/');
-      return;
-    }
-
     setIsLoading(true);
 
     axios
-      .get(GET_USER_PROFILE_URL, {
+      .get(GET_USER_PROFILE_URL + USER_PROFILES_ID, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -70,14 +64,21 @@ const ManageProfilesPage: React.FC = () => {
         setProfileData(profiles);
       })
       .catch((err) => {
-        console.log(err);
+        console.debug(err);
         clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [authToken, userData, router, screenState, refreshProfiles]);
+  }, [
+    authToken,
+    USER_PROFILES_ID,
+    userData,
+    router,
+    screenState,
+    refreshProfiles,
+  ]);
 
   if (!userData || !authToken) {
     clearStorage(['user-data', 'auth-token'], localStorage);
@@ -128,7 +129,7 @@ const ManageProfilesPage: React.FC = () => {
               profileData={editProfileData as UserProfileModel['profiles']}
               changeScreen={setScreenState}
               refreshProfileData={setRefreshProfiles}
-              userProfileId={user_profile_id}
+              userProfileId={USER_PROFILES_ID}
             />
           )}
         </>

@@ -23,8 +23,8 @@ export default {
       const {text, link} = selection
 
       return {
-        title: 'Link CTA',
-        subtitle: text,
+        title: text || "Link Cta",
+        subtitle: link,
       }
     },
   },

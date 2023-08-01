@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
+import Link from 'next/link';
 
 /*
  * Footer
@@ -32,7 +33,7 @@ const AuthFooter = () => {
       <p className={styles.contact}>Questions? Call 000-800-919-1694</p>
       <div className={`${styles.footerLinks} ${styles.smallFont}`}>
         <div>
-          <p>FAQ</p>
+          <Link href='/help/faq'>FAQ</Link>
           <p>Cookie Preferences</p>
         </div>
         <div>

@@ -42,10 +42,14 @@ $auth-footer-font-size: 13px;
       grid-template-columns: 1fr 1fr;
     }
 
+    a,
     p {
+      display: block;
       margin: 20px 0;
       cursor: pointer;
       width: max-content;
+      text-decoration: none;
+      color: inherit;
 
       @media (max-width: 1024px) {
         margin: 20px 0 0;

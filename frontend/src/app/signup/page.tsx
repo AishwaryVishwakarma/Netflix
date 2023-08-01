@@ -22,12 +22,16 @@ let sessionEmail: string | null;
 const SignupPage: React.FC = () => {
   const router = useRouter();
 
-  clearStorage(['user-data', 'auth-token'], localStorage);
+  if (typeof window !== 'undefined') {
+    clearStorage(['user-data', 'auth-token'], localStorage);
+  }
 
   const isMobile = useMediaQuery('(max-width: 800px)');
 
   const [email, setEmail] = React.useState<string>((): string => {
-    sessionEmail = sessionStorage.getItem('email');
+    if (typeof window !== 'undefined') {
+      sessionEmail = sessionStorage.getItem('email');
+    }
 
     return sessionEmail ? sessionEmail : '';
   });
@@ -58,7 +62,9 @@ const SignupPage: React.FC = () => {
 
   // Form Submit Handler
 
-  async function emailSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function emailSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault();
 
     setIsLoading(true);
@@ -77,7 +83,12 @@ const SignupPage: React.FC = () => {
     } catch (error: any) {
       const status = error.response?.status;
 
-      if (status === 404) router.push('/signup/registration');
+      if (status === 404) {
+        router.push('/signup/registration');
+        return;
+      }
+
+      console.debug(error);
     }
   }
 

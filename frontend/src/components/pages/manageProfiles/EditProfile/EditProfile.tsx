@@ -228,7 +228,7 @@ const Default: React.FC<DefaultScreenProps> = ({
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      console.debug(error);
     }
   };
 
@@ -497,7 +497,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
         changeScreen(SCREEN_STATE.DEFAULT);
       }
     } catch (error) {
-      console.log(error);
+      console.debug(error);
       clearStorage(['auth-token', 'user-data'], localStorage);
       router.push('/');
     } finally {

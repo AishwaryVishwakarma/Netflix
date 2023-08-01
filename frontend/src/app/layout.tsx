@@ -1,7 +1,10 @@
 import './globals.css';
 import {Rubik, Nunito, Ubuntu} from 'next/font/google';
 
-const rubik = Rubik({subsets: ['latin'], variable: '--font-rubik'});
+const rubik = Rubik({
+  subsets: ['latin'],
+  variable: '--font-rubik',
+});
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -19,7 +22,11 @@ export const metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang='en'>
-      <body className={`${rubik.variable} ${ubuntu.variable}`}>{children}</body>
+      <body
+        className={`${rubik.variable} ${nunito.variable} ${ubuntu.variable}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

@@ -9,14 +9,8 @@ body {
   height: 100%;
 }
 
-
 :root {
   --background: #141414;
-}
-
-.onTop {
-  position: relative;
-  z-index: 2;
 }
 
 .full-bleed {
@@ -41,8 +35,7 @@ body {
 
 .layouted {
   display: grid;
-  grid-template-columns: 1fr calc(min(77rem, 100%)) 1fr;
-  height: 100%;
+  grid-template-columns: 1fr calc(min(80rem, 100%)) 1fr;
 
   & * {
     grid-column: 2;
