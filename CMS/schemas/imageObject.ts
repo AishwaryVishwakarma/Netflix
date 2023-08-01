@@ -1,5 +1,5 @@
 export default {
-  title: 'Image',
+  title: 'Image Object',
   name: 'imageObject',
   type: 'object',
   fields: [

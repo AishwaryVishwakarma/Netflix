@@ -7,7 +7,13 @@ export default {
       title: 'Features',
       name: 'features',
       type: 'array',
-      of: [{type: "feature"}],
+      of: [{type: 'feature'}],
+    },
+    {
+      title: 'Related Articles',
+      name: 'relatedArticles',
+      type: 'array',
+      of: [{type: 'linkCta'}],
     },
   ],
   preview: {
