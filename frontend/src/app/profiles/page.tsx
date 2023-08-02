@@ -7,9 +7,9 @@ import {type UserModel, type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
 import Protected from '@/components/Protected/Protected';
 import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 import axios from 'axios';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import Default from '@/components/pages/profiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 
@@ -89,7 +89,7 @@ const ProfilesPage: React.FC = () => {
       <div className={styles.header} />
       {isLoading ? (
         <div className={styles.loaderContainer}>
-          <Loader />
+          <CircularLoader />
         </div>
       ) : (
         <>

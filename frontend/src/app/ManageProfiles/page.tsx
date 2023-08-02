@@ -4,12 +4,12 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {type UserModel, type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 import axios from 'axios';
 import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
 import Protected from '@/components/Protected/Protected';
 import Layout from '@/components/Layout/Layout';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import Default from '@/components/pages/manageProfiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfile';
@@ -106,7 +106,7 @@ const ManageProfilesPage: React.FC = () => {
       <div className={styles.header} />
       {isLoading ? (
         <div className={styles.loaderContainer}>
-          <Loader />
+          <CircularLoader />
         </div>
       ) : (
         <>

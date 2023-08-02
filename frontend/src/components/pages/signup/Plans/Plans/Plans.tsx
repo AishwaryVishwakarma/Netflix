@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
-import {PLANS} from '@/DATA/PLANS';
+import {PLANS} from '@/data/plans';
 import {nanoid} from 'nanoid';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 
 /*
  * Plans Screen (Plans Page)
@@ -107,7 +107,7 @@ const Button: React.FC<ButtonProps> = ({submitFunction, type = 'button'}) => {
       className={`${styles.button} ${isLoading && styles.loading}`}
       onClick={onClickHandler}
     >
-      {isLoading ? <Loader /> : 'Next'}
+      {isLoading ? <CircularLoader /> : 'Next'}
     </button>
   );
 };

@@ -1,3 +1,5 @@
+// Sanity client to connect with the dabase server
+
 import {createClient} from '@sanity/client';
 
 const todayDate = new Date().toISOString().slice(0, 10);

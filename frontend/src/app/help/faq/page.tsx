@@ -1,26 +1,19 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import {client} from '@/client';
+import {client} from '@/utils/client';
 import {redirect} from 'next/navigation';
 import Layout from '@/components/Layout/Layout';
-import NetflixLogo from '@/utils/icons/NetflixLogo';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
 import Link from 'next/link';
 import {AiOutlineArrowLeft} from 'react-icons/ai';
-import SanityImage from '@/utils/SanityImage';
+import SanityImage from '@/components/sanity/SanityImage';
 import SanityRichText from '@/utils/SanityRichText';
-import Article from '@/utils/icons/Article';
+import Article from '@/assets/icons/Article';
 
 interface Features {
   _key: string;
   heading: string;
-  featureImage: {
-    alt: string;
-    image: {
-      asset: {
-        _ref: string;
-      };
-    };
-  };
+  featureImage: any;
   description: any;
 }
 

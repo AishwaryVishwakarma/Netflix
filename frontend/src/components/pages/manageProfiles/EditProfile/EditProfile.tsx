@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 import {useRouter} from 'next/navigation';
 import {SCREEN_STATE} from '@/app/ManageProfiles/page';
 import {
@@ -9,11 +9,11 @@ import {
   updateProfile as UPDATE_PROFILE_URL,
 } from '@/END_POINTS';
 import axios from 'axios';
-import Loader from '@/utils/loader/loader';
-import Edit from '@/utils/icons/Edit';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Edit from '@/assets/icons/Edit';
 import {BiArrowBack} from 'react-icons/bi';
 import {AiOutlineRight} from 'react-icons/ai';
-import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
+import ICONS_ARRAY from '@/data/profile_icons';
 import {nanoid} from 'nanoid';
 
 /*
@@ -236,7 +236,7 @@ const Default: React.FC<DefaultScreenProps> = ({
     <section className={styles.editProfileWrapper}>
       {isLoading && (
         <div className={styles.loaderWrapper}>
-          <Loader />
+          <CircularLoader />
         </div>
       )}
       {/* Changing the tabIndex when it's loading in order to prevent navigation through tab */}
@@ -509,7 +509,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
     <section className={styles.deleteProfileWrapper}>
       {isLoading && (
         <div className={styles.loaderWrapper}>
-          <Loader />
+          <CircularLoader />
         </div>
       )}
       <div className={styles.main}>

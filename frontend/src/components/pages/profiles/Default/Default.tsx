@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {SCREEN_STATE} from '@/app/profiles/page';
 import Link from 'next/link';
-import BubbleLoader from '@/utils/BubbleLoader/BubbleLoader';
+import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
 
 /*
  * Default Screen

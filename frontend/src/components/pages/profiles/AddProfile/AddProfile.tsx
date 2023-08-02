@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/profiles/page';
-import {getNextIcon} from '@/DATA/PROFILE_ICONS';
+import {getNextIcon} from '@/data/profile_icons';
 import {type UserProfileModel} from '@/types';
 import {createProfile as CREATE_PROFILE_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 
 /*
  * Add profile Screen

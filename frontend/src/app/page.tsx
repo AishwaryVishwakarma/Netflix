@@ -3,15 +3,15 @@
 import Layout from '@/components/Layout/Layout';
 import styles from './styles.module.scss';
 import React from 'react';
-import NetflixLogo from '@/utils/icons/NetflixLogo';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
 import Link from 'next/link';
 import {login as LOGIN_URL} from '@/END_POINTS';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {type UserModel} from '@/types';
-import BubbleLoader from '@/utils/BubbleLoader/BubbleLoader';
+import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
 
 /*
  * Login Page
@@ -249,7 +249,7 @@ const LoginPage: React.FC = () => {
                   )}
                 </div>
                 <button className={isLoading ? styles.loading : ''}>
-                  {isLoading ? <Loader /> : 'Sign In'}
+                  {isLoading ? <CircularLoader /> : 'Sign In'}
                 </button>
                 {loginError && <p className={styles.error}>{loginError}</p>}
                 <div className={styles.helpSection}>

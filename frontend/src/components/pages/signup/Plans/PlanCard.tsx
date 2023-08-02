@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import CheckMarkCircle from '@/utils/icons/CheckMarkCircle';
-import CheckMark from '@/utils/icons/CheckMark';
-import {type PlanData} from '@/DATA/PLANS';
+import CheckMarkCircle from '@/assets/icons/CheckMarkCircle';
+import CheckMark from '@/assets/icons/CheckMark';
+import {type PlanData} from '@/data/plans';
 
 /*
  * Plans Card (Plans Screen)
@@ -20,7 +20,9 @@ const PlanCard: React.FC<{
     features,
   } = data ?? {};
 
-  const changePlanHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const changePlanHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const subscription = {
       type: event.target.value,
       value: value.toString(),

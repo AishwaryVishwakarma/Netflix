@@ -1,4 +1,4 @@
-import NetflixLogo from '@/utils/icons/NetflixLogo';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
 import Link from 'next/link';
 import React from 'react';
 import styles from './styles.module.scss';

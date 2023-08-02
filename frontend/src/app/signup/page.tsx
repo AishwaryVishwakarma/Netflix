@@ -4,14 +4,14 @@ import Layout from '@/components/Layout/Layout';
 import React from 'react';
 import styles from './styles.module.scss';
 import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
-import NetflixLogo from '@/utils/icons/NetflixLogo';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
 import Link from 'next/link';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import {clearStorage} from '@/FUNCTIONS';
+import clearStorage from '@/utils/clearStorage';
 
 /*
  * Sign Up Page
@@ -143,7 +143,7 @@ const SignupPage: React.FC = () => {
               </div>
               <button type='submit' className={isLoading ? styles.loading : ''}>
                 {isLoading ? (
-                  <Loader />
+                  <CircularLoader />
                 ) : (
                   <>
                     Get Started <AiOutlineRight />

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import Edit from '@/utils/icons/Edit';
+import Edit from '@/assets/icons/Edit';
 import {SCREEN_STATE} from '@/app/ManageProfiles/page';
 import Link from 'next/link';
 

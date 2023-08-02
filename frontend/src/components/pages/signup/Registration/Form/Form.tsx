@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
-import Loader from '@/utils/loader/loader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {useRouter} from 'next/navigation';
 
 /*
@@ -165,7 +165,7 @@ const Form: React.FC<{
             )}
           </div>
           <button className={isLoading ? styles.loading : ''}>
-            {isLoading ? <Loader /> : 'Next'}
+            {isLoading ? <CircularLoader /> : 'Next'}
           </button>
         </form>
         {error && <p className={styles.error}>{error}</p>}

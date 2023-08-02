@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/signup/plans/page';
-import CheckMark from '@/utils/icons/CheckMark';
+import CheckMark from '@/assets/icons/CheckMark';
 
 /*
  * Plans Intro Screen

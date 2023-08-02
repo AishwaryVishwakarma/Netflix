@@ -1,6 +1,6 @@
 import ImageUrlBuilder from '@sanity/image-url';
 import React from 'react';
-import {client} from '../client';
+import {client} from '../../utils/client';
 
 interface Props {
   imageBlock: {
