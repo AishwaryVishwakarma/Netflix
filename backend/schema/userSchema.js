@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
         }
     },
     meta:{
-        profile_id:{
+        profiles_id:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'user_profiles',
             required: false
