@@ -115,7 +115,7 @@ router.post('/checkuser', async(req, res) =>{
     
 
     if (found === null){
-        res.status(404).send({ "detail":"User not found" })
+        res.status(202).send({ "detail":"User not found" })
         return 
     }
 
