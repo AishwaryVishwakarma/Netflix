@@ -100,6 +100,7 @@ const Button: React.FC<ButtonProps> = ({submitFunction, type = 'button'}) => {
 
     submitFunction(setIsLoading);
   };
+
   return (
     <button
       role='button'

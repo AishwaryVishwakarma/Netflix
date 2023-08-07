@@ -12,7 +12,10 @@ const ubuntu = Ubuntu({
   variable: '--font-ubuntu',
 });
 
-const nunito = Nunito({subsets: ['latin'], variable: '--font-nunito'});
+const nunito = Nunito({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+});
 
 export const metadata = {
   title: 'Netflix',

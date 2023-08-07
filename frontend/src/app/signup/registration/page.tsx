@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import Layout from '@/components/Layout/Layout';
@@ -9,7 +8,7 @@ import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
-/*
+/**
  * Registration Page (Contains 2 screens)
  */
 
@@ -29,7 +28,9 @@ const RegistrationPage = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');
 
   const [formData, setFormData] = React.useState<FormData>((): FormData => {
-    sessionEmail = sessionStorage.getItem('email');
+    if (typeof window !== 'undefined') {
+      sessionEmail = sessionStorage.getItem('email');
+    }
 
     return {
       email: sessionEmail ? sessionEmail : '',

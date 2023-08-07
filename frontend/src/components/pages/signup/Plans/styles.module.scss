@@ -19,6 +19,10 @@ $svg-fill: #999999;
   flex: 1 1 0;
   width: 0;
 
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
   input[type='radio'] {
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
@@ -43,13 +47,25 @@ $svg-fill: #999999;
       min-height: 120px;
       padding: 12px 20px;
 
+      @media (max-width: 800px) {
+        min-height: unset;
+      }
+
       .type {
         font-size: 24px;
+
+        @media (max-width: 800px) {
+          color: #fff;
+        }
       }
 
       .resolution {
         font-size: 20px;
         color: rgba(255, 255, 255, 0.7);
+
+        @media (max-width: 800px) {
+          display: none;
+        }
       }
     }
 
@@ -58,6 +74,11 @@ $svg-fill: #999999;
       padding: 0 25px;
       display: flex;
       flex-direction: column;
+
+      @media (max-width: 800px) {
+        gap: 10px;
+        padding-bottom: 10px;
+      }
 
       li {
         display: flex;
@@ -77,6 +98,15 @@ $svg-fill: #999999;
           flex-shrink: 0;
         }
 
+        @media (max-width: 800px) {
+          border-bottom: none;
+          padding: 0;
+
+          &:last-child {
+            height: unset;
+          }
+        }
+
         .featureInfo {
           display: flex;
           flex-direction: column;
@@ -84,6 +114,10 @@ $svg-fill: #999999;
 
           & > p {
             font-size: $font-feature-title;
+
+            @media (max-width: 800px) {
+              display: none;
+            }
           }
 
           & > h4 {
@@ -106,6 +140,10 @@ $svg-fill: #999999;
       color: $color-feature-title;
       transform: translateY(20px);
       opacity: 0;
+
+      @media (max-width: 800px) {
+        transition: all 0.2s;
+      }
     }
   }
 
@@ -114,6 +152,10 @@ $svg-fill: #999999;
     transform: translateY(0);
     opacity: 1;
     padding: 12px 0 18px;
+
+    @media (max-width: 800px) {
+      padding: 5px 0 10px;
+    }
   }
 
   input[type='radio']:checked ~ label {

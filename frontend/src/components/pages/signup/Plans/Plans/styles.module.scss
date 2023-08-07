@@ -40,6 +40,11 @@ $max-width-allowed: 340px;
       gap: 10px;
       height: 450px;
       margin: 20px 0;
+
+      @media (max-width: 800px) {
+        flex-direction: column;
+        height: unset;
+      }
     }
 
     span {
