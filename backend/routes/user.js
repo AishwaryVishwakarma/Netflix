@@ -11,7 +11,19 @@ dotenv.config()
 
 const saltSize = process.env.SALT_SIZE
 
-router.post('/login', async(req,res) =>{
+router.get('/login', async(req, res) => {
+    if ( req.session.user ) {
+        res.status(200).send({ 
+            "user": req.session.user,
+            "jwt": req.session.jwt
+        })
+    } 
+    else {
+        res.status(401).send();
+    }
+})
+
+router.post('/login', async(req, res) => {
     const userData = req.body
     const userCreds = {
         email: userData.email,
@@ -39,10 +51,16 @@ router.post('/login', async(req,res) =>{
     }
 
     try{
-        const jwtToken = userMiddleware.generateJWT(user.id, Boolean(userCreds.remember_me))
+        const jwtToken = userMiddleware.generateJWT(user.id, userCreds.remember_me)
         user.last_log_in = Date.now()
         await user.save()
         user.password = undefined
+
+        if ( userCreds.remember_me == "true" ) {
+            req.session.user = user
+            req.session.jwt = jwtToken
+        }
+        
         res.status(200).send({
             "user": user, 
             "jwtToken": jwtToken
@@ -54,7 +72,7 @@ router.post('/login', async(req,res) =>{
 })
 
 
-router.post('/signup', async(req,res) =>{
+router.post('/signup', async(req, res) =>{
     const userData = req.body
     const userCreds = {
         email: userData.email,
@@ -156,6 +174,11 @@ router.post('/set-subscription', userMiddleware.authenticateJWT, async(req, res)
     }
     
 })
+
+router.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.status(200).send("Logged out successfully")
+});
 
 
 module.exports = router
