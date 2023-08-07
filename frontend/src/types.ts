@@ -2,7 +2,7 @@ export interface UserModel {
   _id: string;
   __v: number;
   meta: {
-    profile_id: string;
+    profiles_id: string;
   };
   email: string;
   account_created_on: string;

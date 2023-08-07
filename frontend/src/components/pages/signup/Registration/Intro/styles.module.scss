@@ -91,12 +91,6 @@ $max-width-allowed: 340px;
   transform: translateX(100px);
   animation: fade-in-from-right 1s forwards;
 
-  @media (max-width: 800px) {
-    transform: translateX(0);
-    opacity: 1;
-    animation: none;
-  }
-
   @keyframes fade-in-from-right {
     100% {
       opacity: 1;

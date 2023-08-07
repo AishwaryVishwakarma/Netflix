@@ -92,8 +92,7 @@ $button-height: 68px;
             background: transparent;
             border: none;
             outline: none;
-            padding-left: $input-left-padding;
-            padding-top: 20px;
+            padding: 20px $input-left-padding 0;
             font-size: $input-font-size;
             letter-spacing: 0.5px;
             border: 1px solid $color-dark;
@@ -191,12 +190,6 @@ $button-height: 68px;
   opacity: 0;
   transform: translateX(100px);
   animation: fade-in-from-right 1s forwards;
-
-  @media (max-width: 800px) {
-    transform: translateX(0);
-    opacity: 1;
-    animation: none;
-  }
 
   @keyframes fade-in-from-right {
     100% {

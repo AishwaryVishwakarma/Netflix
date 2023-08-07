@@ -7,7 +7,7 @@ import NetflixLogo from '@/assets/icons/NetflixLogo';
 import Link from 'next/link';
 import {AiOutlineArrowLeft} from 'react-icons/ai';
 import SanityImage from '@/components/sanity/SanityImage';
-import SanityRichText from '@/utils/SanityRichText';
+import SanityRichText from '@/components/sanity/SanityRichText';
 import Article from '@/assets/icons/Article';
 
 interface Features {

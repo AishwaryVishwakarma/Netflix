@@ -13,14 +13,18 @@ import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import Default from '@/components/pages/profiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 
-/*
-/ Profiles Page
-*/
+/**
+ * Profiles Page (Contains 2 screens)
+ */
 
 export const SCREEN_STATE = {
   DEFAULT: 'default',
   ADD_PROFILE: 'addProfile',
 };
+
+let userData: string | null;
+
+let authToken: string | null;
 
 const ProfilesPage: React.FC = () => {
   const router = useRouter();
@@ -36,13 +40,15 @@ const ProfilesPage: React.FC = () => {
   // Decide whether to refresh the profiles
   const [refreshProfiles, setRefreshProfiles] = React.useState<boolean>(true);
 
-  const userData = localStorage.getItem('user-data');
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('user-data');
 
-  const authToken = localStorage.getItem('auth-token');
+    authToken = localStorage.getItem('auth-token');
+  }
 
   // Getting the associated profiles object ID
   const {
-    meta: {profile_id: USER_PROFILES_ID},
+    meta: {profiles_id: USER_PROFILES_ID},
   }: UserModel = JSON.parse(userData ?? '');
 
   React.useEffect(() => {
@@ -63,20 +69,13 @@ const ProfilesPage: React.FC = () => {
       })
       .catch((err) => {
         console.debug(err);
-        clearStorage(['user-data', 'auth-token'], localStorage);
+        // clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [
-    authToken,
-    USER_PROFILES_ID,
-    userData,
-    router,
-    screenState,
-    refreshProfiles,
-  ]);
+  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
   if (!userData || !authToken) {
     clearStorage(['user-data', 'auth-token'], localStorage);

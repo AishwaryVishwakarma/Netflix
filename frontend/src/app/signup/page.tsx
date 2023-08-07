@@ -13,7 +13,7 @@ import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import clearStorage from '@/utils/clearStorage';
 
-/*
+/**
  * Sign Up Page
  */
 
@@ -79,15 +79,10 @@ const SignupPage: React.FC = () => {
       });
 
       // Sending user back to login pack if the user account already exists
-      if (checkUserExist.status) router.push('/');
+      if (checkUserExist.status === 200) router.push('/');
+
+      if (checkUserExist.status === 202) router.push('/signup/registration');
     } catch (error: any) {
-      const status = error.response?.status;
-
-      if (status === 404) {
-        router.push('/signup/registration');
-        return;
-      }
-
       console.debug(error);
     }
   }

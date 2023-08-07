@@ -14,11 +14,19 @@ import Default from '@/components/pages/manageProfiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfile';
 
+/**
+ * Manage Profiles Page (Contains 3 screens)
+ */
+
 export const SCREEN_STATE = {
   DEFAULT: 'default',
   ADD_PROFILE: 'addProfile',
   EDIT_PROFILE: 'editProfile',
 };
+
+let userData: string | null;
+
+let authToken: string | null;
 
 const ManageProfilesPage: React.FC = () => {
   const router = useRouter();
@@ -38,13 +46,15 @@ const ManageProfilesPage: React.FC = () => {
   // Decide whether to refresh the profiles
   const [refreshProfiles, setRefreshProfiles] = React.useState<boolean>(true);
 
-  const userData = localStorage.getItem('user-data');
+  if (typeof window !== 'undefined') {
+    userData = localStorage.getItem('user-data');
 
-  const authToken = localStorage.getItem('auth-token');
+    authToken = localStorage.getItem('auth-token');
+  }
 
   // Getting the associated profiles object ID
   const {
-    meta: {profile_id: USER_PROFILES_ID},
+    meta: {profiles_id: USER_PROFILES_ID},
   }: UserModel = JSON.parse(userData ?? '');
 
   React.useEffect(() => {
@@ -71,14 +81,7 @@ const ManageProfilesPage: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [
-    authToken,
-    USER_PROFILES_ID,
-    userData,
-    router,
-    screenState,
-    refreshProfiles,
-  ]);
+  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
   if (!userData || !authToken) {
     clearStorage(['user-data', 'auth-token'], localStorage);
@@ -99,6 +102,11 @@ const ManageProfilesPage: React.FC = () => {
         break;
       }
     }
+  };
+
+  const defaultProps = {
+    profileData,
+    changeScreen: setScreenState,
   };
 
   return (

@@ -8,7 +8,7 @@ export const checkUser = `http://localhost:${port}/checkuser`;
 
 export const setSubscription = `http://localhost:${port}/set-subscription`;
 
-export const userProfile = `http://localhost:${port}/profile/`;
+export const userProfile = `http://localhost:${port}/profiles/`;
 
 export const createProfile = `http://localhost:${port}/create-profile`;
 

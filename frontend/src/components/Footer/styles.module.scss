@@ -53,6 +53,7 @@ $auth-footer-font-size: 13px;
 
       @media (max-width: 1024px) {
         margin: 20px 0 0;
+        font-size: 14px;
       }
 
       &:hover {
@@ -72,6 +73,10 @@ $auth-footer-font-size: 13px;
 
     &:hover {
       color: white;
+    }
+
+    @media (max-width: 800px) {
+      font-size: 14px;
     }
   }
 

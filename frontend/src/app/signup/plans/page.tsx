@@ -9,7 +9,7 @@ import Plans from '@/components/pages/signup/Plans/Plans/Plans';
 import Protected from '@/components/Protected/Protected';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
-/*
+/**
  * Plans Page (Contains 2 screen) [Protected]
  */
 

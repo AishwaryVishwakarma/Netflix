@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React from 'react';
@@ -10,7 +9,7 @@ import Protected from '@/components/Protected/Protected';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import clearStorage from '@/utils/clearStorage';
 
-/*
+/**
  * Payment Page [Protected]
  */
 
@@ -36,7 +35,7 @@ const PaymentPage: React.FC = () => {
               Step <b>3</b> of <b>3</b>
             </p>
             <h1>Choose how to pay</h1>
-            <h3>Don't Worry you don't need to pay anything, Enjoy!</h3>
+            <h3>Don&apos; Worry you don&apos; need to pay anything, Enjoy!</h3>
             <Link href='/' onClick={submitHandler}>
               Login
             </Link>

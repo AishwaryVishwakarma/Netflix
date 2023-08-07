@@ -133,8 +133,7 @@ $input-padding-left-mobile: 6%;
                 background: #333333;
                 border: none;
                 outline: none;
-                padding-left: $input-padding-left;
-                padding-top: 20px;
+                padding: 20px $input-padding-left 0;
                 letter-spacing: 0.5px;
 
                 @media (max-width: 800px) {
