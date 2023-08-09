@@ -86,12 +86,6 @@ const ProfilesPage: React.FC = () => {
     };
   }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
-  if (!userData || !authToken) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
-
   return (
     <Layout className='full-bleed full-height defaultBg' footer={false}>
       <div className={styles.header} />

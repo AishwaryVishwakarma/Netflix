@@ -25,11 +25,6 @@ const Plans: React.FC = () => {
 
     const authToken: string | null = localStorage.getItem('auth-token');
 
-    if (!authToken) {
-      router.push('/signup/registration');
-      return;
-    }
-
     try {
       const res = await axios.post(
         SET_SUBSCRIPTION_URL,

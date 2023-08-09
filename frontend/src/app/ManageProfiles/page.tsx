@@ -92,12 +92,6 @@ const ManageProfilesPage: React.FC = () => {
     };
   }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
-  if (!userData || !authToken) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
-
   // Get the profile data for the profile that is currently editing
   const get_edit_profile_data = (id: string): null | void => {
     const profilesArray = profileData?.profiles;
