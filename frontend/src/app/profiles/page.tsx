@@ -56,8 +56,7 @@ const ProfilesPage: React.FC = () => {
     if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
 
     // Using this to cancel the request if the component changes before the request is completed
-    const controller = new AbortController();
-    const signal = controller.signal;
+    const cancelToken = axios.CancelToken.source();
 
     setIsLoading(true);
 
@@ -66,7 +65,7 @@ const ProfilesPage: React.FC = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-        signal,
+        cancelToken: cancelToken.token,
       })
       .then((res) => {
         const profiles: UserProfileModel = res.data?.user_profile;
@@ -82,7 +81,7 @@ const ProfilesPage: React.FC = () => {
       });
 
     return (): void => {
-      controller.abort();
+      cancelToken.cancel();
     };
   }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
