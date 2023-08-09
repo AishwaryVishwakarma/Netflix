@@ -1,0 +1,37 @@
+.container {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(15px);
+  }
+
+  img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+  }
+}
+
+.loaded {
+  &::before {
+    animation: fade-out 0.2s ease-in-out forwards;
+    @keyframes fade-out {
+      100% {
+        opacity: 0;
+      }
+    }
+  }
+
+  img {
+    opacity: 1;
+  }
+}

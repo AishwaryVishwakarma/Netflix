@@ -15,11 +15,6 @@ $mobile-max-width: 85%;
   justify-content: center;
 }
 
-@mixin full-space {
-  height: 100%;
-  width: 100%;
-}
-
 .signupWrapper {
   height: 100%;
   position: relative;
@@ -33,12 +28,10 @@ $mobile-max-width: 85%;
   }
 
   .background {
-    @include full-space();
     position: fixed;
     inset: 0;
     z-index: -1;
     filter: brightness(0.35);
-    object-fit: cover;
   }
 
   .heroSection {

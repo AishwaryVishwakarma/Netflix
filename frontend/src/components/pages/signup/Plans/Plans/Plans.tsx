@@ -44,7 +44,6 @@ const Plans: React.FC = () => {
       }
     } catch (error) {
       console.debug(error);
-      setIsLoading(false);
       router.push('/signup');
     }
   };

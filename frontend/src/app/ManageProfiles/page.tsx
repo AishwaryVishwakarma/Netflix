@@ -79,8 +79,11 @@ const ManageProfilesPage: React.FC = () => {
       })
       .catch((err) => {
         console.debug(err);
-        clearStorage(['user-data', 'auth-token'], localStorage);
-        router.push('/');
+        // To check if the error is due to cancellation of the request
+        if (!axios.isCancel(err)) {
+          clearStorage(['user-data', 'auth-token'], localStorage);
+          router.push('/');
+        }
       })
       .finally(() => {
         setIsLoading(false);

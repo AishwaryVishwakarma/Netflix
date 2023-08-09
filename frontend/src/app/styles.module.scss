@@ -1,5 +1,5 @@
 $primary-color: #e50914;
-$secondary-color: #8c8c84;
+$secondary-color: #8c8c8c;
 $orange: #e87c03;
 $input-font-size: 16px;
 $input-font-size-mobile: 14px;
@@ -11,11 +11,6 @@ $input-padding-left-mobile: 6%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-@mixin full-space {
-  height: 100%;
-  width: 100%;
 }
 
 .loginWrapper {
@@ -30,12 +25,10 @@ $input-padding-left-mobile: 6%;
   }
 
   .background {
-    @include full-space();
     position: fixed;
     inset: 0;
     z-index: -1;
     filter: brightness(0.6);
-    object-fit: cover;
 
     // To match background color in mobile
     @media (max-width: 800px) {

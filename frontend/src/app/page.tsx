@@ -12,10 +12,14 @@ import {useRouter} from 'next/navigation';
 import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {type UserModel} from '@/types';
 import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
+import LazyImage from '@/components/LazyImage/LazyImage';
 
 /*
  * Login Page
  */
+
+export const backgroundPlaceholder =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAAAAAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAUGBAj/xAAlEAABAwQCAgEFAAAAAAAAAAABAgMEBQYRIQASEzEiQVFhgbH/xAAVAQEBAAAAAAAAAAAAAAAAAAAFA//EACQRAAIBAwMDBQAAAAAAAAAAAAECAwARIQUxUQQiQWFxgaGx/9oADAMBAAIRAxEAPwDkFqtS1zzAtpmPMTT1R3psyZ1BDrHcktOZCyglxYVke0/TXNdtORp8oijW/KjTX5jaHagJLjEdKGvJ8u7qXAlSVhOcJUMKJwSB1hnqpUp0i2HZc99xx2G8pThcPkyZTgJCvYJwM4OzknZPKaDPkzLQtmjS1NvxJM6Wt1DjSVKWrqFAlZHbRUsjeitWMdjmEcCzuYozZgBk532xe2D80lGrkK7m4e+OD5z6gj8pxTJdx5lPV6n1qvTnn/I9MpcdpbBJQjQIbO9ZI/P7Jx1Z9qW5UafJmT6NGkPOTXipbiOxO/59h6A0OHG00jtF3+hRHUavJHMyxoAATbLc+9f/2Q==';
 
 interface FormData {
   email: string;
@@ -172,12 +176,15 @@ const LoginPage: React.FC = () => {
       fixedFooter
     >
       <section className={styles.loginWrapper}>
-        <img
+        <LazyImage
           src={
             isMobile
               ? ''
               : 'https://assets.nflxext.com/ffe/siteui/vlv3/d282a426-b01a-424c-9b83-2c2445e4b61a/f7eb3bc2-2867-4c7e-94f8-e62ec11175cd/IN-en-20230626-popsignuptwoweeks-perspective_alpha_website_large.jpg'
           }
+          height='100%'
+          width='100%'
+          placeholder={backgroundPlaceholder}
           alt='background'
           className={styles.background}
         />
