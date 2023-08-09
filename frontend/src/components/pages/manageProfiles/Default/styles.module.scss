@@ -24,23 +24,37 @@ $profile-name-font-size: 1.2vw;
     opacity: 0;
     transform: scale(1.1);
 
+    @media (max-width: 800px) {
+      width: 90%;
+    }
+
     @keyframes scale-in {
       100% {
         opacity: 1;
         transform: scale(1);
       }
     }
-    
+
     h1 {
       color: $primary-color;
       font-size: 3.5vw;
       font-weight: 400;
       user-select: none;
+
+      @media (max-width: 800px) {
+        font-size: 30px;
+      }
     }
 
     .profiles {
       @include flexbox();
       gap: 25px;
+
+      @media (max-width: 800px) {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
 
       .profileCard {
         @include flexbox();
@@ -74,9 +88,15 @@ $profile-name-font-size: 1.2vw;
           color: $secondary-color;
           font-size: $profile-name-font-size;
           max-width: calc($icon-width * 0.9);
+          min-width: 80px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          text-align: center;
+
+          @media (max-width: 800px) {
+            font-size: 12px;
+          }
         }
 
         &:hover {
@@ -112,6 +132,11 @@ $profile-name-font-size: 1.2vw;
         background: $secondary-color;
         border-radius: 50%;
         padding: 0 1.4vw;
+
+        @media (max-width: 800px) {
+          font-size: 45px;
+          padding: 0 3.4vw;
+        }
       }
     }
 
@@ -125,6 +150,10 @@ $profile-name-font-size: 1.2vw;
       cursor: pointer;
       border-radius: 2px;
       text-decoration: none;
+
+      @media (max-width: 800px) {
+        font-size: 13px;
+      }
 
       &:hover {
         color: $primary-color;
