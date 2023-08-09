@@ -25,7 +25,10 @@ app.use(
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const redisClient = redis.createClient()
+const redisClient = redis.createClient({
+    host: 'localhost',
+    port: 6379
+})
 
 redisClient.on('error', err => console.log(err))
 
