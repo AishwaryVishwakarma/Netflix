@@ -14,7 +14,7 @@ import Default from '@/components/pages/profiles/Default/Default';
 import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 
 /**
- * Profiles Page (Contains 2 screens)
+ * Profiles Page (Contains 2 screens) [Protected]
  */
 
 export const SCREEN_STATE = {
@@ -55,6 +55,9 @@ const ProfilesPage: React.FC = () => {
     // Only fetching the data when user has added a profile
     if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
 
+    // Using this to cancel the request if the component changes before the request is completed
+    const cancelToken = axios.CancelToken.source();
+
     setIsLoading(true);
 
     axios
@@ -62,6 +65,7 @@ const ProfilesPage: React.FC = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
+        cancelToken: cancelToken.token,
       })
       .then((res) => {
         const profiles: UserProfileModel = res.data?.user_profile;
@@ -69,19 +73,17 @@ const ProfilesPage: React.FC = () => {
       })
       .catch((err) => {
         console.debug(err);
-        // clearStorage(['user-data', 'auth-token'], localStorage);
+        clearStorage(['user-data', 'auth-token'], localStorage);
         router.push('/');
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
-  if (!userData || !authToken) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
+    return (): void => {
+      cancelToken.cancel();
+    };
+  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
   return (
     <Layout className='full-bleed full-height defaultBg' footer={false}>

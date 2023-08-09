@@ -15,7 +15,7 @@ import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfile';
 
 /**
- * Manage Profiles Page (Contains 3 screens)
+ * Manage Profiles Page (Contains 3 screens) [Protected]
  */
 
 export const SCREEN_STATE = {
@@ -61,6 +61,9 @@ const ManageProfilesPage: React.FC = () => {
     // Only fetching the data when user has added a profile
     if (screenState !== SCREEN_STATE.DEFAULT || !refreshProfiles) return;
 
+    // Using this to cancel the request if the component changes before the request is completed
+    const cancelToken = axios.CancelToken.source();
+
     setIsLoading(true);
 
     axios
@@ -68,6 +71,7 @@ const ManageProfilesPage: React.FC = () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
+        cancelToken: cancelToken.token,
       })
       .then((res) => {
         const profiles: UserProfileModel = res.data?.user_profile;
@@ -81,13 +85,11 @@ const ManageProfilesPage: React.FC = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
-  if (!userData || !authToken) {
-    clearStorage(['user-data', 'auth-token'], localStorage);
-    router.push('/');
-    return;
-  }
+    return (): void => {
+      cancelToken.cancel();
+    };
+  }, [USER_PROFILES_ID, router, screenState, refreshProfiles]);
 
   // Get the profile data for the profile that is currently editing
   const get_edit_profile_data = (id: string): null | void => {
@@ -102,11 +104,6 @@ const ManageProfilesPage: React.FC = () => {
         break;
       }
     }
-  };
-
-  const defaultProps = {
-    profileData,
-    changeScreen: setScreenState,
   };
 
   return (

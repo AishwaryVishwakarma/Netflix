@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import styles from './styles.module.scss';
-import {type FormData} from '@/app/signup/registration/page';
 import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
 import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
@@ -11,18 +10,25 @@ import {useRouter} from 'next/navigation';
  * Registration Form Screen
  */
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
 interface InputTouched {
   email: boolean;
   password: boolean;
 }
 
 const Form: React.FC<{
-  formData: FormData;
-  propsOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({formData, propsOnChange}) => {
+  propsEmail: string;
+}> = ({propsEmail}) => {
   const router = useRouter();
 
-  const {email, password} = formData ?? {};
+  const [formData, setFormData] = React.useState({
+    email: propsEmail ?? '',
+    password: '',
+  });
 
   const [isInputFocused, setIsInputFocused] = React.useState<InputTouched>({
     email: false,
@@ -68,6 +74,18 @@ const Form: React.FC<{
     });
   };
 
+  const formOnChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const {name, value} = event.target;
+    setFormData((prev): FormData => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
   // On Sign Up Form Submit
   const signupHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,6 +93,8 @@ const Form: React.FC<{
     setError('');
 
     setIsLoading(true);
+
+    const {email, password} = formData;
 
     const trimmedEmail = email.trim().toLocaleLowerCase();
 
@@ -92,6 +112,8 @@ const Form: React.FC<{
 
       router.push('/signup/plans');
     } catch (error: any) {
+      console.debug(error);
+
       const stateError = error.response?.data?.detail;
 
       setError(stateError);
@@ -128,7 +150,7 @@ const Form: React.FC<{
                 id='email'
                 value={formData.email}
                 placeholder=' '
-                onChange={propsOnChange}
+                onChange={formOnChangeHandler}
                 onFocus={setInputFocus}
                 onBlur={setInputBlur}
                 required
@@ -150,7 +172,7 @@ const Form: React.FC<{
                 id='password'
                 value={formData.password}
                 placeholder=' '
-                onChange={propsOnChange}
+                onChange={formOnChangeHandler}
                 onFocus={setInputFocus}
                 onBlur={setInputBlur}
                 required
