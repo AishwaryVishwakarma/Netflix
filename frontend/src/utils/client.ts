@@ -1,4 +1,4 @@
-// Sanity client to connect with the dabase server
+// Sanity client to connect with the database server
 
 import {createClient} from '@sanity/client';
 

@@ -25,7 +25,7 @@ const LOCAL_SCREEN_STATE = {
   DELETE: 'delete',
   UPDATE_ICON: 'updateIcon',
   CONFIRM_UPDATE_ICON: 'confirmUpdateIcon',
-};
+} as const;
 
 interface IconState {
   current: string;

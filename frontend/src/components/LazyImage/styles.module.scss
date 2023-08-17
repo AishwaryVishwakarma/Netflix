@@ -25,10 +25,23 @@
   &::before {
     animation: fade-out 0.2s ease-in-out forwards;
     @keyframes fade-out {
-      100% {
+      99% {
         opacity: 0;
       }
+      100% {
+        content: none;
+      }
     }
+  }
+
+  img {
+    opacity: 1;
+  }
+}
+
+.imageCached {
+  &::before {
+    content: none;
   }
 
   img {

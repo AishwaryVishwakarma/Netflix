@@ -16,7 +16,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 export const SCREEN_STATE = {
   INTRO: 'intro',
   PLANS: 'plans',
-};
+} as const;
 
 const PlansPage: React.FC = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');

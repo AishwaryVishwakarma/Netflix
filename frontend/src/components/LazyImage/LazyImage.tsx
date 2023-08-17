@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
+import isImageCached from '@/utils/isImageCached';
 
 interface Props {
   src: string;
@@ -23,7 +24,13 @@ const LazyImage: React.FC<Props> = ({
   priority = 'high',
 }) => {
   const containerRef = React.useRef(null);
+
+  const isImageCachedInBrowser = isImageCached(src);
+
   React.useEffect(() => {
+    // If the image is cached in browsers then don't run the effect
+    if (isImageCachedInBrowser) return;
+
     const container = containerRef.current as HTMLDivElement | null;
 
     // Getting the image element
@@ -42,7 +49,7 @@ const LazyImage: React.FC<Props> = ({
     return (): void => {
       image.removeEventListener('load', loaded);
     };
-  }, []);
+  }, [isImageCachedInBrowser]);
 
   const containerClass = {
     backgroundImage: `url(${placeholder})`,
@@ -55,7 +62,9 @@ const LazyImage: React.FC<Props> = ({
       data-lazy-image='true'
       style={containerClass}
       ref={containerRef}
-      className={`${styles.container} ${className}`}
+      className={`${styles.container} ${
+        isImageCachedInBrowser && styles.imageCached
+      } ${className}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={src} alt={alt} loading={loading} fetchPriority={priority} />

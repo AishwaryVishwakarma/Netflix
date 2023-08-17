@@ -20,7 +20,7 @@ import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 export const SCREEN_STATE = {
   DEFAULT: 'default',
   ADD_PROFILE: 'addProfile',
-};
+} as const;
 
 let userData: string | null;
 

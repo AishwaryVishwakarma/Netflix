@@ -15,7 +15,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 export const SCREEN_STATE = {
   INTRO: 'intro',
   FORM: 'form',
-};
+} as const;
 
 let sessionEmail: string | null;
 
