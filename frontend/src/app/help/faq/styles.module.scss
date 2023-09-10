@@ -215,3 +215,15 @@ $horizontal-padding: 2vw;
     }
   }
 }
+
+.loading {
+  @include flexbox();
+  height: 100vh;
+  width: 100vw;
+
+  .spinner {
+    color: $primary-color;
+    height: 50px;
+    width: 50px;
+  }
+}

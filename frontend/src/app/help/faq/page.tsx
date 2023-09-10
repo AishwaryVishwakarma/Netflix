@@ -9,6 +9,7 @@ import {AiOutlineArrowLeft} from 'react-icons/ai';
 import SanityImage from '@/components/sanity/SanityImage';
 import SanityRichText from '@/components/sanity/SanityRichText';
 import Article from '@/assets/icons/Article';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 
 interface Features {
   _key: string;
@@ -51,53 +52,61 @@ const FAQPage = async () => {
   } = pageData;
 
   return (
-    <Layout className='full-bleed'>
-      <header className='layouted defaultBg'>
-        <div className={styles.headerContent}>
-          <Link href='/'>
-            <NetflixLogo width={80} height={32} />
-          </Link>
-          <div className={styles.divider} />
-          <span>Help Center</span>
-          <Link href='/signup'>JOIN NETFLIX</Link>
-          <Link href='/'>SIGN IN</Link>
+    <React.Suspense
+      fallback={
+        <div className={styles.loading}>
+          <CircularLoader className={styles.spinner} />
         </div>
-      </header>
-      <section className='layouted'>
-        <div className={styles.main}>
-          <div className={styles.leftPan}>
+      }
+    >
+      <Layout className='full-bleed'>
+        <header className='layouted defaultBg'>
+          <div className={styles.headerContent}>
             <Link href='/'>
-              <AiOutlineArrowLeft />
-              <span>Back to help center</span>
+              <NetflixLogo width={80} height={32} />
             </Link>
-            {features.map((feature) => (
-              <div key={feature._key} className={styles.feature}>
-                <h1>{feature.heading}</h1>
-                <SanityImage imageBlock={feature.featureImage} />
-                <SanityRichText
-                  textBlock={feature.description}
-                  className={styles.description}
-                />
-                <hr />
-              </div>
-            ))}
+            <div className={styles.divider} />
+            <span>Help Center</span>
+            <Link href='/signup'>JOIN NETFLIX</Link>
+            <Link href='/'>SIGN IN</Link>
           </div>
-          <div className={styles.rightPan}>
-            <div className={styles.relatedArticles}>
-              <h3>Related Articles</h3>
-              <ul>
-                {relatedArticles.map((article) => (
-                  <li key={article._key}>
-                    <Article />
-                    <Link href={article.link || '/'}>{article.text}</Link>
-                  </li>
-                ))}
-              </ul>
+        </header>
+        <section className='layouted'>
+          <div className={styles.main}>
+            <div className={styles.leftPan}>
+              <Link href='/'>
+                <AiOutlineArrowLeft />
+                <span>Back to help center</span>
+              </Link>
+              {features.map((feature) => (
+                <div key={feature._key} className={styles.feature}>
+                  <h1>{feature.heading}</h1>
+                  <SanityImage imageBlock={feature.featureImage} />
+                  <SanityRichText
+                    textBlock={feature.description}
+                    className={styles.description}
+                  />
+                  <hr />
+                </div>
+              ))}
+            </div>
+            <div className={styles.rightPan}>
+              <div className={styles.relatedArticles}>
+                <h3>Related Articles</h3>
+                <ul>
+                  {relatedArticles.map((article) => (
+                    <li key={article._key}>
+                      <Article />
+                      <Link href={article.link || '/'}>{article.text}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </Layout>
+        </section>
+      </Layout>
+    </React.Suspense>
   );
 };
 
