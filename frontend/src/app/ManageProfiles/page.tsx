@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {type UserModel, type UserProfileModel} from '@/types';
 import {useRouter} from 'next/navigation';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage, getStorage} from '@/utils/storage';
 import axios from 'axios';
 import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
 import Protected from '@/components/Protected/Protected';
@@ -47,9 +47,10 @@ const ManageProfilesPage: React.FC = () => {
   const [refreshProfiles, setRefreshProfiles] = React.useState<boolean>(true);
 
   if (typeof window !== 'undefined') {
-    userData = localStorage.getItem('user-data');
-
-    authToken = localStorage.getItem('auth-token');
+    [userData, authToken] = getStorage(
+      ['user-data', 'auth-token'],
+      localStorage
+    );
   }
 
   // Getting the associated profiles object ID

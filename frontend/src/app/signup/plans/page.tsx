@@ -6,7 +6,6 @@ import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
 import Plans from '@/components/pages/signup/Plans/Plans/Plans';
-import Protected from '@/components/Protected/Protected';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
 /**
@@ -50,8 +49,4 @@ const PlansPage: React.FC = () => {
   );
 };
 
-const Main: React.FC = () => {
-  return <Protected Page={PlansPage} />;
-};
-
-export default Main;
+export default PlansPage;

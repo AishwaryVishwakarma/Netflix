@@ -7,6 +7,7 @@ import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import {getStorage} from '@/utils/storage';
 
 /**
  * Registration Page (Contains 2 screens)
@@ -27,7 +28,7 @@ const RegistrationPage = () => {
   );
 
   if (typeof window !== 'undefined') {
-    sessionEmail = sessionStorage.getItem('email');
+    [sessionEmail] = getStorage(['email'], sessionStorage);
   }
 
   return (

@@ -7,7 +7,7 @@ import Header from '@/components/pages/signup/Header';
 import Link from 'next/link';
 import Protected from '@/components/Protected/Protected';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage} from '@/utils/storage';
 
 /**
  * Payment Page [Protected]

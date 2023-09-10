@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import PlanCard from '../PlanCard';
-import {PLANS} from '@/data/plans';
+import {PLANS} from '@/DATA/PLANS';
 import {nanoid} from 'nanoid';
 import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {setSubscription as SET_SUBSCRIPTION_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage, getStorage} from '@/utils/storage';
 
 /*
  * Plans Screen (Plans Page)
@@ -23,7 +23,7 @@ const Plans: React.FC = () => {
       sessionStorage.getItem('subscription') as string
     );
 
-    const authToken: string | null = localStorage.getItem('auth-token');
+    const [authToken] = getStorage(['auth-token'], localStorage);
 
     try {
       const res = await axios.post(

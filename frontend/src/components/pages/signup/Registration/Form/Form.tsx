@@ -5,6 +5,7 @@ import axios from 'axios';
 import {signup as SIGNUP_URL} from '@/END_POINTS';
 import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {useRouter} from 'next/navigation';
+import {setStorage} from '@/utils/storage';
 
 /*
  * Registration Form Screen
@@ -114,9 +115,7 @@ const Form: React.FC<{
     } catch (error: any) {
       console.debug(error);
 
-      const stateError = error.response?.data?.detail;
-
-      setError(stateError);
+      setError(error.response?.data?.detail);
 
       setIsLoading(false);
     }

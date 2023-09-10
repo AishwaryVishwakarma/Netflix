@@ -13,6 +13,7 @@ import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import {type UserModel} from '@/types';
 import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
 import LazyImage from '@/components/LazyImage/LazyImage';
+import {setStorage} from '@/utils/storage';
 
 /*
  * Login Page
@@ -146,6 +147,8 @@ const LoginPage: React.FC = () => {
     setIsLoading(true);
 
     try {
+      axios.defaults.withCredentials = true;
+
       const res = await axios.post(LOGIN_URL, {
         email: formData.email.trim().toLocaleLowerCase(),
         password: formData.password,
@@ -155,9 +158,13 @@ const LoginPage: React.FC = () => {
       const {user, jwtToken}: {user: UserModel; jwtToken: string} =
         res.data ?? {};
 
-      localStorage.setItem('auth-token', jwtToken);
-
-      localStorage.setItem('user-data', JSON.stringify(user));
+      setStorage(
+        {
+          'auth-token': jwtToken,
+          'user-data': JSON.stringify(user),
+        },
+        localStorage
+      );
 
       sessionStorage.clear();
 
@@ -168,6 +175,30 @@ const LoginPage: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  // Checking if the session exist and redirecting to /profiles page
+  React.useEffect(() => {
+    axios
+      .get(LOGIN_URL)
+      .then((res): void => {
+        if (res.status === 200) {
+          setIsLoading(true);
+          setStorage(
+            {
+              'auth-token': res.data.jwt,
+              'user-data': JSON.stringify(res.data.user),
+            },
+            localStorage
+          );
+          sessionStorage.clear();
+
+          router.push('/profiles');
+        }
+      })
+      .catch((err): void => {
+        console.debug(err);
+      });
+  }, [router]);
 
   return (
     <Layout

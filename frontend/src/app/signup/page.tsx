@@ -11,7 +11,7 @@ import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
 import {useRouter} from 'next/navigation';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage} from '@/utils/storage';
 import LazyImage from '@/components/LazyImage/LazyImage';
 import {backgroundPlaceholder} from '../page';
 

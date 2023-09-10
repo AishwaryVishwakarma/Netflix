@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage, getStorage} from '@/utils/storage';
 import {useRouter} from 'next/navigation';
 import {SCREEN_STATE} from '@/app/ManageProfiles/page';
 import {
@@ -13,7 +13,7 @@ import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
 import Edit from '@/assets/icons/Edit';
 import {BiArrowBack} from 'react-icons/bi';
 import {AiOutlineRight} from 'react-icons/ai';
-import ICONS_ARRAY from '@/data/profile_icons';
+import ICONS_ARRAY from '@/DATA/PROFILE_ICONS';
 import {nanoid} from 'nanoid';
 
 /*
@@ -81,7 +81,7 @@ const EditProfile: React.FC<MainComponentProps> = ({
     autoplay_previews,
   } = profileData[0] ?? {};
 
-  const authToken = localStorage.getItem('auth-token');
+  const [authToken] = getStorage(['auth-token'], localStorage);
 
   const router = useRouter();
 

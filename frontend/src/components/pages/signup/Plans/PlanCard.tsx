@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './styles.module.scss';
 import CheckMarkCircle from '@/assets/icons/CheckMarkCircle';
 import CheckMark from '@/assets/icons/CheckMark';
-import {type PlanData} from '@/data/plans';
+import {type PlanData} from '@/DATA/PLANS';
+import {setStorage} from '@/utils/storage';
 
 /*
  * Plans Card (Plans Screen)
@@ -28,7 +29,12 @@ const PlanCard: React.FC<{
       value: value.toString(),
     };
 
-    sessionStorage.setItem('subscription', JSON.stringify(subscription));
+    setStorage(
+      {
+        subscription: JSON.stringify(subscription),
+      },
+      sessionStorage
+    );
   };
 
   return (

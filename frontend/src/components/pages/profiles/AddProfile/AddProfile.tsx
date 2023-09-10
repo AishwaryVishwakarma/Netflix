@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {SCREEN_STATE} from '@/app/profiles/page';
-import {getNextIcon} from '@/data/profile_icons';
+import {getNextIcon} from '@/DATA/PROFILE_ICONS';
 import {type UserProfileModel} from '@/types';
 import {createProfile as CREATE_PROFILE_URL} from '@/END_POINTS';
 import axios from 'axios';
 import {useRouter} from 'next/navigation';
-import clearStorage from '@/utils/clearStorage';
+import {clearStorage, getStorage} from '@/utils/storage';
 
 /*
  * Add profile Screen
@@ -33,7 +33,7 @@ const AddProfile: React.FC<{
 
   const icon = getNextIcon(_index);
 
-  const authToken = localStorage.getItem('auth-token');
+  const [authToken] = getStorage(['auth-token'], localStorage);
 
   React.useEffect((): void => {
     // Focusing the input element when the component is rendered
