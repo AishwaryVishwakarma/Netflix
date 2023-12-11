@@ -1,9 +1,10 @@
-import React from 'react';
-import {BsFillPlayFill, BsHandThumbsUp} from 'react-icons/bs';
-import {AiOutlinePlus, AiOutlineDown} from 'react-icons/ai';
-import {RxDotFilled} from 'react-icons/rx';
-import {ModalContext} from '@/app/home/page';
+import {ModalContext} from '@/app/home/context';
 import axios from 'axios';
+import React from 'react';
+import {AiOutlineDown, AiOutlinePlus} from 'react-icons/ai';
+import {BsFillPlayFill, BsHandThumbsUp} from 'react-icons/bs';
+import {RxDotFilled} from 'react-icons/rx';
+
 import styles from './styles.module.scss';
 
 const MovieCard: React.FC<any> = ({movieData}) => {

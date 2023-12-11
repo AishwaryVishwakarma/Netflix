@@ -1,11 +1,12 @@
+import {ModalContext} from '@/app/home/context';
 import React from 'react';
-import styles from './styles.module.scss';
 import {createPortal} from 'react-dom';
-import {FaAudioDescription} from 'react-icons/fa';
-import {MdOutlineSubtitles, MdOutlineClose} from 'react-icons/md';
-import {BsFillPlayFill, BsHandThumbsUp} from 'react-icons/bs';
 import {AiOutlinePlus} from 'react-icons/ai';
-import {ModalContext} from '@/app/home/page';
+import {BsFillPlayFill, BsHandThumbsUp} from 'react-icons/bs';
+import {FaAudioDescription} from 'react-icons/fa';
+import {MdOutlineClose, MdOutlineSubtitles} from 'react-icons/md';
+
+import styles from './styles.module.scss';
 
 const MovieDetailModal: React.FC<any> = ({data}) => {
   const {

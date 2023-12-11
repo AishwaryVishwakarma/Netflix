@@ -10,6 +10,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import {type UserModel} from '@/types';
 import {setStorage} from '@/utils/storage';
 import axios from 'axios';
+import Image from 'next/image';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import React from 'react';
@@ -206,17 +207,18 @@ const LoginPage: React.FC = () => {
       fixedFooter
     >
       <section className={styles.loginWrapper}>
-        <LazyImage
+        <Image
           src={
             isMobile
               ? ''
               : 'https://assets.nflxext.com/ffe/siteui/vlv3/d282a426-b01a-424c-9b83-2c2445e4b61a/f7eb3bc2-2867-4c7e-94f8-e62ec11175cd/IN-en-20230626-popsignuptwoweeks-perspective_alpha_website_large.jpg'
           }
-          height='100%'
-          width='100%'
-          placeholder={backgroundPlaceholder}
+          height='1000'
+          width='1000'
+          blurDataURL={backgroundPlaceholder}
           alt='background'
           className={styles.background}
+          placeholder='blur'
         />
         <div className={styles.heroSection}>
           <NetflixLogo

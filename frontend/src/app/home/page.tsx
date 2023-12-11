@@ -1,18 +1,15 @@
 'use client';
 
-import React from 'react';
-import Navbar from '@/components/Navbar/Navbar';
-import MovieSection from '@/components/pages/home/MovieSection/MovieSection';
-import {BsFillPlayFill} from 'react-icons/bs';
-import {AiOutlineInfoCircle} from 'react-icons/ai';
-import MovieDetailModal from '@/components/commons/MovieDetailModal/MovieDetailModal';
-import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
+import Navbar from '@/components/Navbar/Navbar';
+import MovieDetailModal from '@/components/commons/MovieDetailModal/MovieDetailModal';
+import MovieSection from '@/components/pages/home/MovieSection/MovieSection';
+import React from 'react';
+import {AiOutlineInfoCircle} from 'react-icons/ai';
+import {BsFillPlayFill} from 'react-icons/bs';
 
-interface Context {
-  openMovieModal: (data: any) => void;
-  closeMovieModal: () => void;
-}
+import {ModalContext} from './context';
+import styles from './styles.module.scss';
 
 const MOVIES_LIST = [
   {
@@ -34,22 +31,23 @@ const MOVIES_LIST = [
   },
 ];
 
-export const ModalContext = React.createContext<Context>({
-  openMovieModal: (data: any): void => {},
-  closeMovieModal: (): void => {},
-});
-
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
   const [modalData, setModalData] = React.useState();
 
-  const prevTitle = React.useRef(document.title);
+  let documentTitle;
+
+  if (typeof document !== 'undefined') {
+    documentTitle = document.title;
+  }
+
+  const prevTitle = React.useRef(documentTitle);
 
   React.useEffect(() => {
     document.title = 'Home - Netflix';
 
     return () => {
-      document.title = prevTitle.current;
+      document.title = prevTitle.current as string;
     };
   }, []);
 
