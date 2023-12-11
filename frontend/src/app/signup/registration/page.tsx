@@ -1,22 +1,19 @@
 'use client';
 
 import Layout from '@/components/Layout/Layout';
-import React from 'react';
-import styles from './styles.module.scss';
-import Intro from '@/components/pages/signup/Registration/Intro/Intro';
-import Form from '@/components/pages/signup/Registration/Form/Form';
 import Header from '@/components/pages/signup/Header';
+import Form from '@/components/pages/signup/Registration/Form/Form';
+import Intro from '@/components/pages/signup/Registration/Intro/Intro';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import {getStorage} from '@/utils/storage';
+import React from 'react';
+
+import styles from './styles.module.scss';
+import {SCREEN_STATE} from './types';
 
 /**
  * Registration Page (Contains 2 screens)
  */
-
-export const SCREEN_STATE = {
-  INTRO: 'intro',
-  FORM: 'form',
-} as const;
 
 let sessionEmail: string | null;
 

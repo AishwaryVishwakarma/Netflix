@@ -1,26 +1,23 @@
 'use client';
 
-import React from 'react';
-import styles from './styles.module.scss';
-import Layout from '@/components/Layout/Layout';
-import {type UserModel, type UserProfileModel} from '@/types';
-import {useRouter} from 'next/navigation';
-import Protected from '@/components/Protected/Protected';
 import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Layout from '@/components/Layout/Layout';
+import Protected from '@/components/Protected/Protected';
+import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
+import Default from '@/components/pages/profiles/Default/Default';
+import {type UserModel, type UserProfileModel} from '@/types';
 import {clearStorage, getStorage} from '@/utils/storage';
 import axios from 'axios';
-import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
-import Default from '@/components/pages/profiles/Default/Default';
-import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
+import {useRouter} from 'next/navigation';
+import React from 'react';
+
+import styles from './styles.module.scss';
+import {SCREEN_STATE} from './types';
 
 /**
  * Profiles Page (Contains 2 screens) [Protected]
  */
-
-export const SCREEN_STATE = {
-  DEFAULT: 'default',
-  ADD_PROFILE: 'addProfile',
-} as const;
 
 let userData: string | null;
 

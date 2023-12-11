@@ -1,19 +1,20 @@
 'use client';
 
-import Layout from '@/components/Layout/Layout';
-import React from 'react';
-import styles from './styles.module.scss';
-import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
-import NetflixLogo from '@/assets/icons/NetflixLogo';
-import Link from 'next/link';
-import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
-import axios from 'axios';
 import {checkUser as CHECK_USER_EXIST_URL} from '@/END_POINTS';
-import {useRouter} from 'next/navigation';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Layout from '@/components/Layout/Layout';
+import LazyImage from '@/components/LazyImage/LazyImage';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import {clearStorage} from '@/utils/storage';
-import LazyImage from '@/components/LazyImage/LazyImage';
+import axios from 'axios';
+import Link from 'next/link';
+import {useRouter} from 'next/navigation';
+import React from 'react';
+import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
+
 import {backgroundPlaceholder} from '../page';
+import styles from './styles.module.scss';
 
 /**
  * Sign Up Page

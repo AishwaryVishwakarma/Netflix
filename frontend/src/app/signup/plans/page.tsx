@@ -1,21 +1,18 @@
 'use client';
 
-import React from 'react';
-import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
 import Header from '@/components/pages/signup/Header';
 import Intro from '@/components/pages/signup/Plans/Intro/Intro';
 import Plans from '@/components/pages/signup/Plans/Plans/Plans';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import React from 'react';
+
+import styles from './styles.module.scss';
+import {SCREEN_STATE} from './types';
 
 /**
  * Plans Page (Contains 2 screen) [Protected]
  */
-
-export const SCREEN_STATE = {
-  INTRO: 'intro',
-  PLANS: 'plans',
-} as const;
 
 const PlansPage: React.FC = () => {
   const isMobile = useMediaQuery('(max-width: 800px)');

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
-import {SCREEN_STATE} from '@/app/profiles/page';
+import {SCREEN_STATE} from '@/app/profiles/types';
 import Link from 'next/link';
 import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
 

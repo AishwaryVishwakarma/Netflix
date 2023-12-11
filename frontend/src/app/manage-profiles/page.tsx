@@ -1,28 +1,24 @@
 'use client';
 
-import React from 'react';
-import styles from './styles.module.scss';
+import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Layout from '@/components/Layout/Layout';
+import Protected from '@/components/Protected/Protected';
+import Default from '@/components/pages/manageProfiles/Default/Default';
+import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfile';
+import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
 import {type UserModel, type UserProfileModel} from '@/types';
-import {useRouter} from 'next/navigation';
 import {clearStorage, getStorage} from '@/utils/storage';
 import axios from 'axios';
-import {userProfile as GET_USER_PROFILE_URL} from '@/END_POINTS';
-import Protected from '@/components/Protected/Protected';
-import Layout from '@/components/Layout/Layout';
-import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
-import Default from '@/components/pages/manageProfiles/Default/Default';
-import AddProfile from '@/components/pages/profiles/AddProfile/AddProfile';
-import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfile';
+import {useRouter} from 'next/navigation';
+import React from 'react';
+
+import styles from './styles.module.scss';
+import {SCREEN_STATE} from './types';
 
 /**
  * Manage Profiles Page (Contains 3 screens) [Protected]
  */
-
-export enum SCREEN_STATE {
-  DEFAULT= 'default',
-  ADD_PROFILE= 'addProfile',
-  EDIT_PROFILE= 'editProfile',
-};
 
 let userData: string | null;
 

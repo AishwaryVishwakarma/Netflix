@@ -1,15 +1,16 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {client} from '@/utils/client';
-import {redirect} from 'next/navigation';
-import Layout from '@/components/Layout/Layout';
+import Article from '@/assets/icons/Article';
 import NetflixLogo from '@/assets/icons/NetflixLogo';
-import Link from 'next/link';
-import {AiOutlineArrowLeft} from 'react-icons/ai';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Layout from '@/components/Layout/Layout';
 import SanityImage from '@/components/sanity/SanityImage';
 import SanityRichText from '@/components/sanity/SanityRichText';
-import Article from '@/assets/icons/Article';
-import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import {client} from '@/utils/client';
+import Link from 'next/link';
+import {redirect} from 'next/navigation';
+import React from 'react';
+import {AiOutlineArrowLeft} from 'react-icons/ai';
+
+import styles from './styles.module.scss';
 
 interface Features {
   _key: string;

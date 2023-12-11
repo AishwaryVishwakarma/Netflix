@@ -1,19 +1,20 @@
 'use client';
 
-import Layout from '@/components/Layout/Layout';
-import styles from './styles.module.scss';
-import React from 'react';
-import NetflixLogo from '@/assets/icons/NetflixLogo';
-import Link from 'next/link';
 import {login as LOGIN_URL} from '@/END_POINTS';
-import useMediaQuery from '@/hooks/useMediaQuery';
-import axios from 'axios';
-import {useRouter} from 'next/navigation';
-import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
-import {type UserModel} from '@/types';
+import NetflixLogo from '@/assets/icons/NetflixLogo';
 import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
+import CircularLoader from '@/assets/loaders/CircularLoader/CircularLoader';
+import Layout from '@/components/Layout/Layout';
 import LazyImage from '@/components/LazyImage/LazyImage';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import {type UserModel} from '@/types';
 import {setStorage} from '@/utils/storage';
+import axios from 'axios';
+import Link from 'next/link';
+import {useRouter} from 'next/navigation';
+import React from 'react';
+
+import styles from './styles.module.scss';
 
 /*
  * Login Page

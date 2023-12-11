@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {clearStorage, getStorage} from '@/utils/storage';
 import {useRouter} from 'next/navigation';
-import {SCREEN_STATE} from '@/app/manage-profiles/page';
+import {SCREEN_STATE} from '@/app/manage-profiles/types';
 import {
   deleteProfile as DELETE_PROFILE_URL,
   updateProfile as UPDATE_PROFILE_URL,

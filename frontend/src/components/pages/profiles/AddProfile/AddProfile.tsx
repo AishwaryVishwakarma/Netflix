@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import {SCREEN_STATE} from '@/app/profiles/page';
+import {SCREEN_STATE} from '@/app/profiles/types';
 import {getNextIcon} from '@/DATA/PROFILE_ICONS';
 import {type UserProfileModel} from '@/types';
 import {createProfile as CREATE_PROFILE_URL} from '@/END_POINTS';

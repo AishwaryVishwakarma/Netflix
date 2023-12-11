@@ -1,13 +1,14 @@
 'use client';
 
-import React from 'react';
-import styles from './styles.module.scss';
 import Layout from '@/components/Layout/Layout';
-import Header from '@/components/pages/signup/Header';
-import Link from 'next/link';
 import Protected from '@/components/Protected/Protected';
+import Header from '@/components/pages/signup/Header';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import {clearStorage} from '@/utils/storage';
+import Link from 'next/link';
+import React from 'react';
+
+import styles from './styles.module.scss';
 
 /**
  * Payment Page [Protected]
