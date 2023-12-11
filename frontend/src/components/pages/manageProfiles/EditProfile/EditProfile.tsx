@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import {clearStorage, getStorage} from '@/utils/storage';
 import {useRouter} from 'next/navigation';
-import {SCREEN_STATE} from '@/app/ManageProfiles/page';
+import {SCREEN_STATE} from '@/app/manage-profiles/page';
 import {
   deleteProfile as DELETE_PROFILE_URL,
   updateProfile as UPDATE_PROFILE_URL,
@@ -352,7 +352,7 @@ const UpdateIcon: React.FC<UpdateIconScreenProps> = ({
   const {
     name,
     icon,
-    meta: {icon_history},
+    meta: { icon_history },
   } = profileData[0] ?? {};
 
   // Setting the current icon to the parent state object in order to retireve both icons in confirmation screen
@@ -422,7 +422,7 @@ const ConfirmChangeIcon: React.FC<ConfirmationScreenProps> = ({
   changeLocalSreen,
   setLocalProfileData,
 }) => {
-  const {current, new: newIcon} = icons ?? {};
+  const { current, new: newIcon } = icons ?? {};
 
   return (
     <section className={styles.confirmChangeIconWrapper}>
@@ -477,7 +477,7 @@ const Delete: React.FC<DeleteScreenProps> = ({
 }) => {
   const router = useRouter();
 
-  const {_id, name, icon} = profileData[0] ?? {};
+  const { _id, name, icon } = profileData[0] ?? {};
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 

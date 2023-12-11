@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import {type UserProfileModel} from '@/types';
 import Edit from '@/assets/icons/Edit';
-import {SCREEN_STATE} from '@/app/ManageProfiles/page';
+import {SCREEN_STATE} from '@/app/manage-profiles/page';
 import Link from 'next/link';
 
 /*

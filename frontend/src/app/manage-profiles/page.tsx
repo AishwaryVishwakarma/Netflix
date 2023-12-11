@@ -18,11 +18,11 @@ import EditProfile from '@/components/pages/manageProfiles/EditProfile/EditProfi
  * Manage Profiles Page (Contains 3 screens) [Protected]
  */
 
-export const SCREEN_STATE = {
-  DEFAULT: 'default',
-  ADD_PROFILE: 'addProfile',
-  EDIT_PROFILE: 'editProfile',
-} as const;
+export enum SCREEN_STATE {
+  DEFAULT= 'default',
+  ADD_PROFILE= 'addProfile',
+  EDIT_PROFILE= 'editProfile',
+};
 
 let userData: string | null;
 

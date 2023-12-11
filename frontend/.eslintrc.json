@@ -1,3 +1,8 @@
 {
-  "extends": "next/core-web-vitals"
+  // Not using plugins:prettier/recommended because I am on a windows machine and the
+  // eol is always CRLF so I get errors whenever I open a new file (Damn it's frustrating 😩)
+  "extends": ["next/core-web-vitals", "prettier"],
+  "rules": {
+    "no-console": "warn"
+  }
 }
