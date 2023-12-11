@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {SCREEN_STATE} from '@/app/signup/plans/page';
+import {SCREEN_STATE} from '@/app/signup/plans/types';
 import CheckMark from '@/assets/icons/CheckMark';
+import React from 'react';
+
+import styles from './styles.module.scss';
 
 /*
  * Plans Intro Screen

@@ -1,6 +1,7 @@
+import {SCREEN_STATE} from '@/app/signup/registration/types';
 import React from 'react';
+
 import styles from './styles.module.scss';
-import {SCREEN_STATE} from '@/app/signup/registration/page';
 
 /*
  * Registration Intro Screen
