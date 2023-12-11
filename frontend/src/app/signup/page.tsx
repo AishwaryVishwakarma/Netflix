@@ -13,7 +13,7 @@ import {useRouter} from 'next/navigation';
 import React from 'react';
 import {AiOutlineCloseCircle, AiOutlineRight} from 'react-icons/ai';
 
-import {backgroundPlaceholder} from '../page';
+import {backgroundPlaceholder} from '../data';
 import styles from './styles.module.scss';
 
 /**
