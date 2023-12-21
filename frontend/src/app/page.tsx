@@ -39,6 +39,8 @@ let sessionEmail: string | null;
 
 // Main function 👇
 
+axios.defaults.withCredentials = true;
+
 const LoginPage: React.FC = () => {
   const router = useRouter();
 
