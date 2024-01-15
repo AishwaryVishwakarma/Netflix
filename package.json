@@ -1,0 +1,27 @@
+{
+  "name": "netflix",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend",
+    "CMS"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Aishwary Vishwakarma",
+    "email": "aishwaryvishwakarma23@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AishwaryVishwakarma/Netflix"
+  },
+  "bugs": {
+    "url": "https://github.com/AishwaryVishwakarma/Netflix/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "prettier": {}
+}

@@ -1,7 +1,5 @@
 {
-  "editor.mouseWheelZoom": true,
   "editor.formatOnSave": true,
-  "editor.fontSize": 16,
   "editor.formatOnPaste": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
@@ -12,8 +10,6 @@
   "prettier.jsxSingleQuote": true,
   "html.format.wrapAttributes": "force-expand-multiline",
   "editor.tabSize": 2,
-  "terminal.integrated.tabStopWidth": 4,
-  "git.enableSmartCommit": true,
   "html.completion.attributeDefaultValue": "singlequotes",
   "prettier.singleQuote": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
@@ -21,29 +17,14 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "git.autofetch": true,
-  "security.workspace.trust.untrustedFiles": "open",
-  "git.confirmSync": false,
   "editor.bracketPairColorization.enabled": true,
   "editor.linkedEditing": true,
   "workbench.iconTheme": "vscode-icons",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "terminal.integrated.env.linux": {},
-  "workbench.editorAssociations": {
-    "*.ico": "imagePreview.previewEditor"
-  },
-  "tabnine.experimentalAutoImports": true,
   "[javascript]": {
     "editor.maxTokenizationLineLength": 2500
   },
-  "editor.unicodeHighlight.allowedLocales": {
-    "es": true
-  },
-  "vsicons.dontShowNewVersionMessage": true,
-  "files.autoSave": "afterDelay",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "window.zoomLevel": -2,
-  "terminal.integrated.env.windows": {},
   "files.eol": "\n"
 }
