@@ -3,9 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "workspaces": [
-    "frontend",
-    "backend",
-    "CMS"
+    "web",
+    "server",
+    "cms"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
