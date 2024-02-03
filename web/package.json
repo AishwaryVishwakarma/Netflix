@@ -1,9 +1,9 @@
 {
-  "name": "netflix",
-  "version": "0.1.0",
+  "name": "netflix-frontend",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "set PORT=3000 && next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -18,7 +18,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
-    "react-loading-skeleton": "^3.3.1"
+    "react-loading-skeleton": "^3.3.1",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

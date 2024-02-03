@@ -1,9 +1,10 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {type UserProfileModel} from '@/types';
 import {SCREEN_STATE} from '@/app/profiles/types';
-import Link from 'next/link';
 import BubbleLoader from '@/assets/loaders/BubbleLoader/BubbleLoader';
+import {type UserProfileModel} from '@/types';
+import Link from 'next/link';
+import React from 'react';
+
+import styles from './styles.module.scss';
 
 /*
  * Default Screen
@@ -46,7 +47,7 @@ const Default: React.FC<{
           <BubbleLoader />
         ) : (
           <Link
-            href='/ManageProfiles'
+            href='/manage-profiles'
             onClick={(): void => setIsNextPageLoading(true)}
           >
             Manage Profiles
