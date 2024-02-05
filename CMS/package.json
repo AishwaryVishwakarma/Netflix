@@ -1,9 +1,7 @@
 {
   "name": "netflix-cms",
-  "private": true,
   "version": "1.0.0",
   "main": "package.json",
-  "license": "UNLICENSED",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
