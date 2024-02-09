@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const cors = require('cors');
+// const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -15,13 +15,13 @@ const userProfileRoutes = require('./routes/userProfile');
 dotenv.config();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'https://netflix-five-zeta.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ['http://localhost:3000', 'https://netflix-five-zeta.vercel.app'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true,
+//   })
+// );
 
 // var allowedOrigins = [
 //   'http://localhost:3000',
