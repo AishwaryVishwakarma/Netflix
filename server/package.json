@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "build": "ncc build index.js -o dist",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon index.js",
     "lint": "npx eslint ."
   },
   "author": "Aishwary Vishwakarma",
   "license": "ISC",
   "dependencies": {
+    "@vercel/ncc": "^0.38.1",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "connect-redis": "^7.1.0",
