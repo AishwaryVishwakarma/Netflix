@@ -1,25 +1,44 @@
-import React from 'react';
-import axios from 'axios';
-import styles from './styles.module.scss';
+import API_KEY from '@/API_KEY';
 import MovieCard from '@/components/commons/MovieCard/MovieCard';
+import axios from 'axios';
+import {nanoid} from 'nanoid';
+import React from 'react';
 import {MdNavigateBefore, MdNavigateNext} from 'react-icons/md';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import {nanoid} from 'nanoid';
-import API_KEY from '@/API_KEY';
+
+import styles from './styles.module.scss';
 
 interface MovieSectionProps {
-  movieName: string;
+  title: string;
   query: string;
+  idx: number;
 }
 
-const MovieSection: React.FC<MovieSectionProps> = ({movieName, query}) => {
-  const [movies, setMovies] = React.useState([]);
+export interface MovieDetails {
+  backdrop_path: string;
+  id: number;
+  name: string;
+  title: string;
+  origin_country: string;
+  original_name: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  release_date: string;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+const MovieSection: React.FC<MovieSectionProps> = ({title, query, idx}) => {
+  const [movies, setMovies] = React.useState<MovieDetails[]>([]);
+
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const CARD_SEKELETONS = Array.apply(null, Array(10)).map(function () {});
+  const CARD_SEKELETONS = Array.apply(null, Array(10)).map(() => {});
 
-  let cardsSectionRef = React.useRef<HTMLDivElement>(null);
+  let cardsSectionRef = React.useRef<HTMLDivElement | null>(null);
 
   const scroll = (scrollOffset: number) => {
     if (cardsSectionRef.current) {
@@ -27,25 +46,21 @@ const MovieSection: React.FC<MovieSectionProps> = ({movieName, query}) => {
     }
   };
 
-  const URL =
-    query === 'search'
-      ? `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${movieName}`
-      : `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
-
   React.useEffect(() => {
     setIsLoading(true);
+
     axios
-      .get(URL)
+      .get(`https://api.themoviedb.org/3/movie/${query}?api_key=${API_KEY}`)
       .then((res) => {
         setMovies(res.data.results);
         setIsLoading(false);
       })
       .catch((err) => console.debug(err));
-  }, [URL]);
+  }, [query]);
 
   return (
     <>
-      <div className={styles.blurContainer} />
+      {idx === 0 && <div className={styles.blurContainer} />}
       <div className={styles.sectionWrapper}>
         <div className={styles.heading}>
           {isLoading ? (
@@ -56,10 +71,8 @@ const MovieSection: React.FC<MovieSectionProps> = ({movieName, query}) => {
               duration={1}
               width={300}
             />
-          ) : query == 'search' ? (
-            `${movieName} Movies`
           ) : (
-            'Popular Today'
+            title
           )}
         </div>
         <div ref={cardsSectionRef} className={styles.cardsContainer}>
@@ -74,8 +87,8 @@ const MovieSection: React.FC<MovieSectionProps> = ({movieName, query}) => {
                 width={190}
               />
             ))}
-          {movies.map((element: any) => (
-            <MovieCard key={element.id} movieData={element} />
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} {...movie} />
           ))}
           <button
             type='button'

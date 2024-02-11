@@ -28,9 +28,11 @@ const Default: React.FC<{
         <h1>Who&apos;s Watching?</h1>
         <ul className={styles.profiles}>
           {profiles?.map((profile) => (
-            <li className={styles.profileCard} key={profile._id}>
-              <img src={profile.icon} alt='profile' />
-              <p>{profile.name}</p>
+            <li key={profile._id}>
+              <Link href='/home' className={styles.profileCard}>
+                <img src={profile.icon} alt='profile' />
+                <p>{profile.name}</p>
+              </Link>
             </li>
           ))}
           {profile_creation_available && (

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Footer from '../Footer/Footer';
 
 interface LayoutProps {
@@ -7,6 +8,7 @@ interface LayoutProps {
   className?: string;
   footerType?: 'auth' | 'home';
   fixedFooter?: boolean;
+  footerStyles?: string;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -15,11 +17,18 @@ const Layout: React.FC<LayoutProps> = ({
   className = 'layouted full-bleed defaultBg',
   footerType = 'home',
   fixedFooter = false,
+  footerStyles,
 }) => {
   return (
     <>
       <main className={className}>{children}</main>
-      {footer && <Footer type={footerType} fixed={fixedFooter} />}
+      {footer && (
+        <Footer
+          type={footerType}
+          fixed={fixedFooter}
+          footerStyles={footerStyles}
+        />
+      )}
     </>
   );
 };

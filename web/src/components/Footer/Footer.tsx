@@ -1,21 +1,23 @@
-import React from 'react';
-import styles from './styles.module.scss';
-import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
 import Link from 'next/link';
+import React from 'react';
+import {FaFacebookF, FaInstagram, FaTwitter, FaYoutube} from 'react-icons/fa';
+
+import styles from './styles.module.scss';
 
 /*
  * Footer
  */
 
-const Footer: React.FC<{type: 'auth' | 'home'; fixed: boolean}> = ({
-  type,
-  fixed,
-}) => {
+const Footer: React.FC<{
+  type: 'auth' | 'home';
+  fixed: boolean;
+  footerStyles: string | undefined;
+}> = ({type, fixed, footerStyles}) => {
   return (
     <footer
       className={`${styles.footerWrapper} ${type === 'home' && 'defaultBg'} ${
         type === 'auth' && 'transparentBg'
-      } ${fixed && styles.fixedOnBottom}`}
+      } ${fixed && styles.fixedOnBottom} ${footerStyles}`}
     >
       {type === 'home' && <HomeFooter />}
       {type === 'auth' && <AuthFooter />}

@@ -107,37 +107,16 @@
         font-weight: 300;
       }
 
-      .genresContainer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 10px;
-        line-height: 10px;
-        max-height: 42px;
+      .description {
+        font-family: var(--font-ubuntu);
+        color: #ffffff;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
         overflow: hidden;
-
-        .genre {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-
-          &:first-child {
-            .dotIcon {
-              display: none;
-            }
-          }
-
-          .genreTitle {
-            font-size: 12px;
-            font-family: var(--font-ubuntu);
-            color: #ffffff;
-            font-weight: 300;
-          }
-
-          .dotIcon {
-            color: #8f8f8f;
-          }
-        }
+        font-size: 12px;
+        font-weight: 300;
       }
     }
   }

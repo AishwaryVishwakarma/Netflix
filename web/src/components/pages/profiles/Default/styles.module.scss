@@ -33,6 +33,7 @@ $profile-name-font-size: 1.2vw;
         transform: scale(1);
       }
     }
+
     h1 {
       color: $primary-color;
       font-size: 3.5vw;
@@ -59,6 +60,7 @@ $profile-name-font-size: 1.2vw;
         flex-direction: column;
         gap: 10px;
         cursor: pointer;
+        text-decoration: none;
 
         & > img,
         .newProfile {
@@ -111,7 +113,7 @@ $profile-name-font-size: 1.2vw;
       }
 
       .newProfile::before {
-        content: '+';
+        content: "+";
         color: var(--background);
         font-size: 5vw;
         font-weight: 700;
