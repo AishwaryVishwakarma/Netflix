@@ -8,6 +8,12 @@
     "cms"
   ],
   "scripts": {
+    "web": "npm --workspace=web run dev",
+    "server": "npm --workspace=server run dev",
+    "build-web": "npm --workspace=web run build",
+    "build-server": "npm --workspace=server run build",
+    "start-web": "npm --workspace=web run start",
+    "start-server": "npm --workspace=server run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
@@ -22,6 +28,5 @@
     "url": "https://github.com/AishwaryVishwakarma/Netflix/issues"
   },
   "dependencies": {},
-  "devDependencies": {},
-  "prettier": {}
+  "devDependencies": {}
 }
