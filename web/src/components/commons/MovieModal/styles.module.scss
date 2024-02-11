@@ -1,0 +1,152 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  z-index: 11;
+}
+
+.modalContent {
+  position: fixed;
+  z-index: 12;
+  top: 5%;
+  left: 50%;
+  transform: translate(-50%);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 900px;
+  height: 100%;
+  border-radius: 10px;
+  background: var(--background);
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  img {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+  }
+
+  .viewOptions {
+    position: absolute;
+    font-size: 25px;
+    justify-content: center;
+    top: 50%;
+    left: 60px;
+    font-family: var(--font-ubuntu);
+    display: flex;
+    gap: 25px;
+
+    .playButton {
+      padding: 5px 40px 5px 25px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 5px;
+
+      &:hover {
+        background: #f6f0f0;
+      }
+    }
+
+    .otherOptions {
+      color: white;
+      display: flex;
+      gap: 15px;
+      font-size: 45px;
+      cursor: pointer;
+
+      * {
+        border: 1.5px solid #949494;
+        border-radius: 50%;
+        padding: 8px;
+        display: flex;
+        background: #2a2a2a;
+        opacity: 0.6;
+        transition: outline 0.2s ease-in-out;
+      }
+
+      .button {
+        &:hover {
+          outline: 3.5px solid #ffffff;
+        }
+      }
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    font-size: 30px;
+    top: 10px;
+    right: 10px;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    display: flex;
+    background: #1c1c1c;
+    opacity: 0.85;
+    transition: outline 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      outline: 3.5px solid #ffffff;
+    }
+  }
+}
+
+.overviewContainer {
+  padding: 20px 40px;
+  display: flex;
+  gap: 40px;
+  font-family: var(--font-ubuntu);
+  word-spacing: 2px;
+
+  .firstColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 70%;
+
+    .statsContainer {
+      display: flex;
+      color: white;
+      font-size: 20px;
+      gap: 15px;
+
+      .matchPercentage {
+        color: #4ba861;
+        font-weight: bold;
+      }
+
+      .icons {
+        display: flex;
+        gap: 8px;
+      }
+    }
+
+    .movieTitle {
+      color: white;
+      font-size: 20px;
+    }
+
+    .storyDescription {
+      color: white;
+      font-size: 15px;
+      display: inline-flex;
+      line-height: 1.5;
+      word-spacing: 3px;
+      flex-wrap: wrap;
+    }
+  }
+}

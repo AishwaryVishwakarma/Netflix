@@ -1,15 +1,19 @@
+import Image from 'next/image';
+import {useRouter} from 'next/navigation';
 import React from 'react';
-import styles from './styles.module.scss';
 import {
-  AiOutlineSearch,
   AiFillCaretDown,
   AiFillCaretUp,
   AiOutlineEdit,
   AiOutlineProfile,
+  AiOutlineSearch,
 } from 'react-icons/ai';
+import {BiHelpCircle} from 'react-icons/bi';
 import {FaRegBell} from 'react-icons/fa';
 import {MdOutlineAccountCircle} from 'react-icons/md';
-import {BiHelpCircle} from 'react-icons/bi';
+
+import styles from './styles.module.scss';
+
 // import DUMMY_PROFILES from '@/DUMMY_DATA/DUMMY_PROFILES';
 
 const TABS = [
@@ -21,26 +25,9 @@ const TABS = [
   'Browse by Languages',
 ];
 
-const DROPDOWN_ITEMS = [
-  {
-    element: <AiOutlineEdit className={styles.utilityIcons} />,
-    description: 'Manage Profiles',
-  },
-  {
-    element: <AiOutlineProfile className={styles.utilityIcons} />,
-    description: 'Transfer Profile',
-  },
-  {
-    element: <MdOutlineAccountCircle className={styles.utilityIcons} />,
-    description: 'Account',
-  },
-  {
-    element: <BiHelpCircle className={styles.utilityIcons} />,
-    description: 'Help Center',
-  },
-];
-
 const Navbar = () => {
+  const router = useRouter();
+
   const [scrollAmount, setScrollAmount] = React.useState(0);
 
   const handleScroll = () => {
@@ -56,14 +43,38 @@ const Navbar = () => {
     };
   }, [scrollAmount]);
 
+  const DROPDOWN_ITEMS = [
+    {
+      element: <AiOutlineEdit className={styles.utilityIcons} />,
+      description: 'Manage Profiles',
+      onclick: (): void => {
+        router.push('manage-profiles');
+      },
+    },
+    {
+      element: <AiOutlineProfile className={styles.utilityIcons} />,
+      description: 'Transfer Profile',
+    },
+    {
+      element: <MdOutlineAccountCircle className={styles.utilityIcons} />,
+      description: 'Account',
+    },
+    {
+      element: <BiHelpCircle className={styles.utilityIcons} />,
+      description: 'Help Center',
+    },
+  ];
+
   return (
     <nav
       className={`${styles.navbar} ${scrollAmount > 10 ? styles.bgDark : ''}`}
     >
-      <img
+      <Image
         src='https://i.postimg.cc/MTkxkpnT/Logonetflix.png'
-        alt=''
+        alt='Netflix Logo'
         className={styles.logo}
+        height={30}
+        width={100}
       />
       <ul>
         {TABS.map((tab, idx) => (
@@ -75,7 +86,12 @@ const Navbar = () => {
         <p>Children</p>
         <FaRegBell className={styles.bellIcon} />
         <div className={styles.profileWrapper}>
-          <img src='https://i.postimg.cc/yYNvX4dG/red.jpg' alt='' />
+          <Image
+            src='https://i.postimg.cc/yYNvX4dG/red.jpg'
+            alt='Dummy Profile Icon'
+            height={32}
+            width={32}
+          />
           <AiFillCaretDown className={styles.caret} />
           <div className={styles.dropdownWrapper}>
             <div
@@ -84,18 +100,19 @@ const Navbar = () => {
               }`}
             >
               <div className={styles.itemsContainer}>
-                {/* {DUMMY_PROFILES.map((profile, idx) => (
-                  <div key={idx} className={styles.profiles}>
-                    <img src={profile.url} alt='' />
-                    <p>{profile.name}</p>
-                  </div>
-                ))} */}
-                {DROPDOWN_ITEMS.map((item, idx) => (
-                  <div key={idx} className={styles.utilityItems}>
-                    {item.element}
-                    <p>{item.description}</p>
-                  </div>
-                ))}
+                {DROPDOWN_ITEMS.map((item, idx) => {
+                  const {element, description, onclick} = item ?? {};
+                  return (
+                    <div
+                      key={idx}
+                      className={styles.utilityItems}
+                      onClick={onclick}
+                    >
+                      {element}
+                      <p>{description}</p>
+                    </div>
+                  );
+                })}
               </div>
               <div className={styles.signOut}>Sign out of Netflix</div>
               <AiFillCaretUp className={styles.dropdownCaret} />
